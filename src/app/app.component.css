@@ -1,0 +1,5 @@
+@media (max-width: 560px) {
+  .mb-1, .mb-2 {
+    width: 300px !important;
+  }
+}
