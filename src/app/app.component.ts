@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterOutlet} from '@angular/router';
 import {AppModule} from "./app.module";
 import {LoginService} from "./service/login.service";
+import {Usuario} from "../model/usuario";
 
 @Component({
   selector: 'app-root',
@@ -14,9 +15,13 @@ import {LoginService} from "./service/login.service";
 export class AppComponent {
   title = 'Angular-REST';
   //Vamos criar um objeto Usuario, como 2 atributos, similar ao que vamos enviar para a API depois!
-  usuario = {login: "", senha: ""};
+  usuario: Usuario = {
+    login: "",
+    senha: ""
+  }
 
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService) {
+  }
 
   public login() {
     console.log("Teste Login: " + this.usuario.login + " Senha: " + this.usuario.senha);
