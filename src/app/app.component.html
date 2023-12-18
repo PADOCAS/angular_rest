@@ -11,16 +11,16 @@
 
   <div class="mb-2" style="width: 500px;">
     <label id="lblLogin" for="txtLogin">Login</label>
-    <input id="txtLogin" type="email" class="form-control" maxlength="50" placeholder="Informe o Login" required>
+    <input id="txtLogin" type="email" class="form-control" [(ngModel)]="usuario.login" name="login" maxlength="50" placeholder="Informe o Login" required>
   </div>
 
   <div class="mb-2" style="width: 500px;">
     <label id="lblSenha" for="txtSenha">Senha</label>
-    <input id="txtSenha" type="password" class="form-control" maxlength="50" placeholder="Informe a Senha" required>
+    <input id="txtSenha" type="password" class="form-control" [(ngModel)]="usuario.senha" name="senha" maxlength="50" placeholder="Informe a Senha" required>
   </div>
 
   <div class="mb-1" style="width: 500px;">
-    <button type="button" class="btn btn-primary">Acessar</button>
+    <button type="button" class="btn btn-primary" (click)="login();">Acessar</button>
   </div>
 </form>
 
