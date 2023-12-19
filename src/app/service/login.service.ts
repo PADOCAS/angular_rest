@@ -2,13 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Usuario} from "../../model/usuario";
 import {Constants} from "../../util/constants";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router:Router) {
   }
 
   public login(usuario: Usuario) {
@@ -26,6 +27,8 @@ export class LoginService {
           localStorage.setItem("token", token);
 
           console.log("Token: " + localStorage.getItem("token")); //Pegando o token armazenado no navegador
+          //Redirecionando rota para o componente HomeComponent
+          this.router.navigate(["home"]);
         },
         error => {
           console.error(`Acesso Negado!\n\nExceção: ${error.error.excecao},\nCódigo: ${error.error.codigo},\nErro: ${error.error.erro}`);
