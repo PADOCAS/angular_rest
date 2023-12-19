@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+/*Campos requeridos ficam com borda a esquerda verde*/
+.ng-valid[required], .ng-valid.required {
+  border-left: 5px solid #42A948;
+}
+
+/*Campos inválidos ficam com a borda esquerda vermelha*/
+.ng-invalid:not(form) {
+  border-left: 5px solid #A94442;
+}

@@ -24,7 +24,27 @@ export class AppComponent {
   }
 
   public login() {
-    console.log("Teste Login: " + this.usuario.login + " Senha: " + this.usuario.senha);
-    this.loginService.login(this.usuario);
+    if (this.validLogin()) {
+      console.log("Teste Login: " + this.usuario.login + " Senha: " + this.usuario.senha);
+      this.loginService.login(this.usuario);
+    }
+  }
+
+  private validLogin(): boolean {
+    if (this.usuario == null) {
+      return false;
+    }
+
+    if (this.usuario.login === null
+      || this.usuario.login.trim() === "") {
+      return false;
+    }
+
+    if (this.usuario.senha === null
+      || this.usuario.senha.trim() === "") {
+      return false;
+    }
+
+    return true;
   }
 }

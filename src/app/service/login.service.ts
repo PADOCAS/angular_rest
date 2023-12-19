@@ -28,7 +28,8 @@ export class LoginService {
           console.log("Token: " + localStorage.getItem("token")); //Pegando o token armazenado no navegador
         },
         error => {
-          console.error(`Erro ao fazer Login!\n\nExceção: ${error.error.excecao},\nCódigo: ${error.error.codigo},\nErro: ${error.error.erro}`);
+          console.error(`Acesso Negado!\n\nExceção: ${error.error.excecao},\nCódigo: ${error.error.codigo},\nErro: ${error.error.erro}`);
+          alert(`Acesso Negado!\n\nExceção: ${error.error.excecao},\nCódigo: ${error.error.codigo},\nErro: ${error.error.erro}`);
         });
   }
 }
