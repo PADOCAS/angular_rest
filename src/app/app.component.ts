@@ -1,9 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterOutlet} from '@angular/router';
+import {Router, RouterOutlet} from '@angular/router';
 import {AppModule} from "./app.module";
-import {LoginService} from "./service/login.service";
-import {Usuario} from "../model/usuario";
 
 @Component({
   selector: 'app-root',
@@ -12,6 +10,17 @@ import {Usuario} from "../model/usuario";
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Angular-REST';
+
+  constructor(private router: Router) {
+  }
+
+  ngOnInit(): void {
+    if (localStorage != null) {
+      if (localStorage.getItem("token") == null) {
+        this.router.navigate(["login"]);
+      }
+    }
+  }
 }
