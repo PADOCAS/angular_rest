@@ -19,6 +19,6 @@ export class MenuComponent {
 
   public sair(): void {
     localStorage.clear();
-    this.router.navigate(["login"]);
+    //this.router.navigate(["login"]); //Feito direto em tela o redirecionamento
   }
 }
