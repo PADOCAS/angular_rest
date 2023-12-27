@@ -1,0 +1,19 @@
+<app-menu></app-menu>
+<br/>
+<p>Usuários</p>
+
+<table>
+  <thead>
+    <th>ID</th>
+    <th>Login</th>
+    <th>Nome</th>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let usu of usuarios">
+      <td>{{usu.id}}</td>
+      <td>{{usu.login}}</td>
+      <td>{{usu.nome}}</td>
+    </tr>
+  </tbody>
+</table>

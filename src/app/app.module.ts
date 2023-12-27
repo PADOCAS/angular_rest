@@ -4,6 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {LoginService} from "./service/login.service";
 import {HeaderInterceptorService} from "./service/header-interceptor.service";
+import {UsuarioService} from "./service/usuario.service";
 
 @NgModule({
   declarations: [],
@@ -13,8 +14,9 @@ import {HeaderInterceptorService} from "./service/header-interceptor.service";
     HttpClientModule,
   ],
   providers: [
-    //Vamos prover o uso do LoginService para os componentes do módulo:
+    //Vamos prover o uso do LoginService e também UsuarioService para os componentes do módulo:
     LoginService,
+    UsuarioService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HeaderInterceptorService,

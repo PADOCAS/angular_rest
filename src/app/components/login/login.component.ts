@@ -18,8 +18,10 @@ export class LoginComponent {
   title = 'Angular-REST';
   //Vamos criar um objeto Usuario, como 2 atributos, similar ao que vamos enviar para a API depois!
   usuario: Usuario = {
+    id: 0,
     login: "",
-    senha: ""
+    senha: "",
+    nome: ""
   }
 
   constructor(private loginService: LoginService) {
