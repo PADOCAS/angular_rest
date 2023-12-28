@@ -3,17 +3,21 @@
 <p>Usuários Cadastrados</p>
 
 <table class="table table-striped">
+  <caption>{{usuarios == null || usuarios.length == 0 ? 'Nenhum Usuário cadastrado' : usuarios.length + ' usuário(s) cadastrado(s).'}}</caption>
   <thead>
-    <th scope="col">ID</th>
-    <th scope="col">Login</th>
-    <th scope="col">Nome</th>
+  <th scope="col">ID</th>
+  <th scope="col">Login</th>
+  <th scope="col">Nome</th>
   </thead>
 
   <tbody>
-    <tr *ngFor="let usu of usuarios">
-      <td>{{usu.id}}</td>
-      <td>{{usu.login}}</td>
-      <td>{{usu.nome}}</td>
-    </tr>
+  <tr *ngFor="let usu of usuarios">
+    <td>{{ usu.id }}</td>
+    <td>{{ usu.login }}</td>
+    <td>{{ usu.nome }}</td>
+    <td>
+      <button class="btn btn-primary" (click)="deleteUsuario(usu.id);">Excluir</button>
+    </td>
+  </tr>
   </tbody>
 </table>
