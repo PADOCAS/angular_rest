@@ -17,7 +17,7 @@ export class UsuarioService {
    *
    */
   public getListUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(Constants.baseUrl + "listall")
+    return this.http.get<Usuario[]>(Constants.baseUrl + "listall");
   }
 
   /**
@@ -27,5 +27,9 @@ export class UsuarioService {
    */
   public deleteUsuario(id: number): Observable<any> {
     return this.http.delete(Constants.baseUrl + id, {responseType: "text"});
+  }
+
+  public getListUsuarioPorNome(nome:string):Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(Constants.baseUrl + "usuariopornome/" + nome);
   }
 }

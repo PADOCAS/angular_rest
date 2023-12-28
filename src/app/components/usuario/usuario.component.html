@@ -1,9 +1,19 @@
-<app-menu></app-menu>
+<app-menu xmlns:b="http://www.w3.org/1999/html"></app-menu>
 <br/>
-<p>Usuários Cadastrados</p>
+<form class="row g-2">
+  <div class="col-auto">
+    <input id="txtNomePesquisa" name="nomePesquisa" [(ngModel)]="nomePesquisa" type="text" class="form-control" style="width: 500px;" maxlength="100" placeholder="Pesquisa Usuário por Nome">
+  </div>
+  <div class="col-auto">
+    <button type="button" (click)="consultaUsuariosPorNome();" class="btn btn-primary mb-2">Pesquisar</button>
+  </div>
+</form>
+
+<br/>
+<p>Usuários</p>
 
 <table class="table table-striped">
-  <caption>{{usuarios == null || usuarios.length == 0 ? 'Nenhum Usuário cadastrado' : usuarios.length + ' usuário(s) cadastrado(s).'}}</caption>
+  <caption>{{ usuarios == null || usuarios.length == 0 ? 'Nenhum Usuário cadastrado' : usuarios.length + ' usuário(s) listado(s).' }}</caption>
   <thead>
   <th scope="col">ID</th>
   <th scope="col">Login</th>
