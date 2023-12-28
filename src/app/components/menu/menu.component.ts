@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import '@popperjs/core';
 import 'bootstrap';
 import {Router, RouterLink} from "@angular/router";
 
