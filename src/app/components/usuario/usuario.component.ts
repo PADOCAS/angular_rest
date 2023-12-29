@@ -4,6 +4,7 @@ import {Usuario} from "../../../model/usuario";
 import {NgForOf} from "@angular/common";
 import {MenuComponent} from "../menu/menu.component";
 import {FormsModule} from "@angular/forms";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-usuario',
@@ -11,7 +12,8 @@ import {FormsModule} from "@angular/forms";
   imports: [
     NgForOf,
     MenuComponent,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './usuario.component.html',
   styleUrl: './usuario.component.css'
