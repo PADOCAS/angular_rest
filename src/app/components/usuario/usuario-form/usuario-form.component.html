@@ -1,4 +1,43 @@
 <app-menu></app-menu>
-<br/>
-<p>Cadastro de Usuário</p>
-<h1>{{'ID: ' + id}}</h1>
+<h3 style="padding: 10px;">Cadastro de Usuário</h3>
+<h1 style="padding: 10px;">{{ 'ID: ' + id }}</h1>
+
+<form style="padding: 10px;">
+  <div class="mb-2">
+    <div class="col-sm-1">
+      <label id="lblUsuarioId" for="txtUsuarioId">ID</label>
+    </div>
+    <div class="col-sm-1">
+      <input id="txtUsuarioId" type="text" readonly="readonly" disabled="disabled" class="form-control"
+             autocomplete="false">
+    </div>
+  </div>
+  <div class="mb-2">
+    <div class="col-sm-1">
+      <label id="lblNome" for="txtNome">Nome</label>
+    </div>
+    <div class="col-sm-12">
+      <input id="txtNome" type="text" class="form-control" required="required" autocomplete="false">
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <label id="lblLogin" for="txtLogin">Login</label>
+      <div>
+        <input id="txtLogin" type="text" class="form-control" required="required" autocomplete="false">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label id="lblSenha" for="txtSenha">Senha</label>
+      <div>
+        <input id="txtSenha" type="password" class="form-control" required="required" autocomplete="false">
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-2">
+    <button type="button" class="btn btn-danger" style="width: 86px; margin-right: 5px;" [routerLink]="['/usuarioList']">Cancelar</button>
+    <button type="button" class="btn btn-secondary" style="width: 86px; margin-right: 5px;" [routerLink]="['/usuario-add']">Novo</button>
+    <button type="button" class="btn btn-primary" style="width: 86px; margin-right: 5px;">Salvar</button>
+  </div>
+</form>

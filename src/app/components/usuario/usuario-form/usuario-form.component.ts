@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuComponent} from "../../menu/menu.component";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-usuario-form',
   standalone: true,
   imports: [
-    MenuComponent
+    MenuComponent,
+    RouterLink
   ],
   templateUrl: './usuario-form.component.html',
   styleUrl: './usuario-form.component.css'
