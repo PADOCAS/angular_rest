@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Usuario} from "../../model/usuario";
 import {Observable} from "rxjs";
 import {Constants} from "../../util/constants";
+import {ViaCep} from "../../model/viaCep";
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +42,10 @@ export class UsuarioService {
     };
 
     return this.http.get<Usuario>(Constants.baseUrl + id, {headers});
+  }
+
+  public getConsultaCep(cep:string):Observable<any> {
+    //Consulta CEP API VIACEP - JSON
+    return this.http.get<ViaCep>(Constants.viaCepUrl + cep + "/json/");
   }
 }

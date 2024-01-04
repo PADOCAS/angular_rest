@@ -43,6 +43,7 @@
     </div>
     <div class="col-md-2">
       <input id="txtCep" [(ngModel)]="usuario.cep" name="cep" type="text" class="form-control" autocomplete="false"
+             (blur)="consultaCep();"
              maxlength="15">
     </div>
   </div>

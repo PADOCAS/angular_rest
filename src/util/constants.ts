@@ -15,4 +15,7 @@ export class Constants {
     return this.baseServidor + "springbootapirest/usuario/";
   }
 
+  public static get viaCepUrl(): string {
+    return "https://viacep.com.br/ws/";
+  }
 }
