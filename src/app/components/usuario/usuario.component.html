@@ -1,6 +1,7 @@
 <app-menu></app-menu>
-<br/>
-<form class="row g-3">
+<p>Usuários</p>
+
+<form class="row g-3" style="padding: 10px;">
   <div class="col-auto">
     <input id="txtNomePesquisa" name="nomePesquisa" [(ngModel)]="nomePesquisa" type="text" class="form-control" style="width: 500px;" maxlength="100" placeholder="Pesquisa Usuário por Nome">
   </div>
@@ -11,9 +12,6 @@
     <button type="button" [routerLink]="['/usuario-add']" class="btn btn-secondary mb-2">Novo</button>
   </div>
 </form>
-
-<br/>
-<p>Usuários</p>
 
 <table class="table table-striped">
   <caption>{{ usuarios == null || usuarios.length == 0 ? 'Nenhum Usuário cadastrado' : usuarios.length + ' usuário(s) listado(s).' }}</caption>

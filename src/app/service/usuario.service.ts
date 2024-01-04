@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Usuario} from "../../model/usuario";
 import {Observable} from "rxjs";
 import {Constants} from "../../util/constants";
@@ -31,5 +31,15 @@ export class UsuarioService {
 
   public getListUsuarioPorNome(nome:string):Observable<Usuario[]> {
     return this.http.get<Usuario[]>(Constants.baseUrl + "usuariopornome/" + nome);
+  }
+
+  public getUsuario(id:number):Observable<any> {
+    //Método para retornar por ID está versionado na API, devemos pegar o que retorna todas as informações do VO!
+    //Deve ser passado no header o parâmetro para API (X-API-Version=v1)
+    const headers = {
+      'X-API-Version': 'v1'
+    };
+
+    return this.http.get<Usuario>(Constants.baseUrl + id, {headers});
   }
 }

@@ -1,6 +1,5 @@
 <app-menu></app-menu>
-<h3 style="padding: 10px;">Cadastro de Usuário</h3>
-<h1 style="padding: 10px;">{{ 'ID: ' + id }}</h1>
+<p>Cadastro de Usuário</p>
 
 <form style="padding: 10px;">
   <div class="mb-2">
@@ -8,7 +7,8 @@
       <label id="lblUsuarioId" for="txtUsuarioId">ID</label>
     </div>
     <div class="col-sm-1">
-      <input id="txtUsuarioId" type="text" readonly="readonly" disabled="disabled" class="form-control"
+      <input id="txtUsuarioId" [(ngModel)]="usuario.id" name="id" type="text" readonly="readonly" [disabled]="true"
+             class="form-control"
              autocomplete="false">
     </div>
   </div>
@@ -17,27 +17,88 @@
       <label id="lblNome" for="txtNome">Nome</label>
     </div>
     <div class="col-sm-12">
-      <input id="txtNome" type="text" class="form-control" required="required" autocomplete="false">
+      <input id="txtNome" [(ngModel)]="usuario.nome" name="nome" type="text" class="form-control" required="required"
+             autocomplete="false" maxlength="100">
     </div>
   </div>
   <div class="row mb-2">
     <div class="col-md-6">
       <label id="lblLogin" for="txtLogin">Login</label>
       <div>
-        <input id="txtLogin" type="text" class="form-control" required="required" autocomplete="false">
+        <input id="txtLogin" [(ngModel)]="usuario.login" name="login" type="text" class="form-control"
+               required="required" autocomplete="false" maxlength="30">
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" *ngIf="usuario === null || usuario.id === null">
       <label id="lblSenha" for="txtSenha">Senha</label>
       <div>
-        <input id="txtSenha" type="password" class="form-control" required="required" autocomplete="false">
+        <input id="txtSenha" [(ngModel)]="usuario.senha" name="senha" type="password" class="form-control"
+               required="required" autocomplete="false" maxlength="100">
+      </div>
+    </div>
+  </div>
+  <div class="mb-2">
+    <div class="col-md-1">
+      <label id="lblCep" for="txtCep">CEP</label>
+    </div>
+    <div class="col-md-2">
+      <input id="txtCep" [(ngModel)]="usuario.cep" name="cep" type="text" class="form-control" autocomplete="false"
+             maxlength="15">
+    </div>
+  </div>
+  <div class="mb-2">
+    <div class="col-sm-1">
+      <label id="lblLogradouro" for="txtLogradouro">Logradouro</label>
+    </div>
+    <div class="col-sm-12">
+      <input id="txtLogradouro" [(ngModel)]="usuario.logradouro" name="logradouro" type="text" class="form-control"
+             autocomplete="false" maxlength="100">
+    </div>
+  </div>
+  <div class="mb-2">
+    <div class="col-sm-1">
+      <label id="lblComplemento" for="txtComplemento">Complemento</label>
+    </div>
+    <div class="col-sm-12">
+      <input id="txtComplemento" [(ngModel)]="usuario.complemento" name="complemento" type="text" class="form-control"
+             autocomplete="false" maxlength="100">
+    </div>
+  </div>
+  <div class="mb-2">
+    <div class="col-sm-1">
+      <label id="lblBairro" for="txtBairro">Bairro</label>
+    </div>
+    <div class="col-sm-12">
+      <input id="txtBairro" [(ngModel)]="usuario.bairro" name="bairro" type="text" class="form-control"
+             autocomplete="false" maxlength="60">
+    </div>
+  </div>
+
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <label id="lblLocalidade" for="txtLocalidade">Localidade</label>
+      <div>
+        <input id="txtLocalidade" [(ngModel)]="usuario.localidade" name="localidade" type="text" class="form-control"
+               autocomplete="false" maxlength="50">
+      </div>
+    </div>
+    <div class="col-md-1">
+      <label id="lblUf" for="txtUf">UF</label>
+      <div>
+        <input id="txtUf" [(ngModel)]="usuario.uf" name="uf" type="text" class="form-control" autocomplete="false"
+               maxlength="2">
       </div>
     </div>
   </div>
 
   <div class="mb-2">
-    <button type="button" class="btn btn-danger" style="width: 86px; margin-right: 5px;" [routerLink]="['/usuarioList']">Cancelar</button>
-    <button type="button" class="btn btn-secondary" style="width: 86px; margin-right: 5px;" [routerLink]="['/usuario-add']">Novo</button>
-    <button type="button" class="btn btn-primary" style="width: 86px; margin-right: 5px;">Salvar</button>
+    <button type="button" class="btn btn-primary" style="width: 86px; margin-right: 5px;" (click)="salvar();">Salvar
+    </button>
+    <button type="button" class="btn btn-secondary" style="width: 86px; margin-right: 5px;"
+            [routerLink]="['/usuario-add']" (click)="novo();">Novo
+    </button>
+    <button type="button" class="btn btn-danger" style="width: 86px; margin-right: 5px;"
+            [routerLink]="['/usuarioList']">Cancelar
+    </button>
   </div>
 </form>

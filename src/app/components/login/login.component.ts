@@ -21,7 +21,13 @@ export class LoginComponent {
     id: 0,
     login: "",
     senha: "",
-    nome: ""
+    nome: "",
+    cep: "",
+    bairro: "",
+    localidade: "",
+    logradouro: "",
+    complemento: "",
+    uf: ""
   }
 
   constructor(private loginService: LoginService) {
