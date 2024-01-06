@@ -3,6 +3,7 @@ import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {Usuario} from "../../../model/usuario";
 import {LoginService} from "../../service/login.service";
+import {StatusBarService} from "../../service/status-bar.service";
 
 @Component({
   selector: 'app-login',
@@ -30,14 +31,20 @@ export class LoginComponent {
     uf: ""
   }
 
-  constructor(private loginService: LoginService) {
+  constructor(private loginService: LoginService, private statusBarService: StatusBarService) {
   }
 
   public login() {
-    if (this.validLogin()) {
-      console.log("Teste Login: " + this.usuario.login + " Senha: " + this.usuario.senha);
-      this.loginService.login(this.usuario);
-    }
+    this.statusBarService.setShowStatusDialog(true);
+
+    setTimeout(() => {
+      if (this.validLogin()) {
+        console.log("Teste Login: " + this.usuario.login + " Senha: " + this.usuario.senha);
+        this.loginService.login(this.usuario);
+      }
+
+      this.statusBarService.setShowStatusDialog(false);
+    });
   }
 
   private validLogin(): boolean {

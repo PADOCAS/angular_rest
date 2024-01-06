@@ -26,6 +26,6 @@
   </div>
 
   <div class="mb-1" style="width: 500px;">
-    <button type="button" class="btn btn-primary" [disabled]="userLogin.invalid || userSenha.invalid" (click)="login();">Acessar</button>
+    <button type="button" class="btn btn-primary" [disabled]="userLogin.invalid || userSenha.invalid" (click)="login();" (keydown.enter)="login();">Acessar</button>
   </div>
 </form>

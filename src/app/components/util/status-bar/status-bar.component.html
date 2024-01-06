@@ -1,0 +1,29 @@
+<!--Modal ProgressBar-->
+<div class="modal-backdrop" [ngClass]="{'show': statusBarService.showStatusDialog | async, 'fade': !(statusBarService.showStatusDialog | async)}"
+     [style.display]="(statusBarService.showStatusDialog | async) ? 'block' : 'none'" data-bs-toggle="modal"
+     data-bs-target="#staticModalProgressBar"></div>
+<div id="staticModalProgressBar" class="modal d-flex align-items-center justify-content-center"
+     [ngClass]="{'show': statusBarService.showStatusDialog | async, 'fade': !(statusBarService.showStatusDialog | async)}" tabindex="-1" role="dialog"
+     [style.display]="(statusBarService.showStatusDialog | async) ? 'block' : 'none'" aria-modal="true"
+     data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-content" style="background-color: aliceblue; width: 290px;
+    height: 84px;
+    border: 1px dashed black;
+    display: flex;
+    justify-content: center;
+    align-items: center;">
+    <div class="modal-header" style="padding: 5px;">
+      <h1 class="modal-title fs-5" style="font-size: 15px !important; font-weight: bold !important;"
+          id="staticBackdropLabel">Processando</h1>
+    </div>
+    <div class="modal-body">
+      <div class="progress d-flex align-items-center justify-content-center" role="progressbar"
+           aria-label="Animated striped example" aria-valuenow="100" aria-valuemin="0" style="width: 230px;"
+           aria-valuemax="100">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%">
+          <span class="sr-only">Aguarde Processando...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

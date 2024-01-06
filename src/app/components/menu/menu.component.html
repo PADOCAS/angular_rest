@@ -3,7 +3,7 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/home']">Home</a>
+        <a class="nav-link" [routerLink]="['/home']" (click)="menuHome();" (keydown.enter)="menuHome();">Home</a>
       </li>
 
       <li class="nav-item dropdown">
@@ -11,14 +11,15 @@
           Cadastros
         </a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" [routerLink]="['/usuarioList']">Usuários</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/usuarioList']" (click)="menuUsuarios();"
+                 (keydown.enter)="menuUsuarios();">Usuários</a></li>
           <li><a class="dropdown-item" href="#">Another action</a></li>
           <li><a class="dropdown-item" href="#">Something else here</a></li>
         </ul>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/login']" (click)="sair();">Sair</a>
+        <a class="nav-link" [routerLink]="['/login']" (click)="sair();" (keydown.enter)="sair();">Sair</a>
       </li>
     </ul>
   </div>

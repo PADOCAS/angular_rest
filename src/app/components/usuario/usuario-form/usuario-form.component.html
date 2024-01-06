@@ -21,15 +21,15 @@
              autocomplete="false" maxlength="100">
     </div>
   </div>
-  <div class="row mb-2">
-    <div class="col-md-6">
+  <div class="row g-4" style="max-width: 100%;">
+    <div class="col-md-5">
       <label id="lblLogin" for="txtLogin">Login</label>
       <div>
         <input id="txtLogin" [(ngModel)]="usuario.login" name="login" type="text" class="form-control"
                required="required" autocomplete="false" maxlength="30">
       </div>
     </div>
-    <div class="col-md-6" *ngIf="usuario === null || usuario.id === null">
+    <div class="col-md-5" *ngIf="usuario === null || usuario.id === null">
       <label id="lblSenha" for="txtSenha">Senha</label>
       <div>
         <input id="txtSenha" [(ngModel)]="usuario.senha" name="senha" type="password" class="form-control"
@@ -44,7 +44,7 @@
     <div class="col-md-2">
       <input id="txtCep" [(ngModel)]="usuario.cep" name="cep" type="text" class="form-control" autocomplete="false"
              (blur)="consultaCep();"
-             maxlength="15">
+             maxlength="9">
     </div>
   </div>
   <div class="mb-2">
@@ -75,8 +75,8 @@
     </div>
   </div>
 
-  <div class="row mb-2">
-    <div class="col-md-6">
+  <div class="row g-4" style="max-width: 100%;">
+    <div class="col-md-5">
       <label id="lblLocalidade" for="txtLocalidade">Localidade</label>
       <div>
         <input id="txtLocalidade" [(ngModel)]="usuario.localidade" name="localidade" type="text" class="form-control"
@@ -92,14 +92,14 @@
     </div>
   </div>
 
-  <div class="mb-2">
-    <button type="button" class="btn btn-primary" style="width: 86px; margin-right: 5px;" (click)="salvar();">Salvar
+  <div class="mb-2" style="margin-top: 10px;">
+    <button type="button" class="btn btn-primary" style="width: 86px; margin-right: 5px;" (click)="salvar();" (keydown.enter)="salvar();">Salvar
     </button>
     <button type="button" class="btn btn-secondary" style="width: 86px; margin-right: 5px;"
-            [routerLink]="['/usuario-add']" (click)="novo();">Novo
+            [routerLink]="['/usuario-add']" (click)="novo();" (keydown.enter)="novo();">Novo
     </button>
     <button type="button" class="btn btn-danger" style="width: 86px; margin-right: 5px;"
-            [routerLink]="['/usuarioList']">Cancelar
+            [routerLink]="['/usuarioList']" (click)="cancelar();" (keydown.enter)="cancelar();">Cancelar
     </button>
   </div>
 </form>
