@@ -3,11 +3,12 @@ import {CommonModule} from '@angular/common';
 import {Router, RouterOutlet} from '@angular/router';
 import {AppModule} from "./app.module";
 import {StatusBarComponent} from "./components/util/status-bar/status-bar.component";
+import {ToastComponent} from "./components/util/toast/toast.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, AppModule, StatusBarComponent],
+  imports: [CommonModule, RouterOutlet, AppModule, StatusBarComponent, ToastComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

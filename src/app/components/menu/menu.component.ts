@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import 'bootstrap';
 import {Router, RouterLink} from "@angular/router";
 import {StatusBarService} from "../../service/status-bar.service";
+import {ToastService} from "../../service/toast.service";
 
 @Component({
   selector: 'app-menu',
@@ -14,11 +15,12 @@ import {StatusBarService} from "../../service/status-bar.service";
 })
 export class MenuComponent {
 
-  constructor(private router: Router, private statusBarService: StatusBarService) {
+  constructor(private router: Router, private statusBarService: StatusBarService, private toastService:ToastService) {
   }
 
   public sair(): void {
     this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
 
     setTimeout(() => {
       localStorage.clear();
@@ -30,6 +32,7 @@ export class MenuComponent {
 
   public menuHome(): void {
     this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
 
     setTimeout(() => {
       this.statusBarService.setShowStatusDialog(false);
@@ -38,6 +41,7 @@ export class MenuComponent {
 
   public menuUsuarios(): void {
     this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
 
     setTimeout(() => {
       this.statusBarService.setShowStatusDialog(false);

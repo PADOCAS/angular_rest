@@ -4,6 +4,7 @@ import {NgIf} from "@angular/common";
 import {Usuario} from "../../../model/usuario";
 import {LoginService} from "../../service/login.service";
 import {StatusBarService} from "../../service/status-bar.service";
+import {ToastService} from "../../service/toast.service";
 
 @Component({
   selector: 'app-login',
@@ -31,11 +32,12 @@ export class LoginComponent {
     uf: ""
   }
 
-  constructor(private loginService: LoginService, private statusBarService: StatusBarService) {
+  constructor(private loginService: LoginService, private statusBarService: StatusBarService, private toastService:ToastService) {
   }
 
   public login() {
     this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
 
     setTimeout(() => {
       if (this.validLogin()) {

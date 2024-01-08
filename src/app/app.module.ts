@@ -6,6 +6,8 @@ import {LoginService} from "./service/login.service";
 import {HeaderInterceptorService} from "./service/header-interceptor.service";
 import {UsuarioService} from "./service/usuario.service";
 import {StatusBarService} from "./service/status-bar.service";
+import {NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
+import {ToastService} from "./service/toast.service";
 
 @NgModule({
   declarations: [],
@@ -13,13 +15,16 @@ import {StatusBarService} from "./service/status-bar.service";
     CommonModule,
     FormsModule,
     HttpClientModule,
+    NgbToastModule
   ],
   providers: [
     //Vamos prover o uso do LoginService e também UsuarioService para os componentes do módulo:
     //Vamos prover o StatusBarService para qualquer componente utilizar nosso statusBar
+    //Vamos prover o ToastService para qualquer componente utilizar nosso componente de mensagem para o usuário
     LoginService,
     UsuarioService,
     StatusBarService,
+    ToastService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HeaderInterceptorService,
@@ -29,7 +34,8 @@ import {StatusBarService} from "./service/status-bar.service";
   exports: [
     //Exportar o FormsModule para os componentes filhos enxergarem, sem precisar importar individualmente.
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbToastModule
   ]
 })
 export class AppModule {

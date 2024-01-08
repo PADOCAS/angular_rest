@@ -8,6 +8,7 @@ import {NgClass, NgIf} from "@angular/common";
 import {ViaCep} from "../../../../model/viaCep";
 import {StatusBarComponent} from "../../util/status-bar/status-bar.component";
 import {StatusBarService} from "../../../service/status-bar.service";
+import {ToastService} from "../../../service/toast.service";
 
 @Component({
   selector: 'app-usuario-form',
@@ -26,7 +27,7 @@ import {StatusBarService} from "../../../service/status-bar.service";
 export class UsuarioFormComponent implements OnInit {
   usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null);
 
-  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService) {
+  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService:ToastService) {
   }
 
   ngOnInit(): void {
@@ -44,6 +45,7 @@ export class UsuarioFormComponent implements OnInit {
 
   public consultaCep() {
     this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
 
     setTimeout(() => {
       if (this.usuario !== null
@@ -65,15 +67,19 @@ export class UsuarioFormComponent implements OnInit {
                   this.usuario.localidade = viaCep.localidade;
                   this.usuario.complemento = viaCep.complemento;
                   this.usuario.uf = viaCep.uf;
+                  this.toastService.showInfo(null,"Endereço carregado com sucesso!", 2000);
                 } else {
-                  console.error("Erro ao consultar CEP");
+                  this.limpaInfoEndereco();
+                  this.toastService.showErro(null, "Erro ao consultar CEP!", null);
                 }
               }
             }, error => {
-              console.error("Erro ao consultar CEP: " + error);
+              this.limpaInfoEndereco();
+              this.toastService.showErro("Erro ao consultar CEP", error.message, null);
             });
         } else {
-          console.error("CEP inválido, informe apenas números!");
+          this.limpaInfoEndereco();
+          this.toastService.showWarning(null,"CEP inválido, informe apenas números!", null);
         }
       }
 
@@ -81,8 +87,17 @@ export class UsuarioFormComponent implements OnInit {
     });
   }
 
+  private limpaInfoEndereco() {
+    this.usuario.logradouro = null;
+    this.usuario.bairro = null;
+    this.usuario.localidade = null;
+    this.usuario.complemento = null;
+    this.usuario.uf = null;
+  }
+
   public salvar(): void {
     this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
 
     setTimeout(() => {
       //Todo: Salvar!
@@ -93,6 +108,7 @@ export class UsuarioFormComponent implements OnInit {
 
   public novo(): void {
     this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
 
     setTimeout(() => {
       this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null);
@@ -103,6 +119,7 @@ export class UsuarioFormComponent implements OnInit {
 
   public cancelar(): void {
     this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
 
     setTimeout(() => {
       this.statusBarService.setShowStatusDialog(false);

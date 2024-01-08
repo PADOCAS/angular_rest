@@ -6,6 +6,7 @@ import {MenuComponent} from "../menu/menu.component";
 import {FormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
 import {StatusBarService} from "../../service/status-bar.service";
+import {ToastService} from "../../service/toast.service";
 
 @Component({
   selector: 'app-usuario',
@@ -24,7 +25,7 @@ export class UsuarioComponent implements OnInit {
   usuarios: Usuario[] = [];
   nomePesquisa: string = "";
 
-  constructor(private usuarioService: UsuarioService, private statusBarService: StatusBarService) {
+  constructor(private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService:ToastService) {
   }
 
   ngOnInit(): void {
@@ -42,6 +43,7 @@ export class UsuarioComponent implements OnInit {
   public deleteUsuario(id: number) {
     //StatusDialog globalizado!
     this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
 
     setTimeout(() => {
       this.usuarioService.deleteUsuario(id)
@@ -49,6 +51,8 @@ export class UsuarioComponent implements OnInit {
           console.log("Retorno do método delete: " + data);
           //Após deletar, recarrega a lista de usuário para atualizar a tela!
           this.carregarUsuariosCadastrados();
+        }, error => {
+          this.toastService.showErro("Erro ao excluir Usuário", error.message, null);
         });
       this.statusBarService.setShowStatusDialog(false);
     });
@@ -57,6 +61,7 @@ export class UsuarioComponent implements OnInit {
   public consultaUsuariosPorNome() {
     //StatusDialog globalizado!
     this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
 
     setTimeout(() => {
       if (this.nomePesquisa != null
@@ -65,6 +70,8 @@ export class UsuarioComponent implements OnInit {
         this.usuarioService.getListUsuarioPorNome(this.nomePesquisa)
           .subscribe(data => {
             this.usuarios = data
+          }, error => {
+            this.toastService.showErro("Erro ao consultar Usuário", error.message, null);
           });
       } else {
         this.carregarUsuariosCadastrados();
@@ -77,6 +84,7 @@ export class UsuarioComponent implements OnInit {
   public novo() {
     //StatusDialog globalizado!
     this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
 
     setTimeout(() => {
       //StatusDialog globalizado!
@@ -86,6 +94,7 @@ export class UsuarioComponent implements OnInit {
 
   public editUsuario() {
     this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
 
     setTimeout(() => {
       this.statusBarService.setShowStatusDialog(false);

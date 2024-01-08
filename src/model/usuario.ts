@@ -1,14 +1,14 @@
 export class Usuario {
-  id: number;
-  login: string;
-  senha: string;
-  nome: string;
-  cep: string;
-  bairro: string;
-  localidade: string;
-  logradouro: string;
-  complemento: string;
-  uf: string;
+  id: number | any;
+  login: string | any;
+  senha: string | any;
+  nome: string | any;
+  cep: string | any;
+  bairro: string | any;
+  localidade: string | any;
+  logradouro: string | any;
+  complemento: string | any;
+  uf: string | any;
 
   constructor(id: any, login: any, senha: any, nome: any, cep: any, bairro: any, localidade: any, logradouro: any, complemento: any, uf: any) {
     this.id = id;
