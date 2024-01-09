@@ -9,7 +9,6 @@ import {ViaCep} from "../../../../model/viaCep";
 import {StatusBarComponent} from "../../util/status-bar/status-bar.component";
 import {StatusBarService} from "../../../service/status-bar.service";
 import {ToastService} from "../../../service/toast.service";
-import {delay} from "rxjs";
 
 @Component({
   selector: 'app-usuario-form',

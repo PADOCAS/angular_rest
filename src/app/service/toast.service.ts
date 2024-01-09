@@ -51,7 +51,7 @@ export class ToastService {
   }
 
   public showErro(titulo: string | null, mensagem: string, delay: any, objetoErroApi: ObjetoErroApi | null) {
-    let message = "";
+    let message:string;
 
     if (objetoErroApi !== null
       && objetoErroApi.codigo !== undefined
