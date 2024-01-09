@@ -51,6 +51,7 @@ export class UsuarioComponent implements OnInit {
           console.log("Retorno do método delete: " + data);
           //Após deletar, recarrega a lista de usuário para atualizar a tela!
           this.carregarUsuariosCadastrados();
+          this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 1500);
         }, error => {
           this.toastService.showErro("Erro ao excluir Usuário", error.message, null);
         });
