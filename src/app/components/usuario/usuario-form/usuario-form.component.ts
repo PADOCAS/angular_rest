@@ -107,25 +107,27 @@ export class UsuarioFormComponent implements OnInit {
           this.usuarioService.editarUsuario(this.usuario)
             .subscribe(data => {
               //Limpa o cadastro para deixar pronto para salvar um novo registro se necessário:
-              this.novo();
+              this.instanciaNovoRegistro();
               this.toastService.showSuccesso("Sucesso", "Usuário atualizado com sucesso!", 2000);
+              this.statusBarService.setShowStatusDialog(false);
             }, error => {
               this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);
+              this.statusBarService.setShowStatusDialog(false);
             });
         } else {
           //Novo Registro:
           this.usuarioService.saveUsuario(this.usuario)
             .subscribe(data => {
               //Limpa o cadastro para deixar pronto para salvar um novo registro se necessário:
-              this.novo();
+              this.instanciaNovoRegistro();
               this.toastService.showSuccesso("Sucesso", "Usuário salvo com sucesso!", 2000);
+              this.statusBarService.setShowStatusDialog(false);
             }, error => {
               this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);
+              this.statusBarService.setShowStatusDialog(false);
             });
         }
       }
-
-      this.statusBarService.setShowStatusDialog(false);
     });
   }
 
@@ -137,6 +139,10 @@ export class UsuarioFormComponent implements OnInit {
       this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null);
       this.statusBarService.setShowStatusDialog(false);
     });
+  }
+
+  private instanciaNovoRegistro() {
+    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null);
   }
 
   public cancelar(): void {
