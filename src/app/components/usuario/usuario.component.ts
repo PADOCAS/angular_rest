@@ -51,9 +51,9 @@ export class UsuarioComponent implements OnInit {
           console.log("Retorno do método delete: " + data);
           //Após deletar, recarrega a lista de usuário para atualizar a tela!
           this.carregarUsuariosCadastrados();
-          this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 1500);
+          this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
         }, error => {
-          this.toastService.showErro("Erro ao excluir Usuário", error.message, null);
+          this.toastService.showErro("Erro ao excluir Usuário", error.message, null, error.error);
         });
       this.statusBarService.setShowStatusDialog(false);
     });
@@ -72,7 +72,7 @@ export class UsuarioComponent implements OnInit {
           .subscribe(data => {
             this.usuarios = data
           }, error => {
-            this.toastService.showErro("Erro ao consultar Usuário", error.message, null);
+            this.toastService.showErro("Erro ao consultar Usuário", error.message, null, error.error);
           });
       } else {
         this.carregarUsuariosCadastrados();

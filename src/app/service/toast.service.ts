@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Toast} from "../../model/toast";
+import {ObjetoErroApi} from "../../model/objetoErroApi";
 
 
 @Injectable({
@@ -19,11 +20,17 @@ export class ToastService {
     this.toasts = this.toasts.filter((t) => t !== toast);
   }
 
-  public showInfo(titulo: string | null, mensagem: string, delay:any) {
-    this.show({classname: 'bg-info text-light', titulo: titulo === null ? "Info" : titulo, mensagem: mensagem, tipo: "info", delay:delay});
+  public showInfo(titulo: string | null, mensagem: string, delay: any) {
+    this.show({
+      classname: 'bg-info text-light',
+      titulo: titulo === null ? "Info" : titulo,
+      mensagem: mensagem,
+      tipo: "info",
+      delay: delay
+    });
   }
 
-  public showSuccesso(titulo: string | null, mensagem: string, delay:any) {
+  public showSuccesso(titulo: string | null, mensagem: string, delay: any) {
     this.show({
       classname: 'bg-success text-light',
       titulo: titulo === null ? "Sucesso" : titulo,
@@ -33,7 +40,7 @@ export class ToastService {
     });
   }
 
-  public showWarning(titulo: string | null, mensagem: string, delay:any) {
+  public showWarning(titulo: string | null, mensagem: string, delay: any) {
     this.show({
       classname: 'bg-warning text-light',
       titulo: titulo === null ? "Atenção" : titulo,
@@ -43,11 +50,23 @@ export class ToastService {
     });
   }
 
-  public showErro(titulo: string | null, mensagem: string, delay:any) {
+  public showErro(titulo: string | null, mensagem: string, delay: any, objetoErroApi: ObjetoErroApi | null) {
+    let message = "";
+
+    if (objetoErroApi !== null
+      && objetoErroApi.codigo !== undefined
+      && objetoErroApi.codigo !== null
+      && objetoErroApi.erro !== undefined
+      && objetoErroApi.erro !== null) {
+      message = "Exceção: ".concat(objetoErroApi.excecao).concat(", \nCódigo: ").concat(objetoErroApi.codigo).concat(", \nErro: ").concat(objetoErroApi.erro);
+    } else {
+      message = mensagem;
+    }
+
     this.show({
       classname: 'bg-danger text-light',
       titulo: titulo === null ? "Erro" : titulo,
-      mensagem: mensagem,
+      mensagem: message,
       tipo: "erro",
       delay: delay
     });

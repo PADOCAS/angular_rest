@@ -2,6 +2,7 @@ ngb-toast {
   width: 450px;
 }
 
-p {
+.divMessageToast {
+  white-space: pre-line;
   font-size: 13px;
 }

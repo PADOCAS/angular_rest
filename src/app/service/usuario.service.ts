@@ -44,8 +44,28 @@ export class UsuarioService {
     return this.http.get<Usuario>(Constants.baseUrl + id, {headers});
   }
 
+  /**
+   * Consulta API VIACEP para buscar o cep informado
+   * @param cep
+   */
   public getConsultaCep(cep:string):Observable<any> {
     //Consulta CEP API VIACEP - JSON
     return this.http.get<ViaCep>(Constants.viaCepUrl + cep + "/json/");
+  }
+
+  /**
+   * Salvar Usuario (POST)
+   * @param usuario
+   */
+  public saveUsuario(usuario:Usuario):Observable<any> {
+    return this.http.post<Usuario>(Constants.baseUrl, usuario);
+  }
+
+  /**
+   * Editar Usuario (PUT)
+   * @param usuario
+   */
+  public editarUsuario(usuario:Usuario):Observable<any> {
+    return this.http.put<Usuario>(Constants.baseUrl, usuario);
   }
 }

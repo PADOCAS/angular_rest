@@ -9,6 +9,7 @@ import {ViaCep} from "../../../../model/viaCep";
 import {StatusBarComponent} from "../../util/status-bar/status-bar.component";
 import {StatusBarService} from "../../../service/status-bar.service";
 import {ToastService} from "../../../service/toast.service";
+import {delay} from "rxjs";
 
 @Component({
   selector: 'app-usuario-form',
@@ -27,7 +28,7 @@ import {ToastService} from "../../../service/toast.service";
 export class UsuarioFormComponent implements OnInit {
   usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null);
 
-  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService:ToastService) {
+  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService) {
   }
 
   ngOnInit(): void {
@@ -67,19 +68,19 @@ export class UsuarioFormComponent implements OnInit {
                   this.usuario.localidade = viaCep.localidade;
                   this.usuario.complemento = viaCep.complemento;
                   this.usuario.uf = viaCep.uf;
-                  this.toastService.showInfo(null,"Endereço carregado com sucesso!", 2000);
+                  this.toastService.showInfo(null, "Endereço carregado com sucesso!", 2000);
                 } else {
                   this.limpaInfoEndereco();
-                  this.toastService.showErro(null, "Erro ao consultar CEP!", null);
+                  this.toastService.showErro(null, "Erro ao consultar CEP!", null, null);
                 }
               }
             }, error => {
               this.limpaInfoEndereco();
-              this.toastService.showErro("Erro ao consultar CEP", error.message, null);
+              this.toastService.showErro("Erro ao consultar CEP", error.message + "\nInforme um CEP válido e tente novamente.", null, error.error);
             });
         } else {
           this.limpaInfoEndereco();
-          this.toastService.showWarning(null,"CEP inválido, informe apenas números!", null);
+          this.toastService.showWarning(null, "CEP inválido, informe apenas números!", null);
         }
       }
 
@@ -100,7 +101,30 @@ export class UsuarioFormComponent implements OnInit {
     this.toastService.limparMensagens();
 
     setTimeout(() => {
-      //Todo: Salvar!
+      if (this.usuario !== null) {
+        if (this.usuario.id !== null
+          && this.usuario.id.toString().trim() !== null) {
+          //Atualizando Registro:
+          this.usuarioService.editarUsuario(this.usuario)
+            .subscribe(data => {
+              //Limpa o cadastro para deixar pronto para salvar um novo registro se necessário:
+              this.novo();
+              this.toastService.showSuccesso("Sucesso", "Usuário atualizado com sucesso!", 2000);
+            }, error => {
+              this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);
+            });
+        } else {
+          //Novo Registro:
+          this.usuarioService.saveUsuario(this.usuario)
+            .subscribe(data => {
+              //Limpa o cadastro para deixar pronto para salvar um novo registro se necessário:
+              this.novo();
+              this.toastService.showSuccesso("Sucesso", "Usuário salvo com sucesso!", 2000);
+            }, error => {
+              this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);
+            });
+        }
+      }
 
       this.statusBarService.setShowStatusDialog(false);
     });
@@ -112,7 +136,6 @@ export class UsuarioFormComponent implements OnInit {
 
     setTimeout(() => {
       this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null);
-
       this.statusBarService.setShowStatusDialog(false);
     });
   }

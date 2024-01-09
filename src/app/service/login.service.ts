@@ -34,7 +34,7 @@ export class LoginService {
         error => {
           // console.error(`Acesso Negado!\n\nExceção: ${error.error.excecao},\nCódigo: ${error.error.codigo},\nErro: ${error.error.erro}`);
           // alert(`Acesso Negado!\n\nExceção: ${error.error.excecao},\nCódigo: ${error.error.codigo},\nErro: ${error.error.erro}`);
-          this.toastService.showErro("Acesso Negado!", "Exceção: ".concat(error.error.excecao).concat(",\nCódigo: ").concat(error.error.codigo).concat(",\nErro: ").concat(error.error.erro), null);
+          this.toastService.showErro("Acesso Negado!", error.message, null, error.error);
         });
   }
 }
