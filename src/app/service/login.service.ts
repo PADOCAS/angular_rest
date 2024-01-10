@@ -4,13 +4,14 @@ import {Usuario} from "../../model/usuario";
 import {Constants} from "../../util/constants";
 import {Router} from "@angular/router";
 import {ToastService} from "./toast.service";
+import {StatusBarService} from "./status-bar.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private http: HttpClient, private router:Router, private toastService:ToastService) {
+  constructor(private http: HttpClient, private router:Router, private statusBarService: StatusBarService, private toastService:ToastService) {
   }
 
   public login(usuario: Usuario) {
@@ -30,11 +31,13 @@ export class LoginService {
           // console.log("Token: " + localStorage.getItem("token")); //Pegando o token armazenado no navegador
           //Redirecionando rota para o componente HomeComponent
           this.router.navigate(["home"]);
+          this.statusBarService.setShowStatusDialog(false);
         },
         error => {
           // console.error(`Acesso Negado!\n\nExceção: ${error.error.excecao},\nCódigo: ${error.error.codigo},\nErro: ${error.error.erro}`);
           // alert(`Acesso Negado!\n\nExceção: ${error.error.excecao},\nCódigo: ${error.error.codigo},\nErro: ${error.error.erro}`);
           this.toastService.showErro("Acesso Negado!", error.message, null, error.error);
+          this.statusBarService.setShowStatusDialog(false);
         });
   }
 }

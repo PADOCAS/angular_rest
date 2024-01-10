@@ -53,6 +53,7 @@
     </div>
     <div class="col-sm-12">
       <input id="txtLogradouro" [(ngModel)]="usuario.logradouro" name="logradouro" type="text" class="form-control"
+             (ngModelChange)="usuario.logradouro = $event.toUpperCase()"
              autocomplete="false" maxlength="100">
     </div>
   </div>
@@ -62,6 +63,7 @@
     </div>
     <div class="col-sm-12">
       <input id="txtComplemento" [(ngModel)]="usuario.complemento" name="complemento" type="text" class="form-control"
+             (ngModelChange)="usuario.complemento = $event.toUpperCase()"
              autocomplete="false" maxlength="100">
     </div>
   </div>
@@ -71,6 +73,7 @@
     </div>
     <div class="col-sm-12">
       <input id="txtBairro" [(ngModel)]="usuario.bairro" name="bairro" type="text" class="form-control"
+             (ngModelChange)="usuario.bairro = $event.toUpperCase()"
              autocomplete="false" maxlength="60">
     </div>
   </div>
@@ -80,6 +83,7 @@
       <label id="lblLocalidade" for="txtLocalidade">Localidade</label>
       <div>
         <input id="txtLocalidade" [(ngModel)]="usuario.localidade" name="localidade" type="text" class="form-control"
+               (ngModelChange)="usuario.localidade = $event.toUpperCase()"
                autocomplete="false" maxlength="50">
       </div>
     </div>
@@ -87,6 +91,7 @@
       <label id="lblUf" for="txtUf">UF</label>
       <div>
         <input id="txtUf" [(ngModel)]="usuario.uf" name="uf" type="text" class="form-control" autocomplete="false"
+               (ngModelChange)="usuario.uf = $event.toUpperCase()"
                maxlength="2">
       </div>
     </div>

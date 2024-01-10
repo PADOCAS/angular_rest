@@ -58,32 +58,44 @@ export class UsuarioFormComponent implements OnInit {
 
           this.usuarioService.getConsultaCep(this.usuario.cep)
             .subscribe(data => {
-              if (data !== null) {
+              if (data !== null
+                && ((data.erro === undefined)
+                  || (data.erro === null)
+                  || (data.erro === false))) {
+                //Caso digite um CEP que não exista na base, porem com digitos tudo certinho ele retorna um atributo erro = true!
+                //Então vamos retornar uma mensagem nesse caso avisando o usuário que o CEP não foi encontrado! (está no else)
                 viaCep = data;
 
                 if (viaCep !== null) {
-                  this.usuario.logradouro = viaCep.logradouro;
-                  this.usuario.bairro = viaCep.bairro;
-                  this.usuario.localidade = viaCep.localidade;
-                  this.usuario.complemento = viaCep.complemento;
-                  this.usuario.uf = viaCep.uf;
+                  this.usuario.logradouro = viaCep.logradouro !== null ? viaCep.logradouro.toUpperCase() : viaCep.logradouro;
+                  this.usuario.bairro = viaCep.bairro !== null ? viaCep.bairro.toUpperCase() : viaCep.bairro;
+                  this.usuario.localidade = viaCep.localidade !== null ? viaCep.localidade.toUpperCase() : viaCep.localidade;
+                  this.usuario.complemento = viaCep.complemento !== null ? viaCep.complemento.toUpperCase() : viaCep.complemento;
+                  this.usuario.uf = viaCep.uf !== null ? viaCep.uf.toUpperCase() : viaCep.uf;
                   this.toastService.showInfo(null, "Endereço carregado com sucesso!", 2000);
                 } else {
                   this.limpaInfoEndereco();
                   this.toastService.showErro(null, "Erro ao consultar CEP!", null, null);
                 }
+              } else {
+                this.limpaInfoEndereco();
+                this.toastService.showErro(null, "CEP não encontrado.\nInforme um CEP válido e tente novamente.", null, null);
               }
+
+              this.statusBarService.setShowStatusDialog(false);
             }, error => {
               this.limpaInfoEndereco();
               this.toastService.showErro("Erro ao consultar CEP", error.message + "\nInforme um CEP válido e tente novamente.", null, error.error);
+              this.statusBarService.setShowStatusDialog(false);
             });
         } else {
           this.limpaInfoEndereco();
           this.toastService.showWarning(null, "CEP inválido, informe apenas números!", null);
+          this.statusBarService.setShowStatusDialog(false);
         }
+      } else {
+        this.statusBarService.setShowStatusDialog(false);
       }
-
-      this.statusBarService.setShowStatusDialog(false);
     });
   }
 

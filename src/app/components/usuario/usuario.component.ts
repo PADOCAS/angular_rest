@@ -52,10 +52,11 @@ export class UsuarioComponent implements OnInit {
           //Após deletar, recarrega a lista de usuário para atualizar a tela!
           this.carregarUsuariosCadastrados();
           this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
+          this.statusBarService.setShowStatusDialog(false);
         }, error => {
           this.toastService.showErro("Erro ao excluir Usuário", error.message, null, error.error);
+          this.statusBarService.setShowStatusDialog(false);
         });
-      this.statusBarService.setShowStatusDialog(false);
     });
   }
 
@@ -70,15 +71,16 @@ export class UsuarioComponent implements OnInit {
         //Só utiliza a pesquisa por Nome se algo for digitado em tela!
         this.usuarioService.getListUsuarioPorNome(this.nomePesquisa)
           .subscribe(data => {
-            this.usuarios = data
+            this.usuarios = data;
+            this.statusBarService.setShowStatusDialog(false);
           }, error => {
             this.toastService.showErro("Erro ao consultar Usuário", error.message, null, error.error);
+            this.statusBarService.setShowStatusDialog(false);
           });
       } else {
         this.carregarUsuariosCadastrados();
+        this.statusBarService.setShowStatusDialog(false);
       }
-      //StatusDialog globalizado!
-      this.statusBarService.setShowStatusDialog(false);
     });
   }
 
