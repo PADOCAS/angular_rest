@@ -14,25 +14,31 @@
   </div>
   <div class="mb-2">
     <div class="col-sm-1">
+      <span style="color: red; font-weight: bold;" *ngIf="nomeValidate.invalid">* </span>
       <label id="lblNome" for="txtNome">Nome</label>
     </div>
     <div class="col-sm-12">
       <input id="txtNome" [(ngModel)]="usuario.nome" name="nome" type="text" class="form-control" required="required"
+             #nomeValidate="ngModel"
              autocomplete="false" maxlength="100">
     </div>
   </div>
   <div class="row g-4" style="max-width: 100%;">
     <div class="col-md-5">
+      <span style="color: red; font-weight: bold;" *ngIf="loginValidate.invalid">* </span>
       <label id="lblLogin" for="txtLogin">Login</label>
       <div>
         <input id="txtLogin" [(ngModel)]="usuario.login" name="login" type="text" class="form-control"
+               #loginValidate="ngModel"
                required="required" autocomplete="false" maxlength="30">
       </div>
     </div>
     <div class="col-md-5" *ngIf="usuario === null || usuario.id === null">
+      <span style="color: red; font-weight: bold;" *ngIf="senhaValidate.invalid">* </span>
       <label id="lblSenha" for="txtSenha">Senha</label>
       <div>
         <input id="txtSenha" [(ngModel)]="usuario.senha" name="senha" type="password" class="form-control"
+               #senhaValidate="ngModel"
                required="required" autocomplete="false" maxlength="100">
       </div>
     </div>
