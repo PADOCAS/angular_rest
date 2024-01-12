@@ -8,6 +8,7 @@ import {Observable} from "rxjs";
 export class RouterGuard implements CanActivate {
 
   constructor(private router: Router) {
+    //Está dando conflito de dependência caso utilize o UsuarioService aqui nessa classe, fica em circulo de dependência... como não vamos utilizar o UsuarioService aqui retirei o import
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
