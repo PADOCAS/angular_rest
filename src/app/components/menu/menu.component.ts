@@ -24,7 +24,7 @@ export class MenuComponent {
 
     setTimeout(() => {
       localStorage.clear();
-      //this.router.navigate(["login"]); //Feito direto em tela o redirecionamento
+      this.router.navigate(["login"]);
 
       this.statusBarService.setShowStatusDialog(false);
     });
