@@ -4,14 +4,15 @@ import {HomeComponent} from "./components/home/home.component";
 import {LoginComponent} from "./components/login/login.component";
 import {UsuarioComponent} from "./components/usuario/usuario.component";
 import {UsuarioFormComponent} from "./components/usuario/usuario-form/usuario-form.component";
+import {RouterGuard} from "./guard/router.guard";
 
 export const routes: Routes = [
-  {path: "usuario-add", component: UsuarioFormComponent}, //Cadastro de Usuário - adicionar novo
-  {path: "usuario-edit/:id", component: UsuarioFormComponent}, //Cadastro de usuário - editar recebendo parâmetro
-  {path: "usuarioList", component: UsuarioComponent},
-  {path: "home", component: HomeComponent},
-  {path: "login", component: LoginComponent},
-  {path: "", component: LoginComponent}
+  {path: "usuario-add", component: UsuarioFormComponent, canActivate: [RouterGuard]}, //Cadastro de Usuário - adicionar novo //Definimos o RouterGuard para checar token antes de ir para rota!
+  {path: "usuario-edit/:id", component: UsuarioFormComponent, canActivate: [RouterGuard]}, //Cadastro de usuário - editar recebendo parâmetro //Definimos o RouterGuard para checar token antes de ir para rota!
+  {path: "usuarioList", component: UsuarioComponent, canActivate: [RouterGuard]}, //Definimos o RouterGuard para checar token antes de ir para rota!
+  {path: "home", component: HomeComponent, canActivate: [RouterGuard]}, //Definimos o RouterGuard para checar token antes de ir para rota!
+  {path: "login", component: LoginComponent}, //Essas são acessadas sem precisar do token ainda, liberadas! (não precisa do guard)
+  {path: "", component: LoginComponent} //Essas são acessadas sem precisar do token ainda, liberadas! (não precisa do guard)
 ];
 
 @NgModule({

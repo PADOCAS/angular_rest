@@ -8,6 +8,7 @@ import {UsuarioService} from "./service/usuario.service";
 import {StatusBarService} from "./service/status-bar.service";
 import {NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
 import {ToastService} from "./service/toast.service";
+import {RouterGuard} from "./guard/router.guard";
 
 @NgModule({
   declarations: [],
@@ -29,7 +30,8 @@ import {ToastService} from "./service/toast.service";
       provide: HTTP_INTERCEPTORS,
       useClass: HeaderInterceptorService,
       multi: true
-    }
+    },
+    RouterGuard,
   ],
   exports: [
     //Exportar o FormsModule para os componentes filhos enxergarem, sem precisar importar individualmente.
