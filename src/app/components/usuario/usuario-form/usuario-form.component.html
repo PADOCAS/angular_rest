@@ -19,6 +19,7 @@
     </div>
     <div class="col-sm-12">
       <input id="txtNome" [(ngModel)]="usuario.nome" name="nome" type="text" class="form-control" required="required"
+             (ngModelChange)="usuario.nome = $event.toUpperCase()"
              #nomeValidate="ngModel"
              autocomplete="false" maxlength="100">
     </div>

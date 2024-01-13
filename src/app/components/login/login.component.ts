@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
 
     setTimeout(() => {
       if (this.validLogin()) {
-        console.log("Teste Login: " + this.usuario.login + " Senha: " + this.usuario.senha);
+        // console.log("Teste Login: " + this.usuario.login + " Senha: " + this.usuario.senha);
         this.loginService.login(this.usuario);
       } else {
         this.statusBarService.setShowStatusDialog(false);

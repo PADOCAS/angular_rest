@@ -48,7 +48,7 @@ export class UsuarioComponent implements OnInit {
     setTimeout(() => {
       this.usuarioService.deleteUsuario(id)
         .subscribe(data => {
-          console.log("Retorno do método delete: " + data);
+          // console.log("Retorno do método delete: " + data);
           //Após deletar, recarrega a lista de usuário para atualizar a tela!
           this.carregarUsuariosCadastrados();
           this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
