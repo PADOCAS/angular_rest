@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuComponent} from "../../menu/menu.component";
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {Usuario} from "../../../../model/usuario";
 import {UsuarioService} from "../../../service/usuario.service";
 import {FormsModule} from "@angular/forms";
@@ -27,7 +27,7 @@ import {ToastService} from "../../../service/toast.service";
 export class UsuarioFormComponent implements OnInit {
   usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null);
 
-  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService) {
+  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router:Router) {
   }
 
   ngOnInit(): void {
@@ -123,7 +123,14 @@ export class UsuarioFormComponent implements OnInit {
               this.toastService.showSuccesso("Sucesso", "Usuário atualizado com sucesso!", 2000);
               this.statusBarService.setShowStatusDialog(false);
             }, error => {
-              this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);
+              if(error.status !== null
+                  && error.status === 403) {
+                //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
+                this.toastService.showErro("Erro ao salvar Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
+                this.router.navigate(["login"]);
+              } else {
+                this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);
+              }
               this.statusBarService.setShowStatusDialog(false);
             });
         } else {
@@ -135,7 +142,15 @@ export class UsuarioFormComponent implements OnInit {
               this.toastService.showSuccesso("Sucesso", "Usuário salvo com sucesso!", 2000);
               this.statusBarService.setShowStatusDialog(false);
             }, error => {
-              this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);
+              if(error.status !== null
+                && error.status === 403) {
+                //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
+                this.toastService.showErro("Erro ao salvar Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
+                this.router.navigate(["login"]);
+              } else {
+                this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);
+              }
+
               this.statusBarService.setShowStatusDialog(false);
             });
         }

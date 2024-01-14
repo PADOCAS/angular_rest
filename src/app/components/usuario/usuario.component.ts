@@ -4,7 +4,7 @@ import {Usuario} from "../../../model/usuario";
 import {NgForOf} from "@angular/common";
 import {MenuComponent} from "../menu/menu.component";
 import {FormsModule} from "@angular/forms";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {StatusBarService} from "../../service/status-bar.service";
 import {ToastService} from "../../service/toast.service";
 
@@ -25,7 +25,7 @@ export class UsuarioComponent implements OnInit {
   usuarios: Usuario[] = [];
   nomePesquisa: string = "";
 
-  constructor(private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService:ToastService) {
+  constructor(private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService:ToastService, private router:Router) {
   }
 
   ngOnInit(): void {
@@ -54,7 +54,15 @@ export class UsuarioComponent implements OnInit {
           this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
           this.statusBarService.setShowStatusDialog(false);
         }, error => {
-          this.toastService.showErro("Erro ao excluir Usuário", error.message, null, error.error);
+          if(error.status !== null
+            && error.status === 403) {
+            //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
+            this.toastService.showErro("Erro ao excluir Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
+            this.router.navigate(["login"]);
+          } else {
+            this.toastService.showErro("Erro ao excluir Usuário", error.message, null, error.error);
+          }
+
           this.statusBarService.setShowStatusDialog(false);
         });
     });

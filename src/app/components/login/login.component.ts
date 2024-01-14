@@ -48,6 +48,18 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  public loginEnterSenha() {
+    if (this.validLogin()) {
+      this.statusBarService.setShowStatusDialog(true);
+      this.toastService.limparMensagens();
+
+      setTimeout(() => {
+        //StatusBarService já é fechado dentro do loginService após concluir a validação
+        this.loginService.login(this.usuario);
+      });
+    }
+  }
+
   public login() {
     this.statusBarService.setShowStatusDialog(true);
     this.toastService.limparMensagens();
@@ -55,6 +67,7 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       if (this.validLogin()) {
         // console.log("Teste Login: " + this.usuario.login + " Senha: " + this.usuario.senha);
+        //StatusBarService já é fechado dentro do loginService após concluir a validação
         this.loginService.login(this.usuario);
       } else {
         this.statusBarService.setShowStatusDialog(false);

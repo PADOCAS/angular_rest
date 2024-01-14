@@ -19,7 +19,9 @@
 
   <div class="mb-2" style="width: 500px;">
     <label id="lblSenha" for="txtSenha">Senha</label>
-    <input id="txtSenha" type="password" class="form-control" [(ngModel)]="usuario.senha" #userSenha="ngModel" name="senha" maxlength="50" required>
+    <input id="txtSenha" type="password" class="form-control"
+           (keydown.enter)="loginEnterSenha();"
+           [(ngModel)]="usuario.senha" #userSenha="ngModel" name="senha" maxlength="50" required>
     <div *ngIf="userSenha.invalid && userSenha.touched" class="alert alert-danger" >
       Senha deve ser informada
     </div>
