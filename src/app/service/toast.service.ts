@@ -58,7 +58,7 @@ export class ToastService {
       && objetoErroApi.codigo !== null
       && objetoErroApi.erro !== undefined
       && objetoErroApi.erro !== null) {
-      message = "Exceção: ".concat(objetoErroApi.excecao).concat(", \nCódigo: ").concat(objetoErroApi.codigo).concat(", \nErro: ").concat(objetoErroApi.erro);
+      message = "Exceção: ".concat(objetoErroApi.excecao).concat("\nCódigo: ").concat(objetoErroApi.codigo).concat("\nErro: ").concat(objetoErroApi.erro);
     } else {
       message = mensagem;
     }

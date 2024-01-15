@@ -25,7 +25,7 @@ export class UsuarioComponent implements OnInit {
   usuarios: Usuario[] = [];
   nomePesquisa: string = "";
 
-  constructor(private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService:ToastService, private router:Router) {
+  constructor(private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -41,31 +41,34 @@ export class UsuarioComponent implements OnInit {
   }
 
   public deleteUsuario(id: number) {
-    //StatusDialog globalizado!
-    this.statusBarService.setShowStatusDialog(true);
-    this.toastService.limparMensagens();
+    //Mensagem de confirmação para realizar a exclusão do registro:
+    if (confirm("Confirma a exclusão do Usuário?")) {
+      //StatusDialog globalizado!
+      this.statusBarService.setShowStatusDialog(true);
+      this.toastService.limparMensagens();
 
-    setTimeout(() => {
-      this.usuarioService.deleteUsuario(id)
-        .subscribe(data => {
-          // console.log("Retorno do método delete: " + data);
-          //Após deletar, recarrega a lista de usuário para atualizar a tela!
-          this.carregarUsuariosCadastrados();
-          this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
-          this.statusBarService.setShowStatusDialog(false);
-        }, error => {
-          if(error.status !== null
-            && error.status === 403) {
-            //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
-            this.toastService.showErro("Erro ao excluir Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
-            this.router.navigate(["login"]);
-          } else {
-            this.toastService.showErro("Erro ao excluir Usuário", error.message, null, error.error);
-          }
+      setTimeout(() => {
+        this.usuarioService.deleteUsuario(id)
+          .subscribe(data => {
+            // console.log("Retorno do método delete: " + data);
+            //Após deletar, recarrega a lista de usuário para atualizar a tela!
+            this.carregarUsuariosCadastrados();
+            this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
+            this.statusBarService.setShowStatusDialog(false);
+          }, error => {
+            if (error.status !== null
+              && error.status === 403) {
+              //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
+              this.toastService.showErro("Erro ao excluir Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
+              this.router.navigate(["login"]);
+            } else {
+              this.toastService.showErro("Erro ao excluir Usuário", error.message, null, error.error);
+            }
 
-          this.statusBarService.setShowStatusDialog(false);
-        });
-    });
+            this.statusBarService.setShowStatusDialog(false);
+          });
+      });
+    }
   }
 
   public consultaUsuariosPorNome() {
