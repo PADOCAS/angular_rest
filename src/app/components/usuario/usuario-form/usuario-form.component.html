@@ -1,6 +1,24 @@
 <app-menu></app-menu>
 <p>Cadastro de Usuário</p>
 
+<div style="padding-left: 10px; padding-right: 10px;">
+  <div class="card text-start">
+    <div class="card-header">
+      <div class="mb-2" style="margin-bottom: 0 !important;">
+        <button type="button" class="btn btn-primary" style="width: 90px; margin-right: 5px;" (click)="salvar();"
+                (keydown.enter)="salvar();">Salvar
+        </button>
+        <button type="button" class="btn btn-secondary" style="width: 90px; margin-right: 5px;"
+                [routerLink]="['/usuario-add']" (click)="novo();" (keydown.enter)="novo();">Novo
+        </button>
+        <button type="button" class="btn btn-danger" style="width: 90px; margin-right: 5px;"
+                [routerLink]="['/usuarioList']" (click)="cancelar();" (keydown.enter)="cancelar();">Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <form style="padding: 10px;">
   <div class="mb-2">
     <div class="col-sm-1">
@@ -104,14 +122,50 @@
     </div>
   </div>
 
-  <div class="mb-2" style="margin-top: 10px;">
-    <button type="button" class="btn btn-primary" style="width: 86px; margin-right: 5px;" (click)="salvar();" (keydown.enter)="salvar();">Salvar
-    </button>
-    <button type="button" class="btn btn-secondary" style="width: 86px; margin-right: 5px;"
-            [routerLink]="['/usuario-add']" (click)="novo();" (keydown.enter)="novo();">Novo
-    </button>
-    <button type="button" class="btn btn-danger" style="width: 86px; margin-right: 5px;"
-            [routerLink]="['/usuarioList']" (click)="cancelar();" (keydown.enter)="cancelar();">Cancelar
-    </button>
+  <div class="card text-center" style="margin-top: 10px;">
+    <div class="card-header" style="font-weight: bold; text-decoration: underline;">
+      Telefones para contato
+    </div>
+    <div class="card-body">
+      <form class="row g-3" style="padding: 10px; width: 100%;">
+        <div class="col-auto">
+          <input id="txtNumeroTelPesquisa" name="numeroTelPesquisa" type="text" class="form-control"
+                 style="width: 300px;"
+                 maxlength="14" placeholder="Pesquisa Telefone por Número">
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-primary mb-2">Pesquisar</button>
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-secondary mb-2">Novo</button>
+        </div>
+      </form>
+
+      <table class="table table-striped">
+        <caption>{{ usuario.listTelefone == null || usuario.listTelefone.length == 0 ? 'Nenhum Telefone cadastrado' : usuario.listTelefone.length + ' telefone(s) cadastrado(s).' }}</caption>
+        <thead>
+        <th scope="col">ID</th>
+        <th scope="col">Número</th>
+        <th scope="col">Tipo</th>
+        <th scope="col" style="text-align: center;">Editar</th>
+        <th scope="col" style="text-align: center;">Excluir</th>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let tel of usuario.listTelefone">
+          <td>{{ tel.id }}</td>
+          <td>{{ tel.numero }}</td>
+          <td>{{ tel.tipo }}</td>
+          <!-- Editar vai ficar em rota abrindo outra tela (passa parâmetro id para rota) -->
+          <td style="text-align: center;">
+            <button class="btn btn-warning">Editar</button>
+          </td>
+          <td style="text-align: center;">
+            <button class="btn btn-primary">Excluir</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </form>

@@ -21,16 +21,17 @@ export class LoginComponent implements OnInit {
   title = 'Angular-REST';
   //Vamos criar um objeto Usuario, como 2 atributos, similar ao que vamos enviar para a API depois!
   usuario: Usuario = {
-    id: 0,
-    login: "",
-    senha: "",
-    nome: "",
-    cep: "",
-    bairro: "",
-    localidade: "",
-    logradouro: "",
-    complemento: "",
-    uf: ""
+    id: null,
+    login: null,
+    senha: null,
+    nome: null,
+    cep: null,
+    bairro: null,
+    localidade: null,
+    logradouro: null,
+    complemento: null,
+    uf: null,
+    listTelefone: null
   }
 
   constructor(private loginService: LoginService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router) {

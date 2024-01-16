@@ -4,7 +4,7 @@ import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {Usuario} from "../../../../model/usuario";
 import {UsuarioService} from "../../../service/usuario.service";
 import {FormsModule} from "@angular/forms";
-import {NgClass, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {ViaCep} from "../../../../model/viaCep";
 import {StatusBarComponent} from "../../util/status-bar/status-bar.component";
 import {StatusBarService} from "../../../service/status-bar.service";
@@ -19,13 +19,14 @@ import {ToastService} from "../../../service/toast.service";
     FormsModule,
     NgIf,
     NgClass,
-    StatusBarComponent
+    StatusBarComponent,
+    NgForOf
   ],
   templateUrl: './usuario-form.component.html',
   styleUrl: './usuario-form.component.css'
 })
 export class UsuarioFormComponent implements OnInit {
-  usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null);
+  usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null);
 
   constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router:Router) {
   }
@@ -38,7 +39,9 @@ export class UsuarioFormComponent implements OnInit {
       //Alimentando nossa variável com Usuário
       this.usuarioService.getUsuario(Number(this.routeActive.snapshot.paramMap.get('id')))
         .subscribe(data => {
+          console.log(data);
           this.usuario = data;
+          console.log(this.usuario);
         });
     }
   }
@@ -163,13 +166,13 @@ export class UsuarioFormComponent implements OnInit {
     this.toastService.limparMensagens();
 
     setTimeout(() => {
-      this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null);
+      this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null);
       this.statusBarService.setShowStatusDialog(false);
     });
   }
 
   private instanciaNovoRegistro() {
-    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null);
+    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null);
   }
 
   public cancelar(): void {
