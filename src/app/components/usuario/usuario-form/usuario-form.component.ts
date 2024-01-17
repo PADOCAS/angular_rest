@@ -26,7 +26,7 @@ import {ToastService} from "../../../service/toast.service";
   styleUrl: './usuario-form.component.css'
 })
 export class UsuarioFormComponent implements OnInit {
-  usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null);
+  usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null);
 
   constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router:Router) {
   }
@@ -166,13 +166,13 @@ export class UsuarioFormComponent implements OnInit {
     this.toastService.limparMensagens();
 
     setTimeout(() => {
-      this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null);
+      this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null);
       this.statusBarService.setShowStatusDialog(false);
     });
   }
 
   private instanciaNovoRegistro() {
-    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null);
+    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   public cancelar(): void {

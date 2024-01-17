@@ -31,7 +31,8 @@ export class LoginComponent implements OnInit {
     logradouro: null,
     complemento: null,
     uf: null,
-    listTelefone: null
+    listTelefone: null,
+    listRole: null
   }
 
   constructor(private loginService: LoginService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router) {

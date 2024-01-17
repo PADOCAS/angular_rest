@@ -1,4 +1,5 @@
 import {Telefone} from "./telefone";
+import {Role} from "./role";
 
 export class Usuario {
   id: number | any;
@@ -12,8 +13,9 @@ export class Usuario {
   complemento: string | any;
   uf: string | any;
   listTelefone: Array<Telefone> | any;
+  listRole: Array<Role> | any;
 
-  constructor(id: any, login: any, senha: any, nome: any, cep: any, bairro: any, localidade: any, logradouro: any, complemento: any, uf: any, listTelefone: any) {
+  constructor(id: any, login: any, senha: any, nome: any, cep: any, bairro: any, localidade: any, logradouro: any, complemento: any, uf: any, listTelefone: any, listRole: any) {
     this.id = id;
     this.login = login;
     this.senha = senha;
@@ -25,5 +27,6 @@ export class Usuario {
     this.complemento = complemento;
     this.uf = uf;
     this.listTelefone = listTelefone;
+    this.listRole = listRole;
   }
 }
