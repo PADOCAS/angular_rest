@@ -9,6 +9,7 @@ import {ViaCep} from "../../../../model/viaCep";
 import {StatusBarComponent} from "../../util/status-bar/status-bar.component";
 import {StatusBarService} from "../../../service/status-bar.service";
 import {ToastService} from "../../../service/toast.service";
+import {Telefone} from "../../../../model/telefone";
 
 @Component({
   selector: 'app-usuario-form',
@@ -28,7 +29,7 @@ import {ToastService} from "../../../service/toast.service";
 export class UsuarioFormComponent implements OnInit {
   usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null);
 
-  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router:Router) {
+  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -126,8 +127,8 @@ export class UsuarioFormComponent implements OnInit {
               this.toastService.showSuccesso("Sucesso", "Usuário atualizado com sucesso!", 2000);
               this.statusBarService.setShowStatusDialog(false);
             }, error => {
-              if(error.status !== null
-                  && error.status === 403) {
+              if (error.status !== null
+                && error.status === 403) {
                 //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
                 this.toastService.showErro("Erro ao salvar Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
                 this.router.navigate(["login"]);
@@ -145,7 +146,7 @@ export class UsuarioFormComponent implements OnInit {
               this.toastService.showSuccesso("Sucesso", "Usuário salvo com sucesso!", 2000);
               this.statusBarService.setShowStatusDialog(false);
             }, error => {
-              if(error.status !== null
+              if (error.status !== null
                 && error.status === 403) {
                 //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
                 this.toastService.showErro("Erro ao salvar Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
@@ -182,5 +183,35 @@ export class UsuarioFormComponent implements OnInit {
     setTimeout(() => {
       this.statusBarService.setShowStatusDialog(false);
     });
+  }
+
+  public deleteTelefone(telefone: Telefone) {
+    //Mensagem de confirmação para realizar a exclusão do registro:
+    if (confirm("Confirma a exclusão do Telefone?")) {
+      //StatusDialog globalizado!
+      this.statusBarService.setShowStatusDialog(true);
+      this.toastService.limparMensagens();
+
+      setTimeout(() => {
+        if (telefone !== null
+          && this.usuario !== null
+          && this.usuario.listTelefone !== null) {
+          //Encontra o indice do telefone a ser deletado
+          let indexRemove = this.usuario.listTelefone.indexOf(telefone);
+          if (indexRemove !== null
+            && indexRemove !== -1) {
+            //Caso encontrar remove apenas 1 registro (a partir do indice que foi encontrado acima)
+            this.usuario.listTelefone.splice(indexRemove, 1);
+            this.toastService.showSuccesso("Sucesso", "Telefone removido com sucesso!", 2000);
+          } else {
+            this.toastService.showErro("Erro ao excluir Telefone", "Telefone não encontrado.\nVerifique!", 2000, null);
+          }
+        } else {
+          this.toastService.showErro("Erro ao excluir Telefone", "Telefone não encontrado.\nVerifique!", 2000, null);
+        }
+
+        this.statusBarService.setShowStatusDialog(false);
+      });
+    }
   }
 }
