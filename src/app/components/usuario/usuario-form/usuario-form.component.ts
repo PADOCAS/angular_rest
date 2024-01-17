@@ -196,7 +196,7 @@ export class UsuarioFormComponent implements OnInit {
         if (telefone !== null
           && this.usuario !== null
           && this.usuario.listTelefone !== null) {
-          //Encontra o indice do telefone a ser deletado
+          //Encontra o indice do telefone a ser deletado (busca o próprio objeto na lista e retorna o indice dele)
           let indexRemove = this.usuario.listTelefone.indexOf(telefone);
           if (indexRemove !== null
             && indexRemove !== -1) {
