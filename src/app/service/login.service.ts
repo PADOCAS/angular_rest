@@ -15,9 +15,9 @@ export class LoginService {
   }
 
   public login(usuario: Usuario) {
-    console.log("Usuário: " + usuario.login);
-    console.info(usuario); //Sem ser um JSON válido {login: '213123', senha: '12wewe'}
-    console.info(JSON.stringify(usuario)); //Formato JSON válido! {"login":"213123","senha":"12wewe"}
+    // console.log("Usuário: " + usuario.login);
+    // console.info(usuario); //Sem ser um JSON válido {login: '213123', senha: '12wewe'}
+    // console.info(JSON.stringify(usuario)); //Formato JSON válido! {"login":"213123","senha":"12wewe"}
     return this.http.post(Constants.baseLogin, JSON.stringify(usuario))
       .subscribe(data => {
           //Retorno HTTP:

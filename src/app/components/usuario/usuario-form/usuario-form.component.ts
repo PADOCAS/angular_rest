@@ -6,7 +6,6 @@ import {UsuarioService} from "../../../service/usuario.service";
 import {FormsModule} from "@angular/forms";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {ViaCep} from "../../../../model/viaCep";
-import {StatusBarComponent} from "../../util/status-bar/status-bar.component";
 import {StatusBarService} from "../../../service/status-bar.service";
 import {ToastService} from "../../../service/toast.service";
 import {Telefone} from "../../../../model/telefone";
@@ -20,7 +19,6 @@ import {Telefone} from "../../../../model/telefone";
     FormsModule,
     NgIf,
     NgClass,
-    StatusBarComponent,
     NgForOf
   ],
   templateUrl: './usuario-form.component.html',
@@ -35,14 +33,21 @@ export class UsuarioFormComponent implements OnInit {
   ngOnInit(): void {
     if (this.routeActive !== null
       && this.routeActive.snapshot !== null
+      && this.routeActive.snapshot.params !== null
+      && this.routeActive.snapshot.params['usuario'] !== undefined
+      && this.routeActive.snapshot.params['usuario'] !== null) {
+      //Caso estiver editando telefones e retornar para tela de Usuario:
+      this.usuario = JSON.parse(this.routeActive.snapshot.params['usuario']);
+    } else if (this.routeActive !== null
+      && this.routeActive.snapshot !== null
       && this.routeActive.snapshot.paramMap !== null
       && this.routeActive.snapshot.paramMap.get('id') !== null) {
-      //Alimentando nossa variável com Usuário
+      //Caso estiver editando a partir da lista de Usuário (busca pelo id no banco dados atualizados)
       this.usuarioService.getUsuario(Number(this.routeActive.snapshot.paramMap.get('id')))
         .subscribe(data => {
-          console.log(data);
+          // console.log(data);
           this.usuario = data;
-          console.log(this.usuario);
+          // console.log(this.usuario);
         });
     }
   }
@@ -213,5 +218,18 @@ export class UsuarioFormComponent implements OnInit {
         this.statusBarService.setShowStatusDialog(false);
       });
     }
+  }
+
+  public editUsuarioTelefone(telefone: Telefone) {
+    this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
+
+    setTimeout(() => {
+      this.router.navigate(["usuario-telefone-edit", {
+        telefone: JSON.stringify(telefone),
+        usuario: JSON.stringify(this.usuario)
+      }]);
+      this.statusBarService.setShowStatusDialog(false);
+    });
   }
 }

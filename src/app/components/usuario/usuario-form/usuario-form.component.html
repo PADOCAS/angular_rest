@@ -129,14 +129,6 @@
     <div class="card-body">
       <form class="row g-3" style="padding: 10px; width: 100%;">
         <div class="col-auto">
-          <input id="txtNumeroTelPesquisa" name="numeroTelPesquisa" type="text" class="form-control"
-                 style="width: 300px;"
-                 maxlength="14" placeholder="Pesquisa Telefone por Número">
-        </div>
-        <div class="col-auto">
-          <button type="button" class="btn btn-primary mb-2">Pesquisar</button>
-        </div>
-        <div class="col-auto">
           <button type="button" class="btn btn-secondary mb-2">Novo</button>
         </div>
       </form>
@@ -145,8 +137,8 @@
         <caption>{{ usuario.listTelefone == null || usuario.listTelefone.length == 0 ? 'Nenhum Telefone cadastrado' : usuario.listTelefone.length + ' telefone(s) cadastrado(s).' }}</caption>
         <thead>
         <th scope="col">ID</th>
-        <th scope="col">Número</th>
         <th scope="col">Tipo</th>
+        <th scope="col">Número</th>
         <th scope="col" style="text-align: center;">Editar</th>
         <th scope="col" style="text-align: center;">Excluir</th>
         </thead>
@@ -154,11 +146,11 @@
         <tbody>
         <tr *ngFor="let tel of usuario.listTelefone">
           <td>{{ tel.id }}</td>
-          <td>{{ tel.numero }}</td>
           <td>{{ tel.tipo }}</td>
-          <!-- Editar vai ficar em rota abrindo outra tela (passa parâmetro id para rota) -->
+          <td>{{ tel.numero }}</td>
+          <!-- Editar vai ficar em rota abrindo outra tela (passa parâmetro telefone para rota) -->
           <td style="text-align: center;">
-            <button class="btn btn-warning">Editar</button>
+            <button class="btn btn-warning" (click)="editUsuarioTelefone(tel);" (keydown.enter)="editUsuarioTelefone(tel);">Editar</button>
           </td>
           <td style="text-align: center;">
             <button class="btn btn-primary" (click)="deleteTelefone(tel);" (keydown.enter)="deleteTelefone(tel);">Excluir</button>
