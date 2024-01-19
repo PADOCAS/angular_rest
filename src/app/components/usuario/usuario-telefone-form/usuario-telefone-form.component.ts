@@ -77,7 +77,8 @@ export class UsuarioTelefoneFormComponent {
     this.toastService.limparMensagens();
 
     setTimeout(() => {
-      this.router.navigate(["usuario-edit", this.usuario.id]);
+      //Caso for novo usuário (sem id ainda) envia como ZERO para não dar erro, não deixa NULL nessa referência de rota:
+      this.router.navigate(["usuario-edit", this.usuario === undefined || this.usuario === null || this.usuario.id === undefined || this.usuario.id === null ? 0 : this.usuario.id]);
       if (localStorage !== undefined
         && localStorage !== null
         && localStorage.getItem("token") !== undefined
@@ -110,9 +111,10 @@ export class UsuarioTelefoneFormComponent {
             if (indexAlteracao !== null
               && indexAlteracao !== -1) {
               this.usuario.listTelefone[indexAlteracao] = this.telefone;
-              this.toastService.showSuccesso("Sucesso", "Telefone atualizado com sucesso!", 2000);
+              //Vamos comentar a mensagem de sucesso, pois só vai salvar junto do usuário (cadastro pai)
+              // this.toastService.showSuccesso("Sucesso", "Telefone atualizado com sucesso!", 2000);
               //Caso for novo usuário (sem id ainda) envia como ZERO para não dar erro, não deixa NULL nessa referência de rota:
-              this.router.navigate(["usuario-edit", this.usuario.id === undefined || this.usuario.id === null ? 0 : this.usuario.id]);
+              this.router.navigate(["usuario-edit", this.usuario === undefined || this.usuario === null || this.usuario.id === undefined || this.usuario.id === null ? 0 : this.usuario.id]);
               //Limpa dados do telefone no Service:
               this.usuarioTelefoneService.limpaTelefonesMapUsuarioToken(localStorage.getItem("token"));
             }
@@ -121,9 +123,10 @@ export class UsuarioTelefoneFormComponent {
           //Novo Registro:
           if (this.usuario.listTelefone !== null) {
             this.usuario.listTelefone.push(this.telefone);
-            this.toastService.showSuccesso("Sucesso", "Telefone cadastrado com sucesso!", 2000);
+            //Vamos comentar a mensagem de sucesso, pois só vai salvar junto do usuário (cadastro pai)
+            // this.toastService.showSuccesso("Sucesso", "Telefone cadastrado com sucesso!", 2000);
             //Caso for novo usuário (sem id ainda) envia como ZERO para não dar erro, não deixa NULL nessa referência de rota:
-            this.router.navigate(["usuario-edit", this.usuario.id === undefined || this.usuario.id === null ? 0 : this.usuario.id]);
+            this.router.navigate(["usuario-edit", this.usuario === undefined || this.usuario === null || this.usuario.id === undefined || this.usuario.id === null ? 0 : this.usuario.id]);
             //Limpa dados do telefone no Service:
             this.usuarioTelefoneService.limpaTelefonesMapUsuarioToken(localStorage.getItem("token"));
           }

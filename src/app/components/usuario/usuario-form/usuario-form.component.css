@@ -3,4 +3,9 @@ p {
   text-decoration: underline;
   text-align: center;
   font-size: 18px;
+  padding-top: 5px;
+}
+
+table tbody tr {
+  vertical-align: middle;
 }

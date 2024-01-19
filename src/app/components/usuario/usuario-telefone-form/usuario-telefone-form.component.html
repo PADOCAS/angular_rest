@@ -1,53 +1,58 @@
 <app-menu></app-menu>
-<p>Telefone para Contato</p>
-
-<div style="padding-left: 10px; padding-right: 10px;">
-  <div class="card text-start">
-    <div class="card-header">
-      <div class="mb-2" style="margin-bottom: 0 !important;">
-        <button type="button" class="btn btn-primary" (click)="salvarTelefone();" (keydown.enter)="salvarTelefone();" style="width: 90px; margin-right: 5px;">Salvar
-        </button>
-        <button type="button" class="btn btn-secondary" (click)="novo();" (keydown.enter)="novo();" style="width: 90px; margin-right: 5px;">Novo
-        </button>
-        <button type="button" class="btn btn-danger" (click)="cancelarEditarTelefone();" (keydown.enter)="cancelarEditarTelefone();" style="width: 90px; margin-right: 5px;"
-        >Cancelar
-        </button>
+<div class="card" style="margin-top: 10px;">
+  <div style="padding-left: 10px; padding-right: 10px; padding-top: 10px;">
+    <div class="card text-start">
+      <div class="card-header">
+        <div class="mb-2" style="margin-bottom: 0 !important;">
+          <button type="button" class="btn btn-primary" (click)="salvarTelefone();" (keydown.enter)="salvarTelefone();"
+                  style="width: 90px; margin-right: 5px;">Salvar
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="novo();" (keydown.enter)="novo();"
+                  style="width: 90px; margin-right: 5px;">Novo
+          </button>
+          <button type="button" class="btn btn-danger" (click)="cancelarEditarTelefone();"
+                  (keydown.enter)="cancelarEditarTelefone();" style="width: 90px; margin-right: 5px;"
+          >Cancelar
+          </button>
+        </div>
       </div>
     </div>
   </div>
+
+  <p>Telefone para Contato</p>
+
+  <form style="padding: 10px;">
+    <div class="mb-2">
+      <div class="col-sm-1">
+        <label id="lblTelefoneId" for="txtTelefoneId">ID</label>
+      </div>
+      <div class="col-sm-1">
+        <input id="txtTelefoneId" [(ngModel)]="telefone.id" name="id" type="text" readonly="readonly" [disabled]="true"
+               class="form-control"
+               autocomplete="false">
+      </div>
+    </div>
+    <div class="row g-4" style="max-width: 100%;">
+      <div class="col-md-3">
+        <span style="color: red; font-weight: bold;" *ngIf="telefoneTipoValidate.invalid">* </span>
+        <label id="lblTelefoneTipo" for="txtTelefoneTipo">Tipo</label>
+        <div>
+          <input id="txtTelefoneTipo" [(ngModel)]="telefone.tipo" name="tipo" type="text" class="form-control"
+                 (ngModelChange)="telefone.tipo = $event.toUpperCase()"
+                 #telefoneTipoValidate="ngModel"
+                 required="required" autocomplete="false" maxlength="20">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <span style="color: red; font-weight: bold;" *ngIf="telefoneNumeroValidate.invalid">* </span>
+        <label id="lblTelefoneNumero" for="txtTelefoneNumero">Número</label>
+        <div>
+          <input id="txtTelefoneNumero" [(ngModel)]="telefone.numero" name="numero" type="text" class="form-control"
+                 required="required"
+                 #telefoneNumeroValidate="ngModel"
+                 autocomplete="false" maxlength="14">
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
-
-<form style="padding: 10px;">
-  <div class="mb-2">
-    <div class="col-sm-1">
-      <label id="lblTelefoneId" for="txtTelefoneId">ID</label>
-    </div>
-    <div class="col-sm-1">
-      <input id="txtTelefoneId" [(ngModel)]="telefone.id" name="id" type="text" readonly="readonly" [disabled]="true"
-             class="form-control"
-             autocomplete="false">
-    </div>
-  </div>
-  <div class="row g-4" style="max-width: 100%;">
-    <div class="col-md-5">
-      <span style="color: red; font-weight: bold;" *ngIf="telefoneTipoValidate.invalid">* </span>
-      <label id="lblTelefoneTipo" for="txtTelefoneTipo">Tipo</label>
-      <div>
-        <input id="txtTelefoneTipo" [(ngModel)]="telefone.tipo" name="tipo" type="text" class="form-control"
-               (ngModelChange)="telefone.tipo = $event.toUpperCase()"
-               #telefoneTipoValidate="ngModel"
-               required="required" autocomplete="false" maxlength="20">
-      </div>
-    </div>
-    <div class="col-md-5">
-      <span style="color: red; font-weight: bold;" *ngIf="telefoneNumeroValidate.invalid">* </span>
-      <label id="lblTelefoneNumero" for="txtTelefoneNumero">Número</label>
-      <div>
-        <input id="txtTelefoneNumero" [(ngModel)]="telefone.numero" name="numero" type="text" class="form-control"
-               required="required"
-               #telefoneNumeroValidate="ngModel"
-               autocomplete="false" maxlength="14">
-      </div>
-    </div>
-  </div>
-</form>

@@ -138,8 +138,9 @@ export class UsuarioFormComponent implements OnInit {
           this.usuarioService.editarUsuario(this.usuario)
             .subscribe(data => {
               //Limpa o cadastro para deixar pronto para salvar um novo registro se necessário:
-              this.instanciaNovoRegistro();
+              // this.instanciaNovoRegistro();
               this.toastService.showSuccesso("Sucesso", "Usuário atualizado com sucesso!", 2000);
+              this.router.navigate(["usuarioList"]);
               this.statusBarService.setShowStatusDialog(false);
             }, error => {
               if (error.status !== null
@@ -157,8 +158,9 @@ export class UsuarioFormComponent implements OnInit {
           this.usuarioService.saveUsuario(this.usuario)
             .subscribe(data => {
               //Limpa o cadastro para deixar pronto para salvar um novo registro se necessário:
-              this.instanciaNovoRegistro();
+              // this.instanciaNovoRegistro();
               this.toastService.showSuccesso("Sucesso", "Usuário salvo com sucesso!", 2000);
+              this.router.navigate(["usuarioList"]);
               this.statusBarService.setShowStatusDialog(false);
             }, error => {
               if (error.status !== null
@@ -235,7 +237,8 @@ export class UsuarioFormComponent implements OnInit {
             && indexRemove !== -1) {
             //Caso encontrar remove apenas 1 registro (a partir do indice que foi encontrado acima)
             this.usuario.listTelefone.splice(indexRemove, 1);
-            this.toastService.showSuccesso("Sucesso", "Telefone removido com sucesso!", 2000);
+            //Comentamos a mensagem, só será salvo junto com o Usuario (cadastro pai)
+            // this.toastService.showSuccesso("Sucesso", "Telefone removido com sucesso!", 2000);
           } else {
             this.toastService.showErro("Erro ao excluir Telefone", "Telefone não encontrado.\nVerifique!", 2000, null);
           }

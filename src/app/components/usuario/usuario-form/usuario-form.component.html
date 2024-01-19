@@ -1,163 +1,175 @@
 <app-menu></app-menu>
-<p>Cadastro de Usuário</p>
 
-<div style="padding-left: 10px; padding-right: 10px;">
-  <div class="card text-start">
-    <div class="card-header">
-      <div class="mb-2" style="margin-bottom: 0 !important;">
-        <button type="button" class="btn btn-primary" style="width: 90px; margin-right: 5px;" (click)="salvar();"
-                (keydown.enter)="salvar();">Salvar
-        </button>
-        <button type="button" class="btn btn-secondary" style="width: 90px; margin-right: 5px;"
-                [routerLink]="['/usuario-add']" (click)="novo();" (keydown.enter)="novo();">Novo
-        </button>
-        <button type="button" class="btn btn-danger" style="width: 90px; margin-right: 5px;"
-                [routerLink]="['/usuarioList']" (click)="cancelar();" (keydown.enter)="cancelar();">Cancelar
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<form style="padding: 10px;">
-  <div class="mb-2">
-    <div class="col-sm-1">
-      <label id="lblUsuarioId" for="txtUsuarioId">ID</label>
-    </div>
-    <div class="col-sm-1">
-      <input id="txtUsuarioId" [(ngModel)]="usuario.id" name="id" type="text" readonly="readonly" [disabled]="true"
-             class="form-control"
-             autocomplete="false">
-    </div>
-  </div>
-  <div class="mb-2">
-    <div class="col-sm-1">
-      <span style="color: red; font-weight: bold;" *ngIf="nomeValidate.invalid">* </span>
-      <label id="lblNome" for="txtNome">Nome</label>
-    </div>
-    <div class="col-sm-12">
-      <input id="txtNome" [(ngModel)]="usuario.nome" name="nome" type="text" class="form-control" required="required"
-             (ngModelChange)="usuario.nome = $event.toUpperCase()"
-             #nomeValidate="ngModel"
-             autocomplete="false" maxlength="100">
-    </div>
-  </div>
-  <div class="row g-4" style="max-width: 100%;">
-    <div class="col-md-5">
-      <span style="color: red; font-weight: bold;" *ngIf="loginValidate.invalid">* </span>
-      <label id="lblLogin" for="txtLogin">Login</label>
-      <div>
-        <input id="txtLogin" [(ngModel)]="usuario.login" name="login" type="text" class="form-control"
-               #loginValidate="ngModel"
-               required="required" autocomplete="false" maxlength="30">
-      </div>
-    </div>
-    <div class="col-md-5" *ngIf="usuario === null || usuario.id === null">
-      <span style="color: red; font-weight: bold;" *ngIf="senhaValidate.invalid">* </span>
-      <label id="lblSenha" for="txtSenha">Senha</label>
-      <div>
-        <input id="txtSenha" [(ngModel)]="usuario.senha" name="senha" type="password" class="form-control"
-               #senhaValidate="ngModel"
-               required="required" autocomplete="false" maxlength="100">
-      </div>
-    </div>
-  </div>
-  <div class="mb-2">
-    <div class="col-md-1">
-      <label id="lblCep" for="txtCep">CEP</label>
-    </div>
-    <div class="col-md-2">
-      <input id="txtCep" [(ngModel)]="usuario.cep" name="cep" type="text" class="form-control" autocomplete="false"
-             (blur)="consultaCep();"
-             maxlength="9">
-    </div>
-  </div>
-  <div class="mb-2">
-    <div class="col-sm-1">
-      <label id="lblLogradouro" for="txtLogradouro">Logradouro</label>
-    </div>
-    <div class="col-sm-12">
-      <input id="txtLogradouro" [(ngModel)]="usuario.logradouro" name="logradouro" type="text" class="form-control"
-             (ngModelChange)="usuario.logradouro = $event.toUpperCase()"
-             autocomplete="false" maxlength="100">
-    </div>
-  </div>
-  <div class="mb-2">
-    <div class="col-sm-1">
-      <label id="lblComplemento" for="txtComplemento">Complemento</label>
-    </div>
-    <div class="col-sm-12">
-      <input id="txtComplemento" [(ngModel)]="usuario.complemento" name="complemento" type="text" class="form-control"
-             (ngModelChange)="usuario.complemento = $event.toUpperCase()"
-             autocomplete="false" maxlength="100">
-    </div>
-  </div>
-  <div class="mb-2">
-    <div class="col-sm-1">
-      <label id="lblBairro" for="txtBairro">Bairro</label>
-    </div>
-    <div class="col-sm-12">
-      <input id="txtBairro" [(ngModel)]="usuario.bairro" name="bairro" type="text" class="form-control"
-             (ngModelChange)="usuario.bairro = $event.toUpperCase()"
-             autocomplete="false" maxlength="60">
-    </div>
-  </div>
-
-  <div class="row g-4" style="max-width: 100%;">
-    <div class="col-md-5">
-      <label id="lblLocalidade" for="txtLocalidade">Localidade</label>
-      <div>
-        <input id="txtLocalidade" [(ngModel)]="usuario.localidade" name="localidade" type="text" class="form-control"
-               (ngModelChange)="usuario.localidade = $event.toUpperCase()"
-               autocomplete="false" maxlength="50">
-      </div>
-    </div>
-    <div class="col-md-1">
-      <label id="lblUf" for="txtUf">UF</label>
-      <div>
-        <input id="txtUf" [(ngModel)]="usuario.uf" name="uf" type="text" class="form-control" autocomplete="false"
-               (ngModelChange)="usuario.uf = $event.toUpperCase()"
-               maxlength="2">
-      </div>
-    </div>
-  </div>
-
-  <div class="card text-center" style="margin-top: 10px;">
-    <div class="card-header" style="font-weight: bold; text-decoration: underline;">
-      Telefones para contato
-    </div>
-    <div class="card-body">
-      <form class="row g-3" style="padding: 10px; width: 100%;">
-        <div class="col-auto">
-          <button type="button" class="btn btn-secondary mb-2" (click)="cadastrarNovoTelefone();" (keydown.enter)="cadastrarNovoTelefone();">Novo</button>
+<div class="card" style="margin-top: 10px;">
+  <div style="padding-left: 10px; padding-right: 10px; padding-top: 10px;">
+    <div class="card text-start">
+      <div class="card-header">
+        <div class="mb-2" style="margin-bottom: 0 !important;">
+          <button type="button" class="btn btn-primary" style="width: 90px; margin-right: 5px;" (click)="salvar();"
+                  (keydown.enter)="salvar();">Salvar
+          </button>
+          <button type="button" class="btn btn-secondary" style="width: 90px; margin-right: 5px;"
+                  [routerLink]="['/usuario-add']" (click)="novo();" (keydown.enter)="novo();">Novo
+          </button>
+          <button type="button" class="btn btn-danger" style="width: 90px; margin-right: 5px;"
+                  [routerLink]="['/usuarioList']" (click)="cancelar();" (keydown.enter)="cancelar();">Cancelar
+          </button>
         </div>
-      </form>
-
-      <table class="table table-striped">
-        <caption>{{ usuario.listTelefone == null || usuario.listTelefone.length == 0 ? 'Nenhum Telefone cadastrado' : usuario.listTelefone.length + ' telefone(s) cadastrado(s).' }}</caption>
-        <thead>
-        <th scope="col">ID</th>
-        <th scope="col">Tipo</th>
-        <th scope="col">Número</th>
-        <th scope="col" style="text-align: center;">Editar</th>
-        <th scope="col" style="text-align: center;">Excluir</th>
-        </thead>
-
-        <tbody>
-        <tr *ngFor="let tel of usuario.listTelefone">
-          <td>{{ tel.id }}</td>
-          <td>{{ tel.tipo }}</td>
-          <td>{{ tel.numero }}</td>
-          <!-- Editar vai ficar em rota abrindo outra tela (passa parâmetro telefone para rota) -->
-          <td style="text-align: center;">
-            <button class="btn btn-warning" (click)="editUsuarioTelefone(tel);" (keydown.enter)="editUsuarioTelefone(tel);">Editar</button>
-          </td>
-          <td style="text-align: center;">
-            <button class="btn btn-primary" (click)="deleteTelefone(tel);" (keydown.enter)="deleteTelefone(tel);">Excluir</button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+      </div>
     </div>
   </div>
-</form>
+
+  <p>Cadastro de Usuário</p>
+
+  <form style="padding: 10px;">
+    <div class="mb-2">
+      <div class="col-sm-1">
+        <label id="lblUsuarioId" for="txtUsuarioId">ID</label>
+      </div>
+      <div class="col-sm-1">
+        <input id="txtUsuarioId" [(ngModel)]="usuario.id" name="id" type="text" readonly="readonly" [disabled]="true"
+               class="form-control"
+               autocomplete="false">
+      </div>
+    </div>
+    <div class="mb-2">
+      <div class="col-sm-1">
+        <span style="color: red; font-weight: bold;" *ngIf="nomeValidate.invalid">* </span>
+        <label id="lblNome" for="txtNome">Nome</label>
+      </div>
+      <div class="col-sm-12">
+        <input id="txtNome" [(ngModel)]="usuario.nome" name="nome" type="text" class="form-control" required="required"
+               (ngModelChange)="usuario.nome = $event.toUpperCase()"
+               #nomeValidate="ngModel"
+               autocomplete="false" maxlength="100">
+      </div>
+    </div>
+    <div class="row g-4" style="max-width: 100%;">
+      <div class="col-md-5">
+        <span style="color: red; font-weight: bold;" *ngIf="loginValidate.invalid">* </span>
+        <label id="lblLogin" for="txtLogin">Login</label>
+        <div>
+          <input id="txtLogin" [(ngModel)]="usuario.login" name="login" type="text" class="form-control"
+                 #loginValidate="ngModel"
+                 required="required" autocomplete="false" maxlength="30">
+        </div>
+      </div>
+      <div class="col-md-5" *ngIf="usuario === null || usuario.id === null">
+        <span style="color: red; font-weight: bold;" *ngIf="senhaValidate.invalid">* </span>
+        <label id="lblSenha" for="txtSenha">Senha</label>
+        <div>
+          <input id="txtSenha" [(ngModel)]="usuario.senha" name="senha" type="password" class="form-control"
+                 #senhaValidate="ngModel"
+                 required="required" autocomplete="false" maxlength="100">
+        </div>
+      </div>
+    </div>
+    <div class="mb-2">
+      <div class="col-md-1">
+        <label id="lblCep" for="txtCep">CEP</label>
+      </div>
+      <div class="col-md-2">
+        <input id="txtCep" [(ngModel)]="usuario.cep" name="cep" type="text" class="form-control" autocomplete="false"
+               (blur)="consultaCep();"
+               maxlength="9">
+      </div>
+    </div>
+    <div class="mb-2">
+      <div class="col-sm-1">
+        <label id="lblLogradouro" for="txtLogradouro">Logradouro</label>
+      </div>
+      <div class="col-sm-12">
+        <input id="txtLogradouro" [(ngModel)]="usuario.logradouro" name="logradouro" type="text" class="form-control"
+               (ngModelChange)="usuario.logradouro = $event.toUpperCase()"
+               autocomplete="false" maxlength="100">
+      </div>
+    </div>
+    <div class="mb-2">
+      <div class="col-sm-1">
+        <label id="lblComplemento" for="txtComplemento">Complemento</label>
+      </div>
+      <div class="col-sm-12">
+        <input id="txtComplemento" [(ngModel)]="usuario.complemento" name="complemento" type="text" class="form-control"
+               (ngModelChange)="usuario.complemento = $event.toUpperCase()"
+               autocomplete="false" maxlength="100">
+      </div>
+    </div>
+    <div class="mb-2">
+      <div class="col-sm-1">
+        <label id="lblBairro" for="txtBairro">Bairro</label>
+      </div>
+      <div class="col-sm-12">
+        <input id="txtBairro" [(ngModel)]="usuario.bairro" name="bairro" type="text" class="form-control"
+               (ngModelChange)="usuario.bairro = $event.toUpperCase()"
+               autocomplete="false" maxlength="60">
+      </div>
+    </div>
+
+    <div class="row g-4" style="max-width: 100%;">
+      <div class="col-md-5">
+        <label id="lblLocalidade" for="txtLocalidade">Localidade</label>
+        <div>
+          <input id="txtLocalidade" [(ngModel)]="usuario.localidade" name="localidade" type="text" class="form-control"
+                 (ngModelChange)="usuario.localidade = $event.toUpperCase()"
+                 autocomplete="false" maxlength="50">
+        </div>
+      </div>
+      <div class="col-md-1">
+        <label id="lblUf" for="txtUf">UF</label>
+        <div>
+          <input id="txtUf" [(ngModel)]="usuario.uf" name="uf" type="text" class="form-control" autocomplete="false"
+                 (ngModelChange)="usuario.uf = $event.toUpperCase()"
+                 maxlength="2">
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 10px;">
+      <div style="padding-left: 10px; padding-right: 10px; padding-top: 10px;">
+        <div class="card text-start">
+          <div class="card-header">
+            <div class="mb-2" style="margin-bottom: 0 !important;">
+              <button type="button" class="btn btn-secondary mb-2" style="margin-bottom: 0 !important;" (click)="cadastrarNovoTelefone();"
+                      (keydown.enter)="cadastrarNovoTelefone();">Novo
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p>Telefones para Contato</p>
+
+      <div style="padding: 10px;">
+        <table class="table table-striped">
+          <caption>{{ usuario.listTelefone == null || usuario.listTelefone.length == 0 ? 'Nenhum Telefone cadastrado' : usuario.listTelefone.length + ' telefone(s) cadastrado(s).' }}</caption>
+          <thead>
+          <th scope="col">ID</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Número</th>
+          <th scope="col" style="text-align: center;">Editar</th>
+          <th scope="col" style="text-align: center;">Excluir</th>
+          </thead>
+
+          <tbody>
+          <tr *ngFor="let tel of usuario.listTelefone">
+            <td>{{ tel.id }}</td>
+            <td>{{ tel.tipo }}</td>
+            <td>{{ tel.numero }}</td>
+            <!-- Editar vai ficar em rota abrindo outra tela (passa parâmetro telefone para rota) -->
+            <td style="text-align: center;">
+              <button class="btn btn-warning" (click)="editUsuarioTelefone(tel);"
+                      (keydown.enter)="editUsuarioTelefone(tel);">Editar
+              </button>
+            </td>
+            <td style="text-align: center;">
+              <button class="btn btn-primary" (click)="deleteTelefone(tel);" (keydown.enter)="deleteTelefone(tel);">
+                Excluir
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </form>
+</div>
