@@ -10,7 +10,7 @@ import {UsuarioTelefoneFormComponent} from "./components/usuario/usuario-telefon
 export const routes: Routes = [
   {path: "usuario-add", component: UsuarioFormComponent, canActivate: [RouterGuard]}, //Cadastro de Usuário - adicionar novo //Definimos o RouterGuard para checar token antes de ir para rota!
   {path: "usuario-edit/:id", component: UsuarioFormComponent, canActivate: [RouterGuard]}, //Cadastro de usuário - editar recebendo parâmetro //Definimos o RouterGuard para checar token antes de ir para rota!
-  {path: "usuario-telefone-edit", component: UsuarioTelefoneFormComponent, canActivate: [RouterGuard]}, //Cadastro de telefones do usuário (recebe objetos telefone/usuario na chamada) //Definimos o RouterGuard para checar token antes de ir para rota!
+  {path: "usuario-telefone", component: UsuarioTelefoneFormComponent, canActivate: [RouterGuard]}, //Cadastro de telefones do usuário (recebe objetos telefone/usuario por service) //Definimos o RouterGuard para checar token antes de ir para rota!
   {path: "usuarioList", component: UsuarioComponent, canActivate: [RouterGuard]}, //Definimos o RouterGuard para checar token antes de ir para rota!
   {path: "home", component: HomeComponent, canActivate: [RouterGuard]}, //Definimos o RouterGuard para checar token antes de ir para rota!
   {path: "login", component: LoginComponent}, //Essas são acessadas sem precisar do token ainda, liberadas! (não precisa do guard)

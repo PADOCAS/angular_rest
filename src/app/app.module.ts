@@ -9,6 +9,7 @@ import {StatusBarService} from "./service/status-bar.service";
 import {NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
 import {ToastService} from "./service/toast.service";
 import {RouterGuard} from "./guard/router.guard";
+import {UsuarioTelefoneService} from "./service/usuario-telefone.service";
 
 @NgModule({
   declarations: [],
@@ -26,6 +27,7 @@ import {RouterGuard} from "./guard/router.guard";
     UsuarioService,
     StatusBarService,
     ToastService,
+    UsuarioTelefoneService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HeaderInterceptorService,

@@ -9,6 +9,7 @@ import {ViaCep} from "../../../../model/viaCep";
 import {StatusBarService} from "../../../service/status-bar.service";
 import {ToastService} from "../../../service/toast.service";
 import {Telefone} from "../../../../model/telefone";
+import {UsuarioTelefoneService} from "../../../service/usuario-telefone.service";
 
 @Component({
   selector: 'app-usuario-form',
@@ -25,22 +26,31 @@ import {Telefone} from "../../../../model/telefone";
   styleUrl: './usuario-form.component.css'
 })
 export class UsuarioFormComponent implements OnInit {
-  usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null);
+  usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
 
-  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router) {
+  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router, private usuarioTelefoneService: UsuarioTelefoneService) {
   }
 
   ngOnInit(): void {
-    if (this.routeActive !== null
-      && this.routeActive.snapshot !== null
-      && this.routeActive.snapshot.params !== null
-      && this.routeActive.snapshot.params['usuario'] !== undefined
-      && this.routeActive.snapshot.params['usuario'] !== null) {
+    if (localStorage !== undefined
+      && localStorage !== null
+      && localStorage.getItem("token") !== undefined
+      && localStorage.getItem("token") !== null
+      && this.usuarioTelefoneService.getListUsuario() !== undefined
+      && this.usuarioTelefoneService.getListUsuario() !== null
+      && this.usuarioTelefoneService.getListUsuario().get(localStorage.getItem("token")) !== undefined
+      && this.usuarioTelefoneService.getListUsuario().get(localStorage.getItem("token")) !== null) {
       //Caso estiver editando telefones e retornar para tela de Usuario:
-      this.usuario = JSON.parse(this.routeActive.snapshot.params['usuario']);
-    } else if (this.routeActive !== null
+      this.usuario = this.usuarioTelefoneService.getListUsuario().get(localStorage.getItem("token")) as Usuario;
+      //Limpa referência para não atrapalhar outras vezes que entrar no cadastro!
+      this.usuarioTelefoneService.getListUsuario().set(localStorage.getItem("token"), null);
+    } else if (this.routeActive !== undefined
+      && this.routeActive !== null
+      && this.routeActive.snapshot !== undefined
       && this.routeActive.snapshot !== null
+      && this.routeActive.snapshot.paramMap !== undefined
       && this.routeActive.snapshot.paramMap !== null
+      && this.routeActive.snapshot.paramMap.get('id') !== undefined
       && this.routeActive.snapshot.paramMap.get('id') !== null) {
       //Caso estiver editando a partir da lista de Usuário (busca pelo id no banco dados atualizados)
       this.usuarioService.getUsuario(Number(this.routeActive.snapshot.paramMap.get('id')))
@@ -172,13 +182,22 @@ export class UsuarioFormComponent implements OnInit {
     this.toastService.limparMensagens();
 
     setTimeout(() => {
-      this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null);
+      this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
+      if (localStorage !== undefined
+        && localStorage !== null
+        && localStorage.getItem("token") !== undefined
+        && localStorage.getItem("token") !== null
+        && this.usuarioTelefoneService.getListUsuario() !== undefined
+        && this.usuarioTelefoneService.getListUsuario() !== null) {
+        //Limpa referência para não atrapalhar outras vezes que entrar no cadastro!
+        this.usuarioTelefoneService.getListUsuario().set(localStorage.getItem("token"), null);
+      }
       this.statusBarService.setShowStatusDialog(false);
     });
   }
 
   private instanciaNovoRegistro() {
-    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null);
+    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
   }
 
   public cancelar(): void {
@@ -186,6 +205,15 @@ export class UsuarioFormComponent implements OnInit {
     this.toastService.limparMensagens();
 
     setTimeout(() => {
+      if (localStorage !== undefined
+        && localStorage !== null
+        && localStorage.getItem("token") !== undefined
+        && localStorage.getItem("token") !== null
+        && this.usuarioTelefoneService.getListUsuario() !== undefined
+        && this.usuarioTelefoneService.getListUsuario() !== null) {
+        //Limpa referência para não atrapalhar outras vezes que entrar no cadastro!
+        this.usuarioTelefoneService.getListUsuario().set(localStorage.getItem("token"), null);
+      }
       this.statusBarService.setShowStatusDialog(false);
     });
   }
@@ -225,10 +253,42 @@ export class UsuarioFormComponent implements OnInit {
     this.toastService.limparMensagens();
 
     setTimeout(() => {
-      this.router.navigate(["usuario-telefone-edit", {
-        telefone: JSON.stringify(telefone),
-        usuario: JSON.stringify(this.usuario)
-      }]);
+      if (localStorage !== undefined
+        && localStorage !== null
+        && localStorage.getItem("token") !== undefined
+        && localStorage.getItem("token") !== null
+        && this.usuarioTelefoneService.getListUsuario() !== undefined
+        && this.usuarioTelefoneService.getListUsuario() !== null
+        && this.usuarioTelefoneService.getListTelefoneSelectVo() !== undefined
+        && this.usuarioTelefoneService.getListTelefoneSelectVo() !== null
+        && this.usuarioTelefoneService.getListTelefoneEditJson() !== undefined
+        && this.usuarioTelefoneService.getListTelefoneEditJson() !== null) {
+        //Seta usuário e dados do telefone que será alterado no Service:
+        this.usuarioTelefoneService.getListUsuario().set(localStorage.getItem("token"), this.usuario);
+        this.usuarioTelefoneService.getListTelefoneSelectVo().set(localStorage.getItem("token"), telefone);
+        this.usuarioTelefoneService.getListTelefoneEditJson().set(localStorage.getItem("token"), JSON.stringify(telefone));
+      }
+      this.router.navigate(["usuario-telefone"]);
+      this.statusBarService.setShowStatusDialog(false);
+    });
+  }
+
+  public cadastrarNovoTelefone(): void {
+    this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
+
+    setTimeout(() => {
+      if (localStorage !== undefined
+        && localStorage !== null
+        && localStorage.getItem("token") !== undefined
+        && localStorage.getItem("token") !== null
+        && this.usuarioTelefoneService.getListUsuario() !== undefined
+        && this.usuarioTelefoneService.getListUsuario() !== null) {
+        //Seta usuário e limpa dados do telefone no service:
+        this.usuarioTelefoneService.getListUsuario().set(localStorage.getItem("token"), this.usuario);
+        this.usuarioTelefoneService.limpaTelefonesMapUsuarioToken(localStorage.getItem("token"));
+      }
+      this.router.navigate(["usuario-telefone"]);
       this.statusBarService.setShowStatusDialog(false);
     });
   }
