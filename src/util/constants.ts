@@ -4,7 +4,9 @@
 export class Constants {
 
   public static get baseServidor(): string {
-    return "http://localhost:8080/";
+    //Para rodar localmente, precisamos por o IP da máquina local
+    // return "http://localhost:8080/";
+    return "http://192.168.0.14:8080/";
   }
 
   public static get baseLogin(): string {
