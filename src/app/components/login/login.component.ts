@@ -18,6 +18,7 @@ import {Router} from "@angular/router";
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
+  mostrarSenha = false;
   title = 'Angular-REST';
   //Vamos criar um objeto Usuario, como 2 atributos, similar ao que vamos enviar para a API depois!
   usuario: Usuario = {
@@ -93,5 +94,9 @@ export class LoginComponent implements OnInit {
     }
 
     return true;
+  }
+
+  public mostrarOcultarSenha() {
+    this.mostrarSenha = !this.mostrarSenha;
   }
 }
