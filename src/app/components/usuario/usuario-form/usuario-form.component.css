@@ -9,3 +9,7 @@ p {
 table tbody tr {
   vertical-align: middle;
 }
+
+.spaceButton {
+  width: 90px;
+}

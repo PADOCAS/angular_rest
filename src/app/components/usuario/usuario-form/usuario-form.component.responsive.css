@@ -15,8 +15,8 @@
     font-size: 13px;
   }
 
-  .inputGrande {
-    width: 300px;
+  .spaceButton {
+    width: 80px;
   }
 }
 
@@ -37,8 +37,8 @@
     font-size: 11px;
   }
 
-  .inputGrande {
-    width: 250px;
+  .spaceButton {
+    width: 70px;
   }
 }
 
@@ -59,14 +59,8 @@
     font-size: 9px;
   }
 
-  .inputGrande {
-    width: 180px;
-  }
-}
-
-@media (max-width: 400px) {
-  .inputGrande {
-    width: 150px;
+  .spaceButton {
+    width: 65px;
   }
 }
 
@@ -83,11 +77,25 @@
     font-size: 7px;
   }
 
-  input {
-    font-size: 7px;
+  /*input {*/
+  /*  font-size: 8px;*/
+  /*}*/
+}
+
+@media (max-width: 300px) {
+  table tbody tr td{
+    font-size: 6px;
   }
 
-  .inputGrande {
-    width: 120px;
+  table thead th {
+    font-size: 6px;
+  }
+
+  button {
+    font-size: 6px;
+  }
+
+  input {
+    font-size: 7px;
   }
 }

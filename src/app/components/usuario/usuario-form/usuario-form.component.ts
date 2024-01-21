@@ -23,11 +23,11 @@ import {UsuarioTelefoneService} from "../../../service/usuario-telefone.service"
     NgForOf
   ],
   templateUrl: './usuario-form.component.html',
-  styleUrl: './usuario-form.component.css'
+  styleUrls: ['./usuario-form.component.css', './usuario-form.component.responsive.css']
 })
 export class UsuarioFormComponent implements OnInit {
   usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
-
+  mostrarSenha = false;
   constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router, private usuarioTelefoneService: UsuarioTelefoneService) {
   }
 
@@ -294,5 +294,9 @@ export class UsuarioFormComponent implements OnInit {
       this.router.navigate(["usuario-telefone"]);
       this.statusBarService.setShowStatusDialog(false);
     });
+  }
+
+  public mostrarOcultarSenha() {
+    this.mostrarSenha = !this.mostrarSenha;
   }
 }
