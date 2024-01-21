@@ -1,0 +1,87 @@
+@media (max-width: 900px) {
+  table tbody tr td{
+    font-size: 13px;
+  }
+
+  table thead th {
+    font-size: 13px;
+  }
+
+  button {
+    font-size: 13px;
+  }
+
+  input {
+    font-size: 13px;
+  }
+
+  .inputGrande {
+    width: 300px;
+  }
+}
+
+@media (max-width: 550px) {
+  table tbody tr td{
+    font-size: 11px;
+  }
+
+  table thead th {
+    font-size: 11px;
+  }
+
+  button {
+    font-size: 11px;
+  }
+
+  input {
+    font-size: 11px;
+  }
+
+  .inputGrande {
+    width: 250px;
+  }
+}
+
+@media (max-width: 450px) {
+  table tbody tr td{
+    font-size: 9px;
+  }
+
+  table thead th {
+    font-size: 9px;
+  }
+
+  button {
+    font-size: 9px;
+  }
+
+  input {
+    font-size: 9px;
+  }
+
+  .inputGrande {
+    width: 180px;
+  }
+}
+
+@media (max-width: 400px) {
+  table tbody tr td{
+    font-size: 9px;
+  }
+
+  table thead th {
+    font-size: 9px;
+  }
+
+  button {
+    font-size: 9px;
+  }
+
+  input {
+    font-size: 9px;
+  }
+
+  .inputGrande {
+    width: 150px;
+  }
+}

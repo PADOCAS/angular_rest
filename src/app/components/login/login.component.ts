@@ -15,7 +15,7 @@ import {Router} from "@angular/router";
     NgIf
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css', './login.component.responsive.css']
 })
 export class LoginComponent implements OnInit {
   mostrarSenha = false;

@@ -9,3 +9,7 @@ p {
 table tbody tr {
   vertical-align: middle;
 }
+
+.inputGrande {
+  width: 500px;
+}

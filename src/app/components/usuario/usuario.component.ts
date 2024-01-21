@@ -18,7 +18,7 @@ import {ToastService} from "../../service/toast.service";
     RouterLink
   ],
   templateUrl: './usuario.component.html',
-  styleUrl: './usuario.component.css'
+  styleUrls: ['./usuario.component.css', './usuario.component.responsive.css']
 })
 export class UsuarioComponent implements OnInit {
 

@@ -15,7 +15,7 @@ import {NgForOf, NgIf, NgTemplateOutlet} from '@angular/common';
     NgIf,
     NgForOf
   ],
-  styleUrl: './toast.component.css',
+  styleUrls: ['./toast.component.css', './toast.component.responsive.css'],
   templateUrl: './toast.component.html',
   //Fizemos direto no templateURL -> classe html!!
   // template: `

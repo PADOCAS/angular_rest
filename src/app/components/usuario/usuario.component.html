@@ -3,7 +3,7 @@
 
 <form class="row g-3" style="padding: 10px; width: 100%;">
   <div class="col-auto">
-    <input id="txtNomePesquisa" name="nomePesquisa" [(ngModel)]="nomePesquisa" type="text" class="form-control" style="width: 500px;" maxlength="100" placeholder="Pesquisa Usuário por Nome">
+    <input id="txtNomePesquisa" name="nomePesquisa" [(ngModel)]="nomePesquisa" type="text" class="form-control inputGrande" maxlength="100" placeholder="Pesquisa Usuário por Nome">
   </div>
   <div class="col-auto">
     <button type="button" (click)="consultaUsuariosPorNome();" (keydown.enter)="consultaUsuariosPorNome();" class="btn btn-primary mb-2">Pesquisar</button>
