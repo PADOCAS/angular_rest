@@ -5,3 +5,7 @@ p {
   font-size: 18px;
   padding-top: 5px;
 }
+
+.spaceButton {
+  width: 90px;
+}

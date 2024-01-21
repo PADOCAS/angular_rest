@@ -19,7 +19,7 @@ import {UsuarioTelefoneService} from "../../../service/usuario-telefone.service"
     RouterLink
   ],
   templateUrl: './usuario-telefone-form.component.html',
-  styleUrl: './usuario-telefone-form.component.css'
+  styleUrls: ['./usuario-telefone-form.component.css', './usuario-telefone-form.component.responsive.css']
 })
 export class UsuarioTelefoneFormComponent {
   telefone: Telefone = new Telefone(null, null, null);

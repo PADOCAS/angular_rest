@@ -4,14 +4,14 @@
     <div class="card text-start">
       <div class="card-header">
         <div class="mb-2" style="margin-bottom: 0 !important;">
-          <button type="button" class="btn btn-primary" (click)="salvarTelefone();" (keydown.enter)="salvarTelefone();"
-                  style="width: 90px; margin-right: 5px;">Salvar
+          <button type="button" class="btn btn-primary spaceButton" (click)="salvarTelefone();" (keydown.enter)="salvarTelefone();"
+                  style="margin-right: 5px;">Salvar
           </button>
-          <button type="button" class="btn btn-secondary" (click)="novo();" (keydown.enter)="novo();"
-                  style="width: 90px; margin-right: 5px;">Novo
+          <button type="button" class="btn btn-secondary spaceButton" (click)="novo();" (keydown.enter)="novo();"
+                  style="margin-right: 5px;">Novo
           </button>
-          <button type="button" class="btn btn-danger" (click)="cancelarEditarTelefone();"
-                  (keydown.enter)="cancelarEditarTelefone();" style="width: 90px; margin-right: 5px;"
+          <button type="button" class="btn btn-danger spaceButton" (click)="cancelarEditarTelefone();"
+                  (keydown.enter)="cancelarEditarTelefone();" style="margin-right: 5px;"
           >Cancelar
           </button>
         </div>
@@ -23,10 +23,8 @@
 
   <form style="padding: 10px;">
     <div class="mb-2">
-      <div class="col-sm-1">
+      <div class="col-md-2">
         <label id="lblTelefoneId" for="txtTelefoneId">ID</label>
-      </div>
-      <div class="col-sm-1">
         <input id="txtTelefoneId" [(ngModel)]="telefone.id" name="id" type="text" readonly="readonly" [disabled]="true"
                class="form-control"
                autocomplete="false">
