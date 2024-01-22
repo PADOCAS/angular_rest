@@ -10,6 +10,7 @@ import {StatusBarService} from "../../../service/status-bar.service";
 import {ToastService} from "../../../service/toast.service";
 import {Telefone} from "../../../../model/telefone";
 import {UsuarioTelefoneService} from "../../../service/usuario-telefone.service";
+import {NgxMaskPipe} from "ngx-mask";
 
 @Component({
   selector: 'app-usuario-form',
@@ -20,7 +21,8 @@ import {UsuarioTelefoneService} from "../../../service/usuario-telefone.service"
     FormsModule,
     NgIf,
     NgClass,
-    NgForOf
+    NgForOf,
+    NgxMaskPipe
   ],
   templateUrl: './usuario-form.component.html',
   styleUrls: ['./usuario-form.component.css', './usuario-form.component.responsive.css']
@@ -306,31 +308,67 @@ export class UsuarioFormComponent implements OnInit {
   }
 
   private validarSalvar(): boolean {
+    let msgErro: string = "";
+
     if (this.usuario != null) {
       //Nome:
       if (this.usuario.nome === null
         || this.usuario.nome.trim() === "") {
-        this.toastService.showWarning("Atenção", "* Nome deve ser informado.", null);
-        return false;
+        if (msgErro.length > 0) {
+          msgErro += "\n";
+        }
+        msgErro += "* Nome deve ser informado.";
       }
 
       //Login:
       if (this.usuario.login === null
         || this.usuario.login.trim() === "") {
-        this.toastService.showWarning("Atenção", "* Login deve ser informado.", null);
-        return false;
+        if (msgErro.length > 0) {
+          msgErro += "\n";
+        }
+        msgErro += "* Login deve ser informado.";
       }
 
       //Senha:
       if (this.usuario.id === null) {
         if (this.usuario.senha === null
           || this.usuario.senha.trim() === "") {
-          this.toastService.showWarning("Atenção", "* Senha deve ser informada.", null);
-          return false;
+          if (msgErro.length > 0) {
+            msgErro += "\n";
+          }
+          msgErro += "* Senha deve ser informada.";
+        } else if(this.usuario.senha.length < 3) {
+          if (msgErro.length > 0) {
+            msgErro += "\n";
+          }
+          msgErro += "* Senha deve ter no mínimo 3 caracteres.";
         }
       }
     }
+
+    if (msgErro.length > 0) {
+      this.toastService.showWarning("Atenção", msgErro, null);
+      return false;
+    }
+
     return true;
+  }
+
+  public getTelefoneMask(telefone:Telefone): string {
+    if (telefone !== null
+      && telefone.tipo !== undefined
+      && telefone.tipo !== null
+      && telefone.tipo !== "null"
+      && telefone.tipo.trim() !== "") {
+      switch (telefone.tipo) {
+        case 'CELULAR':
+          return '(00)00000-0000';
+        default:
+          return '(00)0000-0000';
+      }
+    }
+
+    return '';
   }
 
 }

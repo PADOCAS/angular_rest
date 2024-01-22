@@ -10,6 +10,7 @@ import {NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
 import {ToastService} from "./service/toast.service";
 import {RouterGuard} from "./guard/router.guard";
 import {UsuarioTelefoneService} from "./service/usuario-telefone.service";
+import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
 
 @NgModule({
   declarations: [],
@@ -17,7 +18,10 @@ import {UsuarioTelefoneService} from "./service/usuario-telefone.service";
     CommonModule,
     FormsModule,
     HttpClientModule,
-    NgbToastModule
+    NgbToastModule,
+    //Imports para máscara em nosso sistema, exemplo número telefone
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
   providers: [
     //Vamos prover o uso do LoginService e também UsuarioService para os componentes do módulo:
@@ -34,6 +38,8 @@ import {UsuarioTelefoneService} from "./service/usuario-telefone.service";
       multi: true
     },
     RouterGuard,
+    //Prover o ngxMask para utilizar campos mascarados em nosso sistema, exemplo número telefone
+    provideNgxMask(),
   ],
   exports: [
     //Exportar o FormsModule para os componentes filhos enxergarem, sem precisar importar individualmente.

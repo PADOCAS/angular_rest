@@ -4,7 +4,8 @@
     <div class="card text-start">
       <div class="card-header">
         <div class="mb-2" style="margin-bottom: 0 !important;">
-          <button type="button" class="btn btn-primary spaceButton" (click)="salvarTelefone();" (keydown.enter)="salvarTelefone();"
+          <button type="button" class="btn btn-primary spaceButton" (click)="salvarTelefone();"
+                  (keydown.enter)="salvarTelefone();"
                   style="margin-right: 5px;">Salvar
           </button>
           <button type="button" class="btn btn-secondary spaceButton" (click)="novo();" (keydown.enter)="novo();"
@@ -33,12 +34,21 @@
     <div class="row g-4" style="max-width: 100%;">
       <div class="col-md-3">
         <span style="color: red; font-weight: bold;" *ngIf="telefoneTipoValidate.invalid">* </span>
-        <label id="lblTelefoneTipo" for="txtTelefoneTipo">Tipo</label>
+        <label id="lblTelefoneTipo" for="selTelefoneTipo">Tipo</label>
         <div>
-          <input id="txtTelefoneTipo" [(ngModel)]="telefone.tipo" name="tipo" type="text" class="form-control"
-                 (ngModelChange)="telefone.tipo = $event.toUpperCase()"
-                 #telefoneTipoValidate="ngModel"
-                 required="required" autocomplete="false" maxlength="20">
+          <!--          <input id="txtTelefoneTipo" [(ngModel)]="telefone.tipo" name="tipo" type="text" class="form-control"-->
+          <!--                 (ngModelChange)="telefone.tipo = $event.toUpperCase()"-->
+          <!--                 #telefoneTipoValidate="ngModel"-->
+          <!--                 required="required" autocomplete="false" maxlength="20">-->
+          <select id="selTelefoneTipo" class="form-select mb-3" aria-label=".form-select-lg example"
+                  [(ngModel)]="telefone.tipo"
+                  #telefoneTipoValidate="ngModel"
+                  name="tipo">
+            <option selected value="null">...</option>
+            <option value="CASA">CASA</option>
+            <option value="CELULAR">CELULAR</option>
+            <option value="COMERCIAL">COMERCIAL</option>
+          </select>
         </div>
       </div>
       <div class="col-md-3">
@@ -48,6 +58,7 @@
           <input id="txtTelefoneNumero" [(ngModel)]="telefone.numero" name="numero" type="text" class="form-control"
                  required="required"
                  #telefoneNumeroValidate="ngModel"
+                 [mask]="getTelefoneMask()"
                  autocomplete="false" maxlength="14">
         </div>
       </div>

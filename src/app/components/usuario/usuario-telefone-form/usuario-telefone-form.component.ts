@@ -8,6 +8,8 @@ import {MenuComponent} from "../../menu/menu.component";
 import {NgIf} from "@angular/common";
 import {Usuario} from "../../../../model/usuario";
 import {UsuarioTelefoneService} from "../../../service/usuario-telefone.service";
+import {NgxMaskDirective} from "ngx-mask";
+import {StringConcatBuiltinFn} from "@angular/compiler-cli/src/ngtsc/partial_evaluator/src/builtin";
 
 @Component({
   selector: 'app-usuario-telefone-form',
@@ -16,7 +18,8 @@ import {UsuarioTelefoneService} from "../../../service/usuario-telefone.service"
     FormsModule,
     MenuComponent,
     NgIf,
-    RouterLink
+    RouterLink,
+    NgxMaskDirective
   ],
   templateUrl: './usuario-telefone-form.component.html',
   styleUrls: ['./usuario-telefone-form.component.css', './usuario-telefone-form.component.responsive.css']
@@ -142,21 +145,69 @@ export class UsuarioTelefoneFormComponent {
   }
 
   private validarSalvar(): boolean {
+    let msgErro: string = "";
+
     if (this.telefone != null) {
       //Tipo:
-      if (this.telefone.tipo === null
+      if (this.telefone.tipo === undefined
+        || this.telefone.tipo === null
+        || this.telefone.tipo === "null"
         || this.telefone.tipo.trim() === "") {
-        this.toastService.showWarning("Atenção", "* Tipo deve ser informado.", null);
-        return false;
+        if (msgErro.length > 0) {
+          msgErro += "\n";
+        }
+        msgErro += "* Tipo deve ser informado.";
       }
 
       //Número:
       if (this.telefone.numero === null
         || this.telefone.numero.trim() === "") {
-        this.toastService.showWarning("Atenção", "* Número deve ser informado.", null);
-        return false;
+        if (msgErro.length > 0) {
+          msgErro += "\n";
+        }
+        msgErro += "* Número deve ser informado.";
+      } else if (this.telefone.tipo !== undefined
+        && this.telefone.tipo !== null
+        && this.telefone.tipo !== "null"
+        && this.telefone.tipo.trim() !== "") {
+        //Valida Número e tipo:
+        switch (this.telefone.tipo) {
+          case 'CELULAR':
+            if(this.telefone.numero.length !== 11) {
+              msgErro += "* Número inválido, deve ser informado no formato (99)99999-9999.";
+            }
+            break;
+          default:
+            if(this.telefone.numero.length !== 10) {
+              msgErro += "* Número inválido, deve ser informado no formato (99)9999-9999.";
+            }
+            break;
+        }
       }
     }
+
+    if (msgErro.length > 0) {
+      this.toastService.showWarning("Atenção", msgErro, null);
+      return false;
+    }
+
     return true;
+  }
+
+  public getTelefoneMask(): string {
+    if (this.telefone !== null
+      && this.telefone.tipo !== undefined
+      && this.telefone.tipo !== null
+      && this.telefone.tipo !== "null"
+      && this.telefone.tipo.trim() !== "") {
+      switch (this.telefone.tipo) {
+        case 'CELULAR':
+          return '(00)00000-0000';
+        default:
+          return '(00)0000-0000';
+      }
+    }
+
+    return '';
   }
 }
