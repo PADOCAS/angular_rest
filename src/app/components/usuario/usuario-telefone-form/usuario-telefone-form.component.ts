@@ -95,45 +95,68 @@ export class UsuarioTelefoneFormComponent {
     this.statusBarService.setShowStatusDialog(true);
     this.toastService.limparMensagens();
 
-    setTimeout(() => {
-      if (localStorage !== undefined
-        && localStorage !== null
-        && localStorage.getItem("token") !== undefined
-        && localStorage.getItem("token") !== null
-        && this.telefone !== null
-        && this.usuario !== null) {
-        if (this.telefoneSelectVo !== undefined
-          && this.telefoneSelectVo !== null) {
-          //Atualizando Registro:
-          if (this.usuario.listTelefone !== null
-            && this.usuario.listTelefone.length > 0) {
-            let indexAlteracao = this.usuario.listTelefone.indexOf(this.telefoneSelectVo);
-            if (indexAlteracao !== null
-              && indexAlteracao !== -1) {
-              this.usuario.listTelefone[indexAlteracao] = this.telefone;
+    if (this.validarSalvar()) {
+      setTimeout(() => {
+        if (localStorage !== undefined
+          && localStorage !== null
+          && localStorage.getItem("token") !== undefined
+          && localStorage.getItem("token") !== null
+          && this.telefone !== null
+          && this.usuario !== null) {
+          if (this.telefoneSelectVo !== undefined
+            && this.telefoneSelectVo !== null) {
+            //Atualizando Registro:
+            if (this.usuario.listTelefone !== null
+              && this.usuario.listTelefone.length > 0) {
+              let indexAlteracao = this.usuario.listTelefone.indexOf(this.telefoneSelectVo);
+              if (indexAlteracao !== null
+                && indexAlteracao !== -1) {
+                this.usuario.listTelefone[indexAlteracao] = this.telefone;
+                //Vamos comentar a mensagem de sucesso, pois só vai salvar junto do usuário (cadastro pai)
+                // this.toastService.showSuccesso("Sucesso", "Telefone atualizado com sucesso!", 2000);
+                //Caso for novo usuário (sem id ainda) envia como ZERO para não dar erro, não deixa NULL nessa referência de rota:
+                this.router.navigate(["usuario-edit", this.usuario === undefined || this.usuario === null || this.usuario.id === undefined || this.usuario.id === null ? 0 : this.usuario.id]);
+                //Limpa dados do telefone no Service:
+                this.usuarioTelefoneService.limpaTelefonesMapUsuarioToken(localStorage.getItem("token"));
+              }
+            }
+          } else {
+            //Novo Registro:
+            if (this.usuario.listTelefone !== null) {
+              this.usuario.listTelefone.push(this.telefone);
               //Vamos comentar a mensagem de sucesso, pois só vai salvar junto do usuário (cadastro pai)
-              // this.toastService.showSuccesso("Sucesso", "Telefone atualizado com sucesso!", 2000);
+              // this.toastService.showSuccesso("Sucesso", "Telefone cadastrado com sucesso!", 2000);
               //Caso for novo usuário (sem id ainda) envia como ZERO para não dar erro, não deixa NULL nessa referência de rota:
               this.router.navigate(["usuario-edit", this.usuario === undefined || this.usuario === null || this.usuario.id === undefined || this.usuario.id === null ? 0 : this.usuario.id]);
               //Limpa dados do telefone no Service:
               this.usuarioTelefoneService.limpaTelefonesMapUsuarioToken(localStorage.getItem("token"));
             }
           }
-        } else {
-          //Novo Registro:
-          if (this.usuario.listTelefone !== null) {
-            this.usuario.listTelefone.push(this.telefone);
-            //Vamos comentar a mensagem de sucesso, pois só vai salvar junto do usuário (cadastro pai)
-            // this.toastService.showSuccesso("Sucesso", "Telefone cadastrado com sucesso!", 2000);
-            //Caso for novo usuário (sem id ainda) envia como ZERO para não dar erro, não deixa NULL nessa referência de rota:
-            this.router.navigate(["usuario-edit", this.usuario === undefined || this.usuario === null || this.usuario.id === undefined || this.usuario.id === null ? 0 : this.usuario.id]);
-            //Limpa dados do telefone no Service:
-            this.usuarioTelefoneService.limpaTelefonesMapUsuarioToken(localStorage.getItem("token"));
-          }
         }
+
+        this.statusBarService.setShowStatusDialog(false);
+      });
+    } else {
+      this.statusBarService.setShowStatusDialog(false);
+    }
+  }
+
+  private validarSalvar(): boolean {
+    if (this.telefone != null) {
+      //Tipo:
+      if (this.telefone.tipo === null
+        || this.telefone.tipo.trim() === "") {
+        this.toastService.showWarning("Atenção", "* Tipo deve ser informado.", null);
+        return false;
       }
 
-      this.statusBarService.setShowStatusDialog(false);
-    });
+      //Número:
+      if (this.telefone.numero === null
+        || this.telefone.numero.trim() === "") {
+        this.toastService.showWarning("Atenção", "* Número deve ser informado.", null);
+        return false;
+      }
+    }
+    return true;
   }
 }

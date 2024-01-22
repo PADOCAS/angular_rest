@@ -28,6 +28,7 @@ import {UsuarioTelefoneService} from "../../../service/usuario-telefone.service"
 export class UsuarioFormComponent implements OnInit {
   usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
   mostrarSenha = false;
+
   constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router, private usuarioTelefoneService: UsuarioTelefoneService) {
   }
 
@@ -130,53 +131,57 @@ export class UsuarioFormComponent implements OnInit {
     this.statusBarService.setShowStatusDialog(true);
     this.toastService.limparMensagens();
 
-    setTimeout(() => {
-      if (this.usuario !== null) {
-        if (this.usuario.id !== null
-          && this.usuario.id.toString().trim() !== null) {
-          //Atualizando Registro:
-          this.usuarioService.editarUsuario(this.usuario)
-            .subscribe(data => {
-              //Limpa o cadastro para deixar pronto para salvar um novo registro se necessário:
-              // this.instanciaNovoRegistro();
-              this.toastService.showSuccesso("Sucesso", "Usuário atualizado com sucesso!", 2000);
-              this.router.navigate(["usuarioList"]);
-              this.statusBarService.setShowStatusDialog(false);
-            }, error => {
-              if (error.status !== null
-                && error.status === 403) {
-                //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
-                this.toastService.showErro("Erro ao salvar Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
-                this.router.navigate(["login"]);
-              } else {
-                this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);
-              }
-              this.statusBarService.setShowStatusDialog(false);
-            });
-        } else {
-          //Novo Registro:
-          this.usuarioService.saveUsuario(this.usuario)
-            .subscribe(data => {
-              //Limpa o cadastro para deixar pronto para salvar um novo registro se necessário:
-              // this.instanciaNovoRegistro();
-              this.toastService.showSuccesso("Sucesso", "Usuário salvo com sucesso!", 2000);
-              this.router.navigate(["usuarioList"]);
-              this.statusBarService.setShowStatusDialog(false);
-            }, error => {
-              if (error.status !== null
-                && error.status === 403) {
-                //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
-                this.toastService.showErro("Erro ao salvar Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
-                this.router.navigate(["login"]);
-              } else {
-                this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);
-              }
+    if (this.validarSalvar()) {
+      setTimeout(() => {
+        if (this.usuario !== null) {
+          if (this.usuario.id !== null
+            && this.usuario.id.toString().trim() !== null) {
+            //Atualizando Registro:
+            this.usuarioService.editarUsuario(this.usuario)
+              .subscribe(data => {
+                //Limpa o cadastro para deixar pronto para salvar um novo registro se necessário:
+                // this.instanciaNovoRegistro();
+                this.toastService.showSuccesso("Sucesso", "Usuário atualizado com sucesso!", 2000);
+                this.router.navigate(["usuarioList"]);
+                this.statusBarService.setShowStatusDialog(false);
+              }, error => {
+                if (error.status !== null
+                  && error.status === 403) {
+                  //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
+                  this.toastService.showErro("Erro ao salvar Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
+                  this.router.navigate(["login"]);
+                } else {
+                  this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);
+                }
+                this.statusBarService.setShowStatusDialog(false);
+              });
+          } else {
+            //Novo Registro:
+            this.usuarioService.saveUsuario(this.usuario)
+              .subscribe(data => {
+                //Limpa o cadastro para deixar pronto para salvar um novo registro se necessário:
+                // this.instanciaNovoRegistro();
+                this.toastService.showSuccesso("Sucesso", "Usuário salvo com sucesso!", 2000);
+                this.router.navigate(["usuarioList"]);
+                this.statusBarService.setShowStatusDialog(false);
+              }, error => {
+                if (error.status !== null
+                  && error.status === 403) {
+                  //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
+                  this.toastService.showErro("Erro ao salvar Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
+                  this.router.navigate(["login"]);
+                } else {
+                  this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);
+                }
 
-              this.statusBarService.setShowStatusDialog(false);
-            });
+                this.statusBarService.setShowStatusDialog(false);
+              });
+          }
         }
-      }
-    });
+      });
+    } else {
+      this.statusBarService.setShowStatusDialog(false);
+    }
   }
 
   public novo(): void {
@@ -299,4 +304,33 @@ export class UsuarioFormComponent implements OnInit {
   public mostrarOcultarSenha() {
     this.mostrarSenha = !this.mostrarSenha;
   }
+
+  private validarSalvar(): boolean {
+    if (this.usuario != null) {
+      //Nome:
+      if (this.usuario.nome === null
+        || this.usuario.nome.trim() === "") {
+        this.toastService.showWarning("Atenção", "* Nome deve ser informado.", null);
+        return false;
+      }
+
+      //Login:
+      if (this.usuario.login === null
+        || this.usuario.login.trim() === "") {
+        this.toastService.showWarning("Atenção", "* Login deve ser informado.", null);
+        return false;
+      }
+
+      //Senha:
+      if (this.usuario.id === null) {
+        if (this.usuario.senha === null
+          || this.usuario.senha.trim() === "") {
+          this.toastService.showWarning("Atenção", "* Senha deve ser informada.", null);
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
 }
