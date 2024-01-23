@@ -26,7 +26,8 @@ export class UsuarioComponent implements OnInit {
 
   usuarios: Usuario[] = [];
   nomePesquisa: string = "";
-  page = 1; // Inicialize com a página 1
+  page:number = 1; // Inicialize com a página 1
+  totalPages: number = 0;
 
   constructor(private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router) {
   }
@@ -39,7 +40,9 @@ export class UsuarioComponent implements OnInit {
   public carregarUsuariosCadastrados() {
     this.usuarioService.getListUsuarios()
       .subscribe(data => {
-        this.usuarios = data
+        //Pega o Page.content (que é a lista de usuário que foi paginada)
+        this.usuarios = data.content;
+        this.totalPages = data.totalElements;
       });
   }
 
@@ -116,5 +119,9 @@ export class UsuarioComponent implements OnInit {
     setTimeout(() => {
       this.statusBarService.setShowStatusDialog(false);
     });
+  }
+
+  public carregarPagina(pagina: number) {
+    console.log("Página: " + pagina);
   }
 }

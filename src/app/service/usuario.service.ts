@@ -17,8 +17,9 @@ export class UsuarioService {
    * Método responsável por listar todos os usuários cadastrados (../usuario/listall)
    *
    */
-  public getListUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(Constants.baseUrl + "listall");
+  public getListUsuarios(): Observable<any> {
+    //Retorna um Pageable com os Usuários:
+    return this.http.get<any>(Constants.baseUrl + "listall");
   }
 
   /**
@@ -31,6 +32,7 @@ export class UsuarioService {
   }
 
   public getListUsuarioPorNome(nome:string):Observable<Usuario[]> {
+    //Retorna um Pageable com os Usuários:
     return this.http.get<Usuario[]>(Constants.baseUrl + "usuariopornome/" + nome);
   }
 

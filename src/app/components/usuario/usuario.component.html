@@ -29,7 +29,7 @@
   </thead>
 
   <tbody>
-  <tr *ngFor="let usu of usuarios | paginate:{ itemsPerPage: 5, currentPage: page }">
+  <tr *ngFor="let usu of usuarios | paginate:{ itemsPerPage: 5, currentPage: page, totalItems: totalPages }">
     <td>{{ usu.id }}</td>
     <td>{{ usu.login }}</td>
     <td>{{ usu.nome }}</td>
@@ -50,7 +50,7 @@
 
 <div style="text-align: center;">
   <pagination-controls class="my-pagination"
-                       (pageChange)="page = $event"
+                       (pageChange)="carregarPagina(page = $event)"
                        previousLabel="Anterior"
                        nextLabel="Próxima"
                        [responsive]="true"
