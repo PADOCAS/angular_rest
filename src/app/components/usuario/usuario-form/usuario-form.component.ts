@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {MenuComponent} from "../../menu/menu.component";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {Usuario} from "../../../../model/usuario";
@@ -31,7 +31,7 @@ export class UsuarioFormComponent implements OnInit {
   usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
   mostrarSenha = false;
 
-  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router, private usuarioTelefoneService: UsuarioTelefoneService) {
+  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router, private usuarioTelefoneService: UsuarioTelefoneService, private elementRef: ElementRef) {
   }
 
   ngOnInit(): void {
@@ -62,6 +62,13 @@ export class UsuarioFormComponent implements OnInit {
           this.usuario = data;
           // console.log(this.usuario);
         });
+    }
+
+    if (this.elementRef !== null
+      && this.elementRef.nativeElement.querySelector('#txtNome') !== undefined
+      && this.elementRef.nativeElement.querySelector('#txtNome') !== null) {
+      //Dar Foco no campo Nome ao iniciar tela:
+      this.elementRef.nativeElement.querySelector('#txtNome').focus();
     }
   }
 

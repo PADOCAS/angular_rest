@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {Usuario} from "../../../model/usuario";
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     listRole: null
   }
 
-  constructor(private loginService: LoginService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router) {
+  constructor(private loginService: LoginService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router, private elementRef: ElementRef) {
   }
 
   ngOnInit(): void {
@@ -47,10 +47,19 @@ export class LoginComponent implements OnInit {
         && token.trim().length > 0) {
         //Caso exista o token já, vamos enviar para o Home:
         this.router.navigate(["home"]);
+      } else if (this.elementRef !== null
+        && this.elementRef.nativeElement.querySelector('#txtLogin') !== undefined
+        && this.elementRef.nativeElement.querySelector('#txtLogin') !== null) {
+        //Dar Foco no campo Login ao iniciar tela:
+        this.elementRef.nativeElement.querySelector('#txtLogin').focus();
       }
+    } else if (this.elementRef !== null
+      && this.elementRef.nativeElement.querySelector('#txtLogin') !== undefined
+      && this.elementRef.nativeElement.querySelector('#txtLogin') !== null) {
+      //Dar Foco no campo Login ao iniciar tela:
+      this.elementRef.nativeElement.querySelector('#txtLogin').focus();
     }
   }
-
   public loginEnterSenha() {
     if (this.validLogin()) {
       this.statusBarService.setShowStatusDialog(true);

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {Telefone} from "../../../../model/telefone";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {StatusBarService} from "../../../service/status-bar.service";
@@ -9,7 +9,6 @@ import {NgIf} from "@angular/common";
 import {Usuario} from "../../../../model/usuario";
 import {UsuarioTelefoneService} from "../../../service/usuario-telefone.service";
 import {NgxMaskDirective} from "ngx-mask";
-import {StringConcatBuiltinFn} from "@angular/compiler-cli/src/ngtsc/partial_evaluator/src/builtin";
 
 @Component({
   selector: 'app-usuario-telefone-form',
@@ -24,12 +23,12 @@ import {StringConcatBuiltinFn} from "@angular/compiler-cli/src/ngtsc/partial_eva
   templateUrl: './usuario-telefone-form.component.html',
   styleUrls: ['./usuario-telefone-form.component.css', './usuario-telefone-form.component.responsive.css']
 })
-export class UsuarioTelefoneFormComponent {
+export class UsuarioTelefoneFormComponent implements OnInit {
   telefone: Telefone = new Telefone(null, null, null);
   telefoneSelectVo: Telefone | any = null; //Guarda a instância que veio de edição
   usuario: Usuario | any;
 
-  constructor(private routeActive: ActivatedRoute, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router, private usuarioTelefoneService: UsuarioTelefoneService) {
+  constructor(private routeActive: ActivatedRoute, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router, private usuarioTelefoneService: UsuarioTelefoneService, private elementRef: ElementRef) {
     // console.log(this.usuarioTelefoneService.getListTelefoneSelectVo().get(localStorage.getItem("token")));
     // console.log(this.usuarioTelefoneService.getListTelefoneEditJson().get(localStorage.getItem("token")));
     // console.log(JSON.parse(this.usuarioTelefoneService.getListTelefoneEditJson().get(localStorage.getItem("token"))));
@@ -61,6 +60,15 @@ export class UsuarioTelefoneFormComponent {
         //Referência real do objeto usuário para manutenção
         this.usuario = this.usuarioTelefoneService.getListUsuario().get(localStorage.getItem("token"));
       }
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.elementRef !== null
+      && this.elementRef.nativeElement.querySelector('#selTelefoneTipo') !== undefined
+      && this.elementRef.nativeElement.querySelector('#selTelefoneTipo') !== null) {
+      //Dar Foco no campo Tipo ao iniciar tela:
+      this.elementRef.nativeElement.querySelector('#selTelefoneTipo').focus();
     }
   }
 
@@ -173,12 +181,12 @@ export class UsuarioTelefoneFormComponent {
         //Valida Número e tipo:
         switch (this.telefone.tipo) {
           case 'CELULAR':
-            if(this.telefone.numero.length !== 11) {
+            if (this.telefone.numero.length !== 11) {
               msgErro += "* Número inválido, deve ser informado no formato (99)99999-9999.";
             }
             break;
           default:
-            if(this.telefone.numero.length !== 10) {
+            if (this.telefone.numero.length !== 10) {
               msgErro += "* Número inválido, deve ser informado no formato (99)9999-9999.";
             }
             break;
