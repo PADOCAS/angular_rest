@@ -13,3 +13,11 @@ table tbody tr {
 .inputGrande {
   width: 500px;
 }
+
+.ngx-pagination {
+  padding-inline-start: 0 !important;
+}
+
+.my-pagination ::ng-deep .ngx-pagination .current {
+  background: red;
+}

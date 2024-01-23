@@ -11,6 +11,7 @@ import {ToastService} from "./service/toast.service";
 import {RouterGuard} from "./guard/router.guard";
 import {UsuarioTelefoneService} from "./service/usuario-telefone.service";
 import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [],
@@ -19,9 +20,11 @@ import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
     FormsModule,
     HttpClientModule,
     NgbToastModule,
-    //Imports para máscara em nosso sistema, exemplo número telefone
+    //Imports para máscara em nosso sistema, exemplo número telefone:
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
+    //Import para paginator:
+    NgxPaginationModule
   ],
   providers: [
     //Vamos prover o uso do LoginService e também UsuarioService para os componentes do módulo:

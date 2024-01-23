@@ -3,13 +3,18 @@
 
 <form class="row g-3" style="padding: 10px; width: 100%;">
   <div class="col-auto">
-    <input id="txtNomePesquisa" name="nomePesquisa" [(ngModel)]="nomePesquisa" type="text" class="form-control inputGrande" maxlength="100" placeholder="Pesquisa Usuário por Nome">
+    <input id="txtNomePesquisa" name="nomePesquisa" [(ngModel)]="nomePesquisa" type="text"
+           class="form-control inputGrande" maxlength="100" placeholder="Pesquisa Usuário por Nome">
   </div>
   <div class="col-auto">
-    <button type="button" (click)="consultaUsuariosPorNome();" (keydown.enter)="consultaUsuariosPorNome();" class="btn btn-primary mb-2">Pesquisar</button>
+    <button type="button" (click)="consultaUsuariosPorNome();" (keydown.enter)="consultaUsuariosPorNome();"
+            class="btn btn-primary mb-2">Pesquisar
+    </button>
   </div>
   <div class="col-auto">
-    <button type="button" [routerLink]="['/usuario-add']" (click)="novo();" (keydown.enter)="novo();" class="btn btn-secondary mb-2">Novo</button>
+    <button type="button" [routerLink]="['/usuario-add']" (click)="novo();" (keydown.enter)="novo();"
+            class="btn btn-secondary mb-2">Novo
+    </button>
   </div>
 </form>
 
@@ -24,17 +29,30 @@
   </thead>
 
   <tbody>
-  <tr *ngFor="let usu of usuarios">
+  <tr *ngFor="let usu of usuarios | paginate:{ itemsPerPage: 5, currentPage: page }">
     <td>{{ usu.id }}</td>
     <td>{{ usu.login }}</td>
     <td>{{ usu.nome }}</td>
     <!-- Editar vai ficar em rota abrindo outra tela (passa parâmetro id para rota) -->
     <td style="text-align: center;">
-      <button [routerLink]="['/usuario-edit', usu.id]" (click)="editUsuario();" (keydown.enter)="editUsuario();" class="btn btn-warning">Editar</button>
+      <button [routerLink]="['/usuario-edit', usu.id]" (click)="editUsuario();" (keydown.enter)="editUsuario();"
+              class="btn btn-warning">Editar
+      </button>
     </td>
     <td style="text-align: center;">
-      <button class="btn btn-primary" (click)="deleteUsuario(usu.id);" (keydown.enter)="deleteUsuario(usu.id);">Excluir</button>
+      <button class="btn btn-primary" (click)="deleteUsuario(usu.id);" (keydown.enter)="deleteUsuario(usu.id);">
+        Excluir
+      </button>
     </td>
   </tr>
   </tbody>
 </table>
+
+<div style="text-align: center;">
+  <pagination-controls class="my-pagination"
+                       (pageChange)="page = $event"
+                       previousLabel="Anterior"
+                       nextLabel="Próxima"
+                       [responsive]="true"
+  ></pagination-controls>
+</div>

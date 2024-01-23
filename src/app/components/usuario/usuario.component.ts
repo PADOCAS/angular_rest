@@ -7,6 +7,7 @@ import {FormsModule} from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
 import {StatusBarService} from "../../service/status-bar.service";
 import {ToastService} from "../../service/toast.service";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @Component({
   selector: 'app-usuario',
@@ -15,7 +16,8 @@ import {ToastService} from "../../service/toast.service";
     NgForOf,
     MenuComponent,
     FormsModule,
-    RouterLink
+    RouterLink,
+    NgxPaginationModule
   ],
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.css', './usuario.component.responsive.css']
@@ -24,6 +26,7 @@ export class UsuarioComponent implements OnInit {
 
   usuarios: Usuario[] = [];
   nomePesquisa: string = "";
+  page = 1; // Inicialize com a página 1
 
   constructor(private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router) {
   }
