@@ -38,6 +38,10 @@ export class UsuarioComponent implements OnInit {
   }
 
   public carregarUsuariosCadastrados() {
+    //Sempre que for carregar reseta a página e totalUsuarios para bater no banco novamente e carregar os dados atualizados:
+    this.page = 0; // Inicialize com a página 0
+    this.totalUsuariosPaginacao = 0;
+
     this.usuarioService.getListUsuarios()
       .subscribe(data => {
         //Pega o Page.content (que é a lista de usuário que foi paginada)
