@@ -23,6 +23,16 @@ export class UsuarioService {
   }
 
   /**
+   * Método responsável por listar todos os usuários para a página (../usuario/page/...)
+   *
+   * @param page (number)
+   */
+  public getPageUsuarios(page: number): Observable<any> {
+    //Retorna um Page com os usuários:
+    return this.http.get<any>(Constants.baseUrl + "page/" + page);
+  }
+
+  /**
    * Método responsável para chamar o delete Usuario da API (../usuario/{id})
    *
    * @param id (id do usuário -> number)
@@ -31,12 +41,12 @@ export class UsuarioService {
     return this.http.delete(Constants.baseUrl + id, {responseType: "text"});
   }
 
-  public getListUsuarioPorNome(nome:string):Observable<Usuario[]> {
+  public getListUsuarioPorNome(nome: string): Observable<Usuario[]> {
     //Retorna um Pageable com os Usuários:
     return this.http.get<Usuario[]>(Constants.baseUrl + "usuariopornome/" + nome);
   }
 
-  public getUsuario(id:number):Observable<any> {
+  public getUsuario(id: number): Observable<any> {
     //Método para retornar por ID está versionado na API, devemos pegar o que retorna todas as informações do VO!
     //Deve ser passado no header o parâmetro para API (X-API-Version=v1)
     const headers = {
@@ -63,7 +73,7 @@ export class UsuarioService {
    * Consulta API VIACEP para buscar o cep informado
    * @param cep
    */
-  public getConsultaCep(cep:string):Observable<any> {
+  public getConsultaCep(cep: string): Observable<any> {
     //Consulta CEP API VIACEP - JSON
     return this.http.get<ViaCep>(Constants.viaCepUrl + cep + "/json/");
   }
@@ -72,7 +82,7 @@ export class UsuarioService {
    * Salvar Usuario (POST)
    * @param usuario
    */
-  public saveUsuario(usuario:Usuario):Observable<any> {
+  public saveUsuario(usuario: Usuario): Observable<any> {
     return this.http.post<Usuario>(Constants.baseUrl, usuario);
   }
 
@@ -80,9 +90,9 @@ export class UsuarioService {
    * Editar Usuario (PUT)
    * @param usuario
    */
-  public editarUsuario(usuario:Usuario):Observable<any> {
+  public editarUsuario(usuario: Usuario): Observable<any> {
     //Convertendo para um novo objeto e enviando para API (para não enviar com informações de ROLE etc.. que vieram do FIND, deixamos o objeto apenas com o necessário antes de editar!)
-    let usuarioPutCharged:Usuario = new Usuario(usuario.id, usuario.login,usuario.senha,usuario.nome, usuario.cep, usuario.bairro,usuario.localidade, usuario.logradouro, usuario.complemento, usuario.uf, usuario.listTelefone, usuario.listRole);
+    let usuarioPutCharged: Usuario = new Usuario(usuario.id, usuario.login, usuario.senha, usuario.nome, usuario.cep, usuario.bairro, usuario.localidade, usuario.logradouro, usuario.complemento, usuario.uf, usuario.listTelefone, usuario.listRole);
     return this.http.put<Usuario>(Constants.baseUrl, usuarioPutCharged);
   }
 }

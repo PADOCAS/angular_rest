@@ -26,8 +26,8 @@ export class UsuarioComponent implements OnInit {
 
   usuarios: Usuario[] = [];
   nomePesquisa: string = "";
-  page:number = 1; // Inicialize com a página 1
-  totalPages: number = 0;
+  page: number = 0; // Inicialize com a página 0
+  totalUsuariosPaginacao: number = 0;
 
   constructor(private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router) {
   }
@@ -42,7 +42,7 @@ export class UsuarioComponent implements OnInit {
       .subscribe(data => {
         //Pega o Page.content (que é a lista de usuário que foi paginada)
         this.usuarios = data.content;
-        this.totalPages = data.totalElements;
+        this.totalUsuariosPaginacao = data.totalElements;
       });
   }
 
@@ -122,6 +122,13 @@ export class UsuarioComponent implements OnInit {
   }
 
   public carregarPagina(pagina: number) {
-    console.log("Página: " + pagina);
+    // console.log("Página: " + pagina);
+    //Paginação deve pegar a pagina - 1 para fazer a consulta correta la na API (começa no índice ZERO)
+    this.usuarioService.getPageUsuarios(pagina - 1)
+      .subscribe(data => {
+        //Pega o Page.content (que é a lista de usuário que foi paginada)
+        this.usuarios = data.content;
+        this.totalUsuariosPaginacao = data.totalElements;
+      });
   }
 }

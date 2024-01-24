@@ -19,7 +19,7 @@
 </form>
 
 <table class="table table-striped">
-  <caption>{{ usuarios == null || usuarios.length == 0 ? 'Nenhum Usuário cadastrado' : usuarios.length + ' usuário(s) listado(s).' }}</caption>
+  <caption>{{ totalUsuariosPaginacao == null || totalUsuariosPaginacao == 0 ? 'Nenhum Usuário cadastrado' : totalUsuariosPaginacao + ' usuário(s) listado(s).' }}</caption>
   <thead>
   <th scope="col">ID</th>
   <th scope="col">Login</th>
@@ -29,7 +29,7 @@
   </thead>
 
   <tbody>
-  <tr *ngFor="let usu of usuarios | paginate:{ itemsPerPage: 5, currentPage: page, totalItems: totalPages }">
+  <tr *ngFor="let usu of usuarios | paginate:{ itemsPerPage: 5, currentPage: page, totalItems: totalUsuariosPaginacao }">
     <td>{{ usu.id }}</td>
     <td>{{ usu.login }}</td>
     <td>{{ usu.nome }}</td>
