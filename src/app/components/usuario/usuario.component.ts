@@ -69,7 +69,7 @@ export class UsuarioComponent implements OnInit {
             this.page = 0; // Inicialize com a página 0
             this.totalUsuariosPaginacao = 0;
 
-              if (this.nomePesquisa != null
+              if (this.nomePesquisa !== null
                 && this.nomePesquisa.trim() !== '') {
                 //Só utiliza a pesquisa por Nome se algo for digitado em tela!
                 this.usuarioService.getListUsuarioPorNome(this.nomePesquisa)
@@ -114,7 +114,7 @@ export class UsuarioComponent implements OnInit {
     this.totalUsuariosPaginacao = 0;
 
     setTimeout(() => {
-      if (this.nomePesquisa != null
+      if (this.nomePesquisa !== null
         && this.nomePesquisa.trim() !== '') {
         //Só utiliza a pesquisa por Nome se algo for digitado em tela!
         this.usuarioService.getListUsuarioPorNome(this.nomePesquisa)
