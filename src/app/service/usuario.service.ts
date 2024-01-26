@@ -41,9 +41,14 @@ export class UsuarioService {
     return this.http.delete(Constants.baseUrl + id, {responseType: "text"});
   }
 
-  public getListUsuarioPorNome(nome: string): Observable<Usuario[]> {
-    //Retorna um Pageable com os Usuários:
-    return this.http.get<Usuario[]>(Constants.baseUrl + "usuariopornome/" + nome);
+  public getListUsuarioPorNome(nome: string): Observable<any> {
+    //Retorna um Page com os Usuários filtrados por nome:
+    return this.http.get<any>(Constants.baseUrl + "usuariopornome/" + nome);
+  }
+
+  public getPageUsuarioPorNome(nome:string, page:number):Observable<any> {
+    //Retorna um Page com os Usuários filtrados por nome para a página que o usuário vai navegar:
+    return this.http.get<any>(Constants.baseUrl + "pageusuariopornome/" + page + "/" + nome);
   }
 
   public getUsuario(id: number): Observable<any> {

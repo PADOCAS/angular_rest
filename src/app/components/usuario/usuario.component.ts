@@ -62,9 +62,33 @@ export class UsuarioComponent implements OnInit {
           .subscribe(data => {
             // console.log("Retorno do método delete: " + data);
             //Após deletar, recarrega a lista de usuário para atualizar a tela!
-            this.carregarUsuariosCadastrados();
-            this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
-            this.statusBarService.setShowStatusDialog(false);
+            // Não vamos fazer assim, vamos deixar o nomePesquisa preenchido e apenas refazer a consulta por nome
+            // this.nomePesquisa = "";
+            // this.carregarUsuariosCadastrados();
+
+            this.page = 0; // Inicialize com a página 0
+            this.totalUsuariosPaginacao = 0;
+
+              if (this.nomePesquisa != null
+                && this.nomePesquisa.trim() !== '') {
+                //Só utiliza a pesquisa por Nome se algo for digitado em tela!
+                this.usuarioService.getListUsuarioPorNome(this.nomePesquisa)
+                  .subscribe(data => {
+                    //Pega o Page.content (que é a lista de usuário que foi paginada)
+                    this.usuarios = data.content;
+                    this.totalUsuariosPaginacao = data.totalElements;
+
+                    this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
+                    this.statusBarService.setShowStatusDialog(false);
+                  }, error => {
+                    this.toastService.showErro("Erro ao consultar Usuário por Nome", error.message, null, error.error);
+                    this.statusBarService.setShowStatusDialog(false);
+                  });
+              } else {
+                this.carregarUsuariosCadastrados();
+                this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
+                this.statusBarService.setShowStatusDialog(false);
+              }
           }, error => {
             if (error.status !== null
               && error.status === 403) {
@@ -86,13 +110,19 @@ export class UsuarioComponent implements OnInit {
     this.statusBarService.setShowStatusDialog(true);
     this.toastService.limparMensagens();
 
+    this.page = 0; // Inicialize com a página 0
+    this.totalUsuariosPaginacao = 0;
+
     setTimeout(() => {
       if (this.nomePesquisa != null
         && this.nomePesquisa.trim() !== '') {
         //Só utiliza a pesquisa por Nome se algo for digitado em tela!
         this.usuarioService.getListUsuarioPorNome(this.nomePesquisa)
           .subscribe(data => {
-            this.usuarios = data;
+            //Pega o Page.content (que é a lista de usuário que foi paginada)
+            this.usuarios = data.content;
+            this.totalUsuariosPaginacao = data.totalElements;
+
             this.statusBarService.setShowStatusDialog(false);
           }, error => {
             this.toastService.showErro("Erro ao consultar Usuário", error.message, null, error.error);
@@ -125,14 +155,43 @@ export class UsuarioComponent implements OnInit {
     });
   }
 
+  /**
+   * Método para carregar por página, pode ser por Filtro de nome ou sem, depende o que estiver preenchido no campo pesquisa por nome!
+   *
+   * @param pagina (number)
+   */
   public carregarPagina(pagina: number) {
     // console.log("Página: " + pagina);
-    //Paginação deve pegar a pagina - 1 para fazer a consulta correta la na API (começa no índice ZERO)
-    this.usuarioService.getPageUsuarios(pagina - 1)
-      .subscribe(data => {
-        //Pega o Page.content (que é a lista de usuário que foi paginada)
-        this.usuarios = data.content;
-        this.totalUsuariosPaginacao = data.totalElements;
-      });
+    //StatusDialog globalizado!
+    this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
+
+    setTimeout(() => {
+      if (this.nomePesquisa != null
+        && this.nomePesquisa.trim() !== '') {
+        //Só utiliza a pesquisa por Nome se algo for digitado em tela!
+        this.usuarioService.getPageUsuarioPorNome(this.nomePesquisa, pagina - 1)
+          .subscribe(data => {
+            //Pega o Page.content (que é a lista de usuário que foi paginada)
+            this.usuarios = data.content;
+            this.totalUsuariosPaginacao = data.totalElements;
+
+            this.statusBarService.setShowStatusDialog(false);
+          }, error => {
+            this.toastService.showErro("Erro ao consultar Usuário", error.message, null, error.error);
+            this.statusBarService.setShowStatusDialog(false);
+          });
+      } else {
+        //Paginação deve pegar a pagina - 1 para fazer a consulta correta la na API (começa no índice ZERO)
+        this.usuarioService.getPageUsuarios(pagina - 1)
+          .subscribe(data => {
+            //Pega o Page.content (que é a lista de usuário que foi paginada)
+            this.usuarios = data.content;
+            this.totalUsuariosPaginacao = data.totalElements;
+
+            this.statusBarService.setShowStatusDialog(false);
+          });
+      }
+    });
   }
 }
