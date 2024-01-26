@@ -66,29 +66,82 @@ export class UsuarioComponent implements OnInit {
             // this.nomePesquisa = "";
             // this.carregarUsuariosCadastrados();
 
-            this.page = 0; // Inicialize com a página 0
-            this.totalUsuariosPaginacao = 0;
+            //Retira isso, vamos respeitar a página que o usuário estava e o total que trará da nova consulta após a ação de deletar!
+            // this.page = 0; // Inicialize com a página 0
+            // this.totalUsuariosPaginacao = 0;
 
-              if (this.nomePesquisa !== null
-                && this.nomePesquisa.trim() !== '') {
-                //Só utiliza a pesquisa por Nome se algo for digitado em tela!
-                this.usuarioService.getListUsuarioPorNome(this.nomePesquisa)
-                  .subscribe(data => {
-                    //Pega o Page.content (que é a lista de usuário que foi paginada)
+            if (this.nomePesquisa !== null
+              && this.nomePesquisa.trim() !== '') {
+              //Só utiliza a pesquisa por Nome se algo for digitado em tela!
+              this.usuarioService.getPageUsuarioPorNome(this.nomePesquisa, this.page - 1)
+                .subscribe(data => {
+                  //Verifica se ao deletar, a página não existe mais, ai retorna para página anterior (máxima disponível):
+                  if (data.content !== null
+                    && data.content.length === 0
+                    && data.totalPages !== null
+                    && data.totalPages > 0
+                    && this.page > data.totalPages) {
+                    //Joga para última página disponível:
+                    this.page = data.totalPages;
+
+                    this.usuarioService.getPageUsuarioPorNome(this.nomePesquisa, this.page - 1)
+                      .subscribe(data => {
+                        //Pega o Page.content (que é a lista de usuário que foi paginada)
+                        this.usuarios = data.content;
+                        this.totalUsuariosPaginacao = data.totalElements;
+
+                        this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
+                        this.statusBarService.setShowStatusDialog(false);
+                      }, error => {
+                        this.toastService.showErro("Erro ao consultar Usuário", error.message, null, error.error);
+                        this.statusBarService.setShowStatusDialog(false);
+                      });
+                  } else {
                     this.usuarios = data.content;
                     this.totalUsuariosPaginacao = data.totalElements;
 
                     this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
                     this.statusBarService.setShowStatusDialog(false);
-                  }, error => {
-                    this.toastService.showErro("Erro ao consultar Usuário por Nome", error.message, null, error.error);
+                  }
+                }, error => {
+                  this.toastService.showErro("Erro ao consultar Usuário por Nome", error.message, null, error.error);
+                  this.statusBarService.setShowStatusDialog(false);
+                });
+            } else {
+              //Paginação deve pegar a pagina - 1 para fazer a consulta correta la na API (começa no índice ZERO)
+              this.usuarioService.getPageUsuarios(this.page - 1)
+                .subscribe(data => {
+                  //Pega o Page.content (que é a lista de usuário que foi paginada)
+                  //Verifica se ao deletar, a página não existe mais, ai retorna para página anterior (máxima disponível):
+                  if (data.content !== null
+                    && data.content.length === 0
+                    && data.totalPages !== null
+                    && data.totalPages > 0
+                    && this.page > data.totalPages) {
+                    //Joga para última página disponível:
+                    this.page = data.totalPages;
+
+                    this.usuarioService.getPageUsuarios(this.page - 1)
+                      .subscribe(data => {
+                        //Pega o Page.content (que é a lista de usuário que foi paginada)
+                        this.usuarios = data.content;
+                        this.totalUsuariosPaginacao = data.totalElements;
+
+                        this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
+                        this.statusBarService.setShowStatusDialog(false);
+                      }, error => {
+                        this.toastService.showErro("Erro ao consultar Usuário", error.message, null, error.error);
+                        this.statusBarService.setShowStatusDialog(false);
+                      });
+                  } else {
+                    this.usuarios = data.content;
+                    this.totalUsuariosPaginacao = data.totalElements;
+
+                    this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
                     this.statusBarService.setShowStatusDialog(false);
-                  });
-              } else {
-                this.carregarUsuariosCadastrados();
-                this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
-                this.statusBarService.setShowStatusDialog(false);
-              }
+                  }
+                });
+            }
           }, error => {
             if (error.status !== null
               && error.status === 403) {
