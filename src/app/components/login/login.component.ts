@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
     logradouro: null,
     complemento: null,
     uf: null,
+    dataNascimento: null,
     listTelefone: null,
     listRole: null
   }

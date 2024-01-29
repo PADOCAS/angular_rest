@@ -6,7 +6,7 @@ import {LoginService} from "./service/login.service";
 import {HeaderInterceptorService} from "./service/header-interceptor.service";
 import {UsuarioService} from "./service/usuario.service";
 import {StatusBarService} from "./service/status-bar.service";
-import {NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule, NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
 import {ToastService} from "./service/toast.service";
 import {RouterGuard} from "./guard/router.guard";
 import {UsuarioTelefoneService} from "./service/usuario-telefone.service";
@@ -24,7 +24,9 @@ import {NgxPaginationModule} from "ngx-pagination";
     NgxMaskDirective,
     NgxMaskPipe,
     //Import para paginator:
-    NgxPaginationModule
+    NgxPaginationModule,
+    //Importa para datePicker ng bootstrap:
+    NgbModule
   ],
   providers: [
     //Vamos prover o uso do LoginService e também UsuarioService para os componentes do módulo:
