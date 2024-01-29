@@ -8,6 +8,7 @@ import {Router, RouterLink} from "@angular/router";
 import {StatusBarService} from "../../service/status-bar.service";
 import {ToastService} from "../../service/toast.service";
 import {NgxPaginationModule} from "ngx-pagination";
+import {catchError, of, switchMap, tap} from "rxjs";
 
 @Component({
   selector: 'app-usuario',
@@ -39,7 +40,7 @@ export class UsuarioComponent implements OnInit {
 
   public carregarUsuariosCadastrados() {
     //Sempre que for carregar reseta a página e totalUsuarios para bater no banco novamente e carregar os dados atualizados:
-    this.page = 0; // Inicialize com a página 0
+    this.page = 1; // Inicialize com a página 1
     this.totalUsuariosPaginacao = 0;
 
     this.usuarioService.getListUsuarios()
@@ -50,7 +51,82 @@ export class UsuarioComponent implements OnInit {
       });
   }
 
-  public deleteUsuario(id: number) {
+  /**
+   * Método deleteUsuario com código limpo, deixando tudo esclarescido, melhor entendível e programável
+   *
+   * @param id (number)
+   */
+  public deleteUsuario(id: number): void {
+    //Mensagem de confirmação para realizar a exclusão do registro:
+    if (confirm("Confirma a exclusão do Usuário?")) {
+      //StatusDialog globalizado!
+      this.statusBarService.setShowStatusDialog(true);
+      this.toastService.limparMensagens();
+
+      //pipe: Encadear operações em observáveis.
+      //switchMap: Para encadear as chamadas de API de acordo com a lógica condicional (se há um nome de pesquisa ou não)
+      //catchError: Tratamos erros.
+      //of: Para criar um novo observável com base nos dados recebidos.
+      //tap: para executar ações secundárias (como atribuir valores às variáveis e exibir mensagens de sucesso).
+      //subscribe final: Apenas para tratar exception, caso tiver.
+      this.usuarioService.deleteUsuario(id).pipe(
+        switchMap(() => {
+          if (this.nomePesquisa
+            && this.nomePesquisa.trim() !== '') {
+            return this.usuarioService.getPageUsuarioPorNome(this.nomePesquisa, this.page - 1);
+          } else {
+            return this.usuarioService.getPageUsuarios(this.page - 1);
+          }
+        }), catchError(error => {
+          if (error.status === 403) {
+            this.toastService.showErro("Erro ao excluir Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
+            this.router.navigate(["login"]);
+          } else {
+            this.toastService.showErro("Erro ao excluir Usuário", error.message, null, error.error);
+          }
+          throw error;
+        }), switchMap(data => {
+          if (data.content !== null && data.content.length === 0 && data.totalPages !== null && data.totalPages > 0 && this.page > data.totalPages) {
+            this.page = data.totalPages;
+
+            if (this.nomePesquisa
+              && this.nomePesquisa.trim() !== '') {
+              return this.usuarioService.getPageUsuarioPorNome(this.nomePesquisa, this.page - 1);
+            } else {
+              return this.usuarioService.getPageUsuarios(this.page - 1);
+            }
+          } else {
+            return of(data);
+          }
+        }), tap(data => {
+          this.usuarios = data.content;
+          this.totalUsuariosPaginacao = data.totalElements;
+          this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
+          this.statusBarService.setShowStatusDialog(false);
+        })
+      ).subscribe(
+        () => {
+        },
+        error => {
+          if (error.status !== 403) {
+            if (this.nomePesquisa
+              && this.nomePesquisa.trim() !== '') {
+              this.toastService.showErro("Erro ao consultar Usuário por Nome", error.message, null, error.error);
+            } else {
+              this.toastService.showErro("Erro ao consultar Usuário", error.message, null, error.error);
+            }
+          }
+          this.statusBarService.setShowStatusDialog(false);
+        }
+      );
+    }
+  }
+
+  /**
+   * Método deleteUsuario sem aprimorá-lo de forma mais limpa
+   * @param id (number)
+   */
+  public deleteUsuarioAntesSemDeixarOMetodoMaisEnxuto(id: number) {
     //Mensagem de confirmação para realizar a exclusão do registro:
     if (confirm("Confirma a exclusão do Usuário?")) {
       //StatusDialog globalizado!
@@ -67,7 +143,7 @@ export class UsuarioComponent implements OnInit {
             // this.carregarUsuariosCadastrados();
 
             //Retira isso, vamos respeitar a página que o usuário estava e o total que trará da nova consulta após a ação de deletar!
-            // this.page = 0; // Inicialize com a página 0
+            // this.page = 1; // Inicialize com a página 0
             // this.totalUsuariosPaginacao = 0;
 
             if (this.nomePesquisa !== null
@@ -163,7 +239,7 @@ export class UsuarioComponent implements OnInit {
     this.statusBarService.setShowStatusDialog(true);
     this.toastService.limparMensagens();
 
-    this.page = 0; // Inicialize com a página 0
+    this.page = 1; // Inicialize com a página 1
     this.totalUsuariosPaginacao = 0;
 
     setTimeout(() => {
