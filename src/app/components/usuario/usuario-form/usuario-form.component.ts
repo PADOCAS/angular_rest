@@ -11,6 +11,9 @@ import {ToastService} from "../../../service/toast.service";
 import {Telefone} from "../../../../model/telefone";
 import {UsuarioTelefoneService} from "../../../service/usuario-telefone.service";
 import {NgxMaskPipe} from "ngx-mask";
+import {NgbDate, NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-usuario-form',
@@ -22,7 +25,9 @@ import {NgxMaskPipe} from "ngx-mask";
     NgIf,
     NgClass,
     NgForOf,
-    NgxMaskPipe
+    NgxMaskPipe,
+    NgbInputDatepicker,
+    FaIconComponent
   ],
   templateUrl: './usuario-form.component.html',
   styleUrls: ['./usuario-form.component.css', './usuario-form.component.responsive.css']
@@ -344,7 +349,7 @@ export class UsuarioFormComponent implements OnInit {
             msgErro += "\n";
           }
           msgErro += "* Senha deve ser informada.";
-        } else if(this.usuario.senha.length < 3) {
+        } else if (this.usuario.senha.length < 3) {
           if (msgErro.length > 0) {
             msgErro += "\n";
           }
@@ -361,7 +366,7 @@ export class UsuarioFormComponent implements OnInit {
     return true;
   }
 
-  public getTelefoneMask(telefone:Telefone): string {
+  public getTelefoneMask(telefone: Telefone): string {
     if (telefone !== null
       && telefone.tipo !== undefined
       && telefone.tipo !== null
@@ -378,4 +383,5 @@ export class UsuarioFormComponent implements OnInit {
     return '';
   }
 
+  protected readonly faCalendarAlt = faCalendarAlt;
 }

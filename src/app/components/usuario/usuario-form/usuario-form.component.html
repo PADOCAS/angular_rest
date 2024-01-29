@@ -66,6 +66,33 @@
         </div>
       </div>
     </div>
+    <div class="row g-8" style="max-width: 100%;">
+      <div class="col-md-4">
+        <label id="lblDataNascimento" for="txtDataNascimento">Data Nascimento</label>
+        <div class="input-group">
+          <input id="txtDataNascimento" [(ngModel)]="usuario.dataNascimento" name="dataNascimento" type="text" class="form-control"
+                 placeholder="dd/MM/yyyy"
+                 [dayTemplate]="customDay"
+                 [positionTarget]="btnCalendarDataNascimento"
+                 ngbDatepicker #datePickerDataNascimento="ngbDatepicker"
+                 autocomplete="false">
+          <button #btnCalendarDataNascimento class="btn btn-outline-secondary" (click)="datePickerDataNascimento.toggle();" type="button">
+            <fa-icon [icon]="faCalendarAlt"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label id="lblCpf" for="txtCpf">CPF</label>
+        <div>
+          <input id="txtCpf"
+                 type="text"
+                 class="form-control"
+                 autocomplete="false"
+                 maxlength="11">
+        </div>
+      </div>
+    </div>
+
     <div class="mb-2">
       <div class="col-md-1">
         <label id="lblCep" for="txtCep">CEP</label>
@@ -175,3 +202,23 @@
     </div>
   </form>
 </div>
+
+<!--Todo: Avançar convertendo para portugues esse calendar:-->
+<ng-template
+  #customDay
+  let-date
+  let-currentMonth="currentMonth"
+  let-selected="selected"
+  let-disabled="disabled"
+  let-focused="focused"
+>
+	<span
+    class="custom-day"
+    [class.focused]="focused"
+    [class.bg-primary]="selected"
+    [class.hidden]="date.month !== currentMonth"
+    [class.text-muted]="disabled"
+  >
+		{{ date.day }}
+	</span>
+</ng-template>
