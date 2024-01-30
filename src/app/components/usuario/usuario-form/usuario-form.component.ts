@@ -11,9 +11,10 @@ import {ToastService} from "../../../service/toast.service";
 import {Telefone} from "../../../../model/telefone";
 import {UsuarioTelefoneService} from "../../../service/usuario-telefone.service";
 import {NgxMaskPipe} from "ngx-mask";
-import {NgbDate, NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
+import {NgbDateParserFormatter, NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
+import {FormatData} from "../../../../util/FormatData";
 
 @Component({
   selector: 'app-usuario-form',
@@ -29,6 +30,14 @@ import {faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
     NgbInputDatepicker,
     FaIconComponent
   ],
+  //Prove as classes para trabalhar com Formatação de Data pt-Br
+  providers: [
+    [{provide: NgbDateParserFormatter, useClass: FormatData}],
+  ],
+  // providers: [
+  //   [I18n, {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n}],
+  //   [{provide: NgbDateParserFormatter, useClass: NgbDatePTParserFormatter}],
+  // ],
   templateUrl: './usuario-form.component.html',
   styleUrls: ['./usuario-form.component.css', './usuario-form.component.responsive.css']
 })

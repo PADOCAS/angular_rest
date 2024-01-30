@@ -1,4 +1,4 @@
-<app-menu></app-menu>
+<app-menu xmlns:weekdays="http://www.w3.org/1999/xhtml"></app-menu>
 
 <div class="card" style="margin-top: 10px;">
   <div style="padding-left: 10px; padding-right: 10px; padding-top: 10px;">
@@ -72,11 +72,10 @@
         <div class="input-group">
           <input id="txtDataNascimento" [(ngModel)]="usuario.dataNascimento" name="dataNascimento" type="text" class="form-control"
                  placeholder="dd/MM/yyyy"
-                 [dayTemplate]="customDay"
                  [positionTarget]="btnCalendarDataNascimento"
                  ngbDatepicker #datePickerDataNascimento="ngbDatepicker"
                  autocomplete="false">
-          <button #btnCalendarDataNascimento class="btn btn-outline-secondary" (click)="datePickerDataNascimento.toggle();" type="button">
+          <button style="background-color: #B0C4DE;" #btnCalendarDataNascimento class="btn btn-outline-secondary" (click)="datePickerDataNascimento.toggle();" type="button">
             <fa-icon [icon]="faCalendarAlt"></fa-icon>
           </button>
         </div>
@@ -202,23 +201,3 @@
     </div>
   </form>
 </div>
-
-<!--Todo: Avançar convertendo para portugues esse calendar:-->
-<ng-template
-  #customDay
-  let-date
-  let-currentMonth="currentMonth"
-  let-selected="selected"
-  let-disabled="disabled"
-  let-focused="focused"
->
-	<span
-    class="custom-day"
-    [class.focused]="focused"
-    [class.bg-primary]="selected"
-    [class.hidden]="date.month !== currentMonth"
-    [class.text-muted]="disabled"
-  >
-		{{ date.day }}
-	</span>
-</ng-template>
