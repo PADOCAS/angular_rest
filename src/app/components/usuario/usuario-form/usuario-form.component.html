@@ -1,4 +1,4 @@
-<app-menu xmlns:weekdays="http://www.w3.org/1999/xhtml"></app-menu>
+<app-menu></app-menu>
 
 <div class="card" style="margin-top: 10px;">
   <div style="padding-left: 10px; padding-right: 10px; padding-top: 10px;">
@@ -57,7 +57,8 @@
         <label id="lblSenha" for="txtSenha">Senha</label>
 
         <div class="input-group">
-          <input id="txtSenha" [(ngModel)]="usuario.senha" name="senha" [type]="mostrarSenha ? 'text' : 'password'" class="form-control"
+          <input id="txtSenha" [(ngModel)]="usuario.senha" name="senha" [type]="mostrarSenha ? 'text' : 'password'"
+                 class="form-control"
                  #senhaValidate="ngModel"
                  required="required" autocomplete="false" maxlength="30">
           <button class="btn btn-outline-secondary" type="button" id="btnMostrarSenha" (click)="mostrarOcultarSenha()">
@@ -70,12 +71,16 @@
       <div class="col-md-4">
         <label id="lblDataNascimento" for="txtDataNascimento">Data Nascimento</label>
         <div class="input-group">
-          <input id="txtDataNascimento" [(ngModel)]="usuario.dataNascimento" name="dataNascimento" type="text" class="form-control"
+          <input id="txtDataNascimento" [(ngModel)]="usuario.dataNascimento" name="dataNascimento" type="text"
+                 class="form-control"
                  placeholder="dd/MM/yyyy"
                  [positionTarget]="btnCalendarDataNascimento"
+                 (focusout)="validatorUtil().isValidDate(usuario.dataNascimento, null)"
+                 maxlength="10"
                  ngbDatepicker #datePickerDataNascimento="ngbDatepicker"
                  autocomplete="false">
-          <button style="background-color: #B0C4DE;" #btnCalendarDataNascimento class="btn btn-outline-secondary" (click)="datePickerDataNascimento.toggle();" type="button">
+          <button style="background-color: #B0C4DE;" #btnCalendarDataNascimento class="btn btn-outline-secondary"
+                  (click)="datePickerDataNascimento.toggle();" type="button">
             <fa-icon [icon]="faCalendarAlt"></fa-icon>
           </button>
         </div>
@@ -157,7 +162,8 @@
         <div class="card text-start">
           <div class="card-header">
             <div class="mb-2" style="margin-bottom: 0 !important;">
-              <button type="button" class="btn btn-secondary mb-2" style="margin-bottom: 0 !important;" (click)="cadastrarNovoTelefone();"
+              <button type="button" class="btn btn-secondary mb-2" style="margin-bottom: 0 !important;"
+                      (click)="cadastrarNovoTelefone();"
                       (keydown.enter)="cadastrarNovoTelefone();">Novo
               </button>
             </div>

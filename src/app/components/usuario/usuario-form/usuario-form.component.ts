@@ -10,11 +10,14 @@ import {StatusBarService} from "../../../service/status-bar.service";
 import {ToastService} from "../../../service/toast.service";
 import {Telefone} from "../../../../model/telefone";
 import {UsuarioTelefoneService} from "../../../service/usuario-telefone.service";
-import {NgxMaskPipe} from "ngx-mask";
-import {NgbDateParserFormatter, NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
+import {NgxMaskDirective, NgxMaskPipe} from "ngx-mask";
+import {NgbDateAdapter, NgbDateParserFormatter, NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
 import {FormatData} from "../../../../util/FormatData";
+import {FormatDateAdapter} from "../../../../util/FormatDateAdapter";
+import {ValidatorUtilService} from "../../../service/validator-util.service";
+import {ErrorMessage} from "../../../../model/errorMessage";
 
 @Component({
   selector: 'app-usuario-form',
@@ -28,11 +31,16 @@ import {FormatData} from "../../../../util/FormatData";
     NgForOf,
     NgxMaskPipe,
     NgbInputDatepicker,
-    FaIconComponent
+    FaIconComponent,
+    NgxMaskDirective
   ],
   //Prove as classes para trabalhar com Formatação de Data pt-Br
   providers: [
-    [{provide: NgbDateParserFormatter, useClass: FormatData}],
+    [{
+      provide: NgbDateParserFormatter, useClass: FormatData
+    }, {
+      provide: NgbDateAdapter, useClass: FormatDateAdapter
+    }],
   ],
   // providers: [
   //   [I18n, {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n}],
@@ -45,7 +53,7 @@ export class UsuarioFormComponent implements OnInit {
   usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
   mostrarSenha = false;
 
-  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router, private usuarioTelefoneService: UsuarioTelefoneService, private elementRef: ElementRef) {
+  constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router, private usuarioTelefoneService: UsuarioTelefoneService, private elementRef: ElementRef, private validatorUtilService: ValidatorUtilService) {
   }
 
   ngOnInit(): void {
@@ -365,6 +373,18 @@ export class UsuarioFormComponent implements OnInit {
           msgErro += "* Senha deve ter no mínimo 3 caracteres.";
         }
       }
+
+      //Data Nascimento:
+      if (this.usuario.dataNascimento !== undefined
+        && this.usuario.dataNascimento !== null
+        && this.usuario.dataNascimento.trim() !== "") {
+        //Cria um Objeto e passa a msg dentro para tratar caso der erro, acessar a msg atualizada!
+        //Caso mandar apenas a msg para o método será outra referência!
+        let errorMsgAux:ErrorMessage = new ErrorMessage(msgErro);
+        if(!this.validatorUtilService.isValidDate(this.usuario.dataNascimento, errorMsgAux)) {
+          msgErro = errorMsgAux.msg;
+        }
+      }
     }
 
     if (msgErro.length > 0) {
@@ -392,5 +412,10 @@ export class UsuarioFormComponent implements OnInit {
     return '';
   }
 
+  public validatorUtil(): ValidatorUtilService {
+    return this.validatorUtilService;
+  }
+
   protected readonly faCalendarAlt = faCalendarAlt;
+  protected readonly ErrorMessage = ErrorMessage;
 }

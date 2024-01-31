@@ -13,6 +13,7 @@ import {UsuarioTelefoneService} from "./service/usuario-telefone.service";
 import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
 import {NgxPaginationModule} from "ngx-pagination";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {ValidatorUtilService} from "./service/validator-util.service";
 
 @NgModule({
   declarations: [],
@@ -34,11 +35,13 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     //Vamos prover o uso do LoginService e também UsuarioService para os componentes do módulo:
     //Vamos prover o StatusBarService para qualquer componente utilizar nosso statusBar
     //Vamos prover o ToastService para qualquer componente utilizar nosso componente de mensagem para o usuário
+    //Vamor prover o ValidatorUtilService para qualquer componente utilizar nosso validator geral Util
     LoginService,
     UsuarioService,
     StatusBarService,
     ToastService,
     UsuarioTelefoneService,
+    ValidatorUtilService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HeaderInterceptorService,
