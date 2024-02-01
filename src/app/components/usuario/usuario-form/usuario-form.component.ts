@@ -50,7 +50,7 @@ import {ErrorMessage} from "../../../../model/errorMessage";
   styleUrls: ['./usuario-form.component.css', './usuario-form.component.responsive.css']
 })
 export class UsuarioFormComponent implements OnInit {
-  usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
+  usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
   mostrarSenha = false;
 
   constructor(private routeActive: ActivatedRoute, private usuarioService: UsuarioService, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router, private usuarioTelefoneService: UsuarioTelefoneService, private elementRef: ElementRef, private validatorUtilService: ValidatorUtilService) {
@@ -220,7 +220,7 @@ export class UsuarioFormComponent implements OnInit {
     this.toastService.limparMensagens();
 
     setTimeout(() => {
-      this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
+      this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
       if (localStorage !== undefined
         && localStorage !== null
         && localStorage.getItem("token") !== undefined
@@ -235,7 +235,7 @@ export class UsuarioFormComponent implements OnInit {
   }
 
   private instanciaNovoRegistro() {
-    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
+    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
   }
 
   public cancelar(): void {
@@ -414,6 +414,11 @@ export class UsuarioFormComponent implements OnInit {
 
   public validatorUtil(): ValidatorUtilService {
     return this.validatorUtilService;
+  }
+
+  public onChangeCpf(value: string): void {
+    // Verifica se o valor é vazio e define como null se for
+    this.usuario.cpf = value.trim() === '' ? null : value;
   }
 
   protected readonly faCalendarAlt = faCalendarAlt;

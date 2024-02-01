@@ -89,10 +89,12 @@
         <label id="lblCpf" for="txtCpf">CPF</label>
         <div>
           <input id="txtCpf"
+                 [(ngModel)]="usuario.cpf" name="cpf"
+                 (ngModelChange)="onChangeCpf($event)"
                  type="text"
                  class="form-control"
                  autocomplete="false"
-                 maxlength="11">
+                 mask="000.000.000-00">
         </div>
       </div>
     </div>
