@@ -99,6 +99,18 @@
       </div>
     </div>
 
+    <div class="row g-8" style="max-width: 100%;">
+      <div class="col-md-4">
+        <label id="lblProfissao" for="selProfissao">Profissão</label>
+        <select id="selProfissao" [(ngModel)]="usuario.profissao.id" name="profissao" type="text"
+                class="form-select mb-3" aria-label=".form-select-lg example"
+                autocomplete="false">
+          <option selected value="null">...</option>
+          <option *ngFor="let p of listProfissao" [value]="p.id">{{ p.descricao }}</option>
+        </select>
+      </div>
+    </div>
+
     <div class="mb-2">
       <div class="col-md-1">
         <label id="lblCep" for="txtCep">CEP</label>

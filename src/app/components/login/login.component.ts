@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
     uf: null,
     dataNascimento: null,
     cpf: null,
+    profissao: null,
     listTelefone: null,
     listRole: null
   }

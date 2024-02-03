@@ -17,6 +17,13 @@ export class Constants {
     return this.baseServidor + "springbootapirest/usuario/";
   }
 
+  /**
+   * Base URL Path para acessar qualquer controller da API
+   */
+  public static get baseUrlPath(): string {
+    return this.baseServidor + "springbootapirest/";
+  }
+
   public static get viaCepUrl(): string {
     return "https://viacep.com.br/ws/";
   }
