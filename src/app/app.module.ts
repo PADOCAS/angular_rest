@@ -14,6 +14,7 @@ import {NgxMaskDirective, NgxMaskPipe, provideNgxMask} from "ngx-mask";
 import {NgxPaginationModule} from "ngx-pagination";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {ValidatorUtilService} from "./service/validator-util.service";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 @NgModule({
   declarations: [],
@@ -29,7 +30,9 @@ import {ValidatorUtilService} from "./service/validator-util.service";
     NgxPaginationModule,
     //Importa para datePicker ng bootstrap:
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    //NgSelectModule - AutoComplete ng, import module:
+    NgSelectModule
   ],
   providers: [
     //Vamos prover o uso do LoginService e também UsuarioService para os componentes do módulo:

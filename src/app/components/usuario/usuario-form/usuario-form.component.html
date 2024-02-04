@@ -109,6 +109,23 @@
           <option *ngFor="let p of listProfissao" [value]="p.id">{{ p.descricao }}</option>
         </select>
       </div>
+
+      <div class="col-md-4">
+        <label id="lblAutoComplete" for="ngSelectProfissao">Profissão</label>
+<!--        <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Digite para Pesquisar...">-->
+<!--        <datalist id="datalistOptions">-->
+<!--          <option *ngFor="let p of listProfissao" [value]="p.descricao"></option>-->
+<!--        </datalist>-->
+
+        <ng-select id="ngSelectProfissao"
+                   [items]="listProfissao"
+                   placeholder="Selecione uma Profissão..."
+                   bindLabel="idDescricaoFormatted"
+                   bindValue="id"
+                   name="profissao"
+                   [(ngModel)]="usuario.profissao.id">
+        </ng-select>
+      </div>
     </div>
 
     <div class="mb-2">

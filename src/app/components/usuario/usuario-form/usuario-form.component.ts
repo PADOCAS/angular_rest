@@ -19,6 +19,7 @@ import {FormatDateAdapter} from "../../../../util/FormatDateAdapter";
 import {ValidatorUtilService} from "../../../service/validator-util.service";
 import {ErrorMessage} from "../../../../model/errorMessage";
 import {Profissao} from "../../../../model/profissao";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 @Component({
   selector: 'app-usuario-form',
@@ -33,7 +34,8 @@ import {Profissao} from "../../../../model/profissao";
     NgxMaskPipe,
     NgbInputDatepicker,
     FaIconComponent,
-    NgxMaskDirective
+    NgxMaskDirective,
+    NgSelectModule
   ],
   //Prove as classes para trabalhar com Formatação de Data pt-Br
   providers: [
