@@ -94,7 +94,19 @@ export class UsuarioFormComponent implements OnInit {
         .subscribe(data => {
           // console.log(data);
           this.usuario = data;
+          //Quando está editando registro, ele vem com um find em profissão, precisamos alimentar o campo idDescricaoFormatted onde vai usar no ng-select:
+          if(this.usuario !== undefined
+          && this.usuario !== null
+          && this.usuario.profissao !== undefined
+            && this.usuario.profissao !== null
+            && this.usuario.profissao.id !== undefined
+            && this.usuario.profissao.id !== null
+            && this.usuario.profissao.descricao !== undefined
+            && this.usuario.profissao.descricao !== null) {
+            this.usuario.profissao.idDescricaoFormatted = `(${this.usuario.profissao.id}) ${this.usuario.profissao.descricao}`;
+          }
           // console.log(this.usuario);
+          // console.log(this.usuario.profissao);
         });
     }
 
@@ -177,6 +189,7 @@ export class UsuarioFormComponent implements OnInit {
     if (this.validarSalvar()) {
       setTimeout(() => {
         if (this.usuario !== null) {
+          // console.log(this.usuario.profissao);
           if (this.usuario.id !== null
             && this.usuario.id.toString().trim() !== null) {
             //Atualizando Registro:

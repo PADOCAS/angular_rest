@@ -32,7 +32,7 @@ export class Usuario {
     this.uf = uf;
     this.dataNascimento = dataNascimento;
     this.cpf = cpf;
-    this.profissao = profissao === null || profissao === undefined ? new Profissao(null, null, null) : profissao;
+    this.profissao = profissao;
     this.listTelefone = listTelefone;
     this.listRole = listRole;
   }

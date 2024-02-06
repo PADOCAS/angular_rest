@@ -101,29 +101,24 @@
 
     <div class="row g-8" style="max-width: 100%;">
       <div class="col-md-4">
-        <label id="lblProfissao" for="selProfissao">Profissão</label>
-        <select id="selProfissao" [(ngModel)]="usuario.profissao.id" name="profissao" type="text"
-                class="form-select mb-3" aria-label=".form-select-lg example"
-                autocomplete="false">
-          <option selected value="null">...</option>
-          <option *ngFor="let p of listProfissao" [value]="p.id">{{ p.descricao }}</option>
-        </select>
-      </div>
+        <label id="lblProfissao" for="ngSelectProfissao">Profissão</label>
+        <!--        ** Usando select, apenas para teste: ** -->
+        <!--        <select id="selProfissao" [(ngModel)]="usuario.profissao.id" name="profissao" type="text"-->
+        <!--                class="form-select mb-3" aria-label=".form-select-lg example"-->
+        <!--                autocomplete="false">-->
+        <!--          <option selected value="null">...</option>-->
+        <!--          <option *ngFor="let p of listProfissao" [value]="p.id">{{ p.descricao }}</option>-->
+        <!--        </select>-->
 
-      <div class="col-md-4">
-        <label id="lblAutoComplete" for="ngSelectProfissao">Profissão</label>
-<!--        <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Digite para Pesquisar...">-->
-<!--        <datalist id="datalistOptions">-->
-<!--          <option *ngFor="let p of listProfissao" [value]="p.descricao"></option>-->
-<!--        </datalist>-->
-
+        <!--        Usando ng-select muito mais completo:-->
+        <!--       ** Não precisamos usar o bindValue, ele já está trabalhando com o objeto profissao direto! ** -->
         <ng-select id="ngSelectProfissao"
                    [items]="listProfissao"
+                   [(ngModel)]="usuario.profissao"
                    placeholder="Selecione uma Profissão..."
                    bindLabel="idDescricaoFormatted"
-                   bindValue="id"
-                   name="profissao"
-                   [(ngModel)]="usuario.profissao.id">
+                   notFoundText="Nenhuma profissão encontrada"
+                   name="profissao">
         </ng-select>
       </div>
     </div>
