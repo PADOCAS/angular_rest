@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit} from '@angular/core';
 import {Telefone} from "../../../../model/telefone";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {StatusBarService} from "../../../service/status-bar.service";
@@ -27,8 +27,9 @@ export class UsuarioTelefoneFormComponent implements OnInit {
   telefone: Telefone = new Telefone(null, null, null);
   telefoneSelectVo: Telefone | any = null; //Guarda a instância que veio de edição
   usuario: Usuario | any;
+  maskNumeroTelefone: string = '';
 
-  constructor(private routeActive: ActivatedRoute, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router, private usuarioTelefoneService: UsuarioTelefoneService, private elementRef: ElementRef) {
+  constructor(private routeActive: ActivatedRoute, private statusBarService: StatusBarService, private toastService: ToastService, private router: Router, private usuarioTelefoneService: UsuarioTelefoneService, private elementRef: ElementRef, private changeDetectorRef: ChangeDetectorRef) {
     // console.log(this.usuarioTelefoneService.getListTelefoneSelectVo().get(localStorage.getItem("token")));
     // console.log(this.usuarioTelefoneService.getListTelefoneEditJson().get(localStorage.getItem("token")));
     // console.log(JSON.parse(this.usuarioTelefoneService.getListTelefoneEditJson().get(localStorage.getItem("token"))));
@@ -69,6 +70,23 @@ export class UsuarioTelefoneFormComponent implements OnInit {
       && this.elementRef.nativeElement.querySelector('#selTelefoneTipo') !== null) {
       //Dar Foco no campo Tipo ao iniciar tela:
       this.elementRef.nativeElement.querySelector('#selTelefoneTipo').focus();
+    }
+
+    if (this.telefone !== null) {
+      if (this.telefone.tipo !== null) {
+        switch (this.telefone.tipo) {
+          case 'CELULAR':
+            this.maskNumeroTelefone = '(00)00000-0000';
+            break;
+          default:
+            this.maskNumeroTelefone = '(00)0000-0000';
+            break;
+        }
+      } else {
+        this.maskNumeroTelefone = '';
+      }
+    } else {
+      this.maskNumeroTelefone = '';
     }
 
     //Fecha o statusBar
@@ -206,20 +224,26 @@ export class UsuarioTelefoneFormComponent implements OnInit {
     return true;
   }
 
-  public getTelefoneMask(): string {
-    if (this.telefone !== null
-      && this.telefone.tipo !== undefined
-      && this.telefone.tipo !== null
-      && this.telefone.tipo !== "null"
-      && this.telefone.tipo.trim() !== "") {
-      switch (this.telefone.tipo) {
-        case 'CELULAR':
-          return '(00)00000-0000';
-        default:
-          return '(00)0000-0000';
+  public onChangeTipo(event: any) {
+    if (this.telefone !== null) {
+      if (this.telefone.tipo !== undefined
+        && this.telefone.tipo !== null
+        && this.telefone.tipo !== "null"
+        && this.telefone.tipo.trim() !== "") {
+        switch (this.telefone.tipo) {
+          case 'CELULAR':
+            this.maskNumeroTelefone = '(00)00000-0000';
+            break;
+          default:
+            this.maskNumeroTelefone = '(00)0000-0000';
+            break;
+        }
+      } else {
+        this.maskNumeroTelefone = '';
       }
-    }
 
-    return '';
+      //Rodamos manuamente a detecção de mudanças para não dar erro troca da máscara (ExpressionChangedAfterItHasBeenCheckedError)
+      this.changeDetectorRef.detectChanges();
+    }
   }
 }

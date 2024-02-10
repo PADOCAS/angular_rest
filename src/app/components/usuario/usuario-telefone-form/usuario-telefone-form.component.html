@@ -42,6 +42,7 @@
           <!--                 required="required" autocomplete="false" maxlength="20">-->
           <select id="selTelefoneTipo" class="form-select mb-3" aria-label=".form-select-lg example"
                   [(ngModel)]="telefone.tipo"
+                  (change)="onChangeTipo($event)"
                   #telefoneTipoValidate="ngModel"
                   name="tipo">
             <option selected value="null">...</option>
@@ -58,7 +59,7 @@
           <input id="txtTelefoneNumero" [(ngModel)]="telefone.numero" name="numero" type="text" class="form-control"
                  required="required"
                  #telefoneNumeroValidate="ngModel"
-                 [mask]="getTelefoneMask()"
+                 [mask]="maskNumeroTelefone"
                  autocomplete="false" maxlength="14">
         </div>
       </div>
