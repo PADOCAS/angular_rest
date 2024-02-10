@@ -20,6 +20,7 @@ import {ValidatorUtilService} from "../../../service/validator-util.service";
 import {ErrorMessage} from "../../../../model/errorMessage";
 import {Profissao} from "../../../../model/profissao";
 import {NgSelectModule} from "@ng-select/ng-select";
+import {of, switchMap, tap} from "rxjs";
 
 @Component({
   selector: 'app-usuario-form',
@@ -61,43 +62,48 @@ export class UsuarioFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //Carrega lista de Profissao atualizada ao abrir a tela:
-    this.usuarioService.getListProfissao().subscribe(
-      data => {
+    //Executando funções em cascata e depois fecha o statusBar:
+    this.usuarioService.getListProfissao().pipe(
+      switchMap(data => {
         this.listProfissao = data;
-        // console.log(this.listProfissao);
-      }
-    );
-
-    if (localStorage !== undefined
-      && localStorage !== null
-      && localStorage.getItem("token") !== undefined
-      && localStorage.getItem("token") !== null
-      && this.usuarioTelefoneService.getListUsuario() !== undefined
-      && this.usuarioTelefoneService.getListUsuario() !== null
-      && this.usuarioTelefoneService.getListUsuario().get(localStorage.getItem("token")) !== undefined
-      && this.usuarioTelefoneService.getListUsuario().get(localStorage.getItem("token")) !== null) {
-      //Caso estiver editando telefones e retornar para tela de Usuario:
-      this.usuario = this.usuarioTelefoneService.getListUsuario().get(localStorage.getItem("token")) as Usuario;
-      //Limpa referência para não atrapalhar outras vezes que entrar no cadastro!
-      this.usuarioTelefoneService.getListUsuario().set(localStorage.getItem("token"), null);
-    } else if (this.routeActive !== undefined
-      && this.routeActive !== null
-      && this.routeActive.snapshot !== undefined
-      && this.routeActive.snapshot !== null
-      && this.routeActive.snapshot.paramMap !== undefined
-      && this.routeActive.snapshot.paramMap !== null
-      && this.routeActive.snapshot.paramMap.get('id') !== undefined
-      && this.routeActive.snapshot.paramMap.get('id') !== null) {
-      //Caso estiver editando a partir da lista de Usuário (busca pelo id no banco dados atualizados)
-      this.usuarioService.getUsuario(Number(this.routeActive.snapshot.paramMap.get('id')))
-        .subscribe(data => {
-          // console.log(data);
+        // console.log("1-Carreguei profissão...");
+        //Passar return of(null) caso contrário se for uma data com objetos preenchidos ele fica passando 1 a 1 no switchMap abaixo (NÃO QUEREMOS ISSO)
+        return of(null);
+      }), switchMap(data => {
+        if (localStorage !== undefined
+          && localStorage !== null
+          && localStorage.getItem("token") !== undefined
+          && localStorage.getItem("token") !== null
+          && this.usuarioTelefoneService.getListUsuario() !== undefined
+          && this.usuarioTelefoneService.getListUsuario() !== null
+          && this.usuarioTelefoneService.getListUsuario().get(localStorage.getItem("token")) !== undefined
+          && this.usuarioTelefoneService.getListUsuario().get(localStorage.getItem("token")) !== null) {
+          //Caso estiver editando telefones e retornar para tela de Usuario:
+          this.usuario = this.usuarioTelefoneService.getListUsuario().get(localStorage.getItem("token")) as Usuario;
+          //Limpa referência para não atrapalhar outras vezes que entrar no cadastro!
+          this.usuarioTelefoneService.getListUsuario().set(localStorage.getItem("token"), null);
+        } else if (this.routeActive !== undefined
+          && this.routeActive !== null
+          && this.routeActive.snapshot !== undefined
+          && this.routeActive.snapshot !== null
+          && this.routeActive.snapshot.paramMap !== undefined
+          && this.routeActive.snapshot.paramMap !== null
+          && this.routeActive.snapshot.paramMap.get('id') !== undefined
+          && this.routeActive.snapshot.paramMap.get('id') !== null) {
+          //Caso estiver editando a partir da lista de Usuário (busca pelo id no banco dados atualizados)
+          //Retorna o Usuário carregado para a próxima TAP fazer o set no vo e depois fechar o status bar
+          return this.usuarioService.getUsuario(Number(this.routeActive.snapshot.paramMap.get('id')));
+        }
+        //Retorn observable null, pois apenas vamos trabalhar esse retorno quando for abrir o editar do registro!
+        return of(null);
+      }), tap(data => {
+        if (data !== undefined
+          && data !== null) {
           this.usuario = data;
           //Quando está editando registro, ele vem com um find em profissão, precisamos alimentar o campo idDescricaoFormatted onde vai usar no ng-select:
-          if(this.usuario !== undefined
-          && this.usuario !== null
-          && this.usuario.profissao !== undefined
+          if (this.usuario !== undefined
+            && this.usuario !== null
+            && this.usuario.profissao !== undefined
             && this.usuario.profissao !== null
             && this.usuario.profissao.id !== undefined
             && this.usuario.profissao.id !== null
@@ -105,17 +111,26 @@ export class UsuarioFormComponent implements OnInit {
             && this.usuario.profissao.descricao !== null) {
             this.usuario.profissao.idDescricaoFormatted = `(${this.usuario.profissao.id}) ${this.usuario.profissao.descricao}`;
           }
-          // console.log(this.usuario);
-          // console.log(this.usuario.profissao);
-        });
-    }
+          // console.log("2-Carreguei o Usuário para alteração...");
+        }
 
-    if (this.elementRef !== null
-      && this.elementRef.nativeElement.querySelector('#txtNome') !== undefined
-      && this.elementRef.nativeElement.querySelector('#txtNome') !== null) {
-      //Dar Foco no campo Nome ao iniciar tela:
-      this.elementRef.nativeElement.querySelector('#txtNome').focus();
-    }
+        if (this.elementRef !== null
+          && this.elementRef.nativeElement.querySelector('#txtNome') !== undefined
+          && this.elementRef.nativeElement.querySelector('#txtNome') !== null) {
+          //Dar Foco no campo Nome ao iniciar tela:
+          this.elementRef.nativeElement.querySelector('#txtNome').focus();
+        }
+      })
+    ).subscribe(
+      () => {
+        //Fecha o statusBar:
+        this.statusBarService.setShowStatusDialog(false);
+      },
+      error => {
+        //Fecha o statusBar:
+        this.statusBarService.setShowStatusDialog(false);
+      }
+    );
   }
 
   public consultaCep() {

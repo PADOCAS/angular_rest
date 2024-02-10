@@ -268,20 +268,13 @@ export class UsuarioComponent implements OnInit {
     //StatusDialog globalizado!
     this.statusBarService.setShowStatusDialog(true);
     this.toastService.limparMensagens();
-
-    setTimeout(() => {
-      //StatusDialog globalizado!
-      this.statusBarService.setShowStatusDialog(false);
-    });
+    //Vai fechar o StatusDialog no Formulario -> usuario-form-component.ts onInit após carregar todos os atributos!
   }
 
   public editUsuario() {
     this.statusBarService.setShowStatusDialog(true);
     this.toastService.limparMensagens();
-
-    setTimeout(() => {
-      this.statusBarService.setShowStatusDialog(false);
-    });
+    //Vai fechar o StatusDialog no Formulario -> usuario-form-component.ts onInit após carregar todos os atributos!
   }
 
   /**
