@@ -70,6 +70,9 @@ export class UsuarioTelefoneFormComponent implements OnInit {
       //Dar Foco no campo Tipo ao iniciar tela:
       this.elementRef.nativeElement.querySelector('#selTelefoneTipo').focus();
     }
+
+    //Fecha o statusBar
+    this.statusBarService.setShowStatusDialog(false);
   }
 
   public novo(): void {
@@ -98,7 +101,8 @@ export class UsuarioTelefoneFormComponent implements OnInit {
         this.usuarioTelefoneService.limpaTelefonesMapUsuarioToken(localStorage.getItem("token"));
       }
 
-      this.statusBarService.setShowStatusDialog(false);
+      //Vai fechar o statusBar ao acabar de carregar a tela de Usuário
+      // this.statusBarService.setShowStatusDialog(false);
     });
   }
 

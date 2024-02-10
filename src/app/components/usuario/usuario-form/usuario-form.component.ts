@@ -348,7 +348,8 @@ export class UsuarioFormComponent implements OnInit {
         this.usuarioTelefoneService.getListTelefoneEditJson().set(localStorage.getItem("token"), JSON.stringify(telefone));
       }
       this.router.navigate(["usuario-telefone"]);
-      this.statusBarService.setShowStatusDialog(false);
+      //Vamos fechar o statusBar ao Abrir a tela do telefone!
+      //this.statusBarService.setShowStatusDialog(false);
     });
   }
 
