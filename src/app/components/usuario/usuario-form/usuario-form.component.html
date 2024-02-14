@@ -123,6 +123,19 @@
       </div>
     </div>
 
+    <div class="row g-8" style="max-width: 100%;">
+      <div class="col-md-4">
+        <label id="lblSalario" for="txtSalario">Salário</label>
+        <input id="txtSalario"
+               [(ngModel)]="usuario.salario"
+               name="salario"
+               currencyMask
+               class="form-control"
+               [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', precision: 2, allowNegative: false}"
+               (focus)="focusOnDecimal();"/>
+      </div>
+    </div>
+
     <div class="mb-2">
       <div class="col-md-1">
         <label id="lblCep" for="txtCep">CEP</label>

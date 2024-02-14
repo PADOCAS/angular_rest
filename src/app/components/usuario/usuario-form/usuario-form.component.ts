@@ -21,6 +21,7 @@ import {ErrorMessage} from "../../../../model/errorMessage";
 import {Profissao} from "../../../../model/profissao";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {of, switchMap, tap} from "rxjs";
+import {NgxCurrencyDirective} from "ngx-currency";
 
 @Component({
   selector: 'app-usuario-form',
@@ -36,7 +37,8 @@ import {of, switchMap, tap} from "rxjs";
     NgbInputDatepicker,
     FaIconComponent,
     NgxMaskDirective,
-    NgSelectModule
+    NgSelectModule,
+    NgxCurrencyDirective
   ],
   //Prove as classes para trabalhar com Formatação de Data pt-Br
   providers: [
@@ -54,7 +56,7 @@ import {of, switchMap, tap} from "rxjs";
   styleUrls: ['./usuario-form.component.css', './usuario-form.component.responsive.css']
 })
 export class UsuarioFormComponent implements OnInit {
-  usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
+  usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, null, 0.00, new Array<Telefone>, null);
   mostrarSenha = false;
   listProfissao: Array<Profissao> | any = null;
 
@@ -131,6 +133,22 @@ export class UsuarioFormComponent implements OnInit {
         this.statusBarService.setShowStatusDialog(false);
       }
     );
+  }
+
+  /**
+   * Método para ao ganhar foco, selecionar tudo para alteração
+   */
+  public focusOnDecimal() {
+    let inputElement = document.getElementById('txtSalario') as HTMLInputElement;
+    let salario = inputElement.value;
+
+    if (salario !== undefined
+      && salario !== null
+      && salario.trim() !== '') {
+      //Caso tiver algo preenchido ele ja seleciona tudo para alteração ficar mais simples:
+      inputElement.selectionStart = 0;
+      inputElement.selectionEnd = inputElement.value.length;
+    }
   }
 
   public consultaCep() {
@@ -260,7 +278,7 @@ export class UsuarioFormComponent implements OnInit {
     this.toastService.limparMensagens();
 
     setTimeout(() => {
-      this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
+      this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, null, 0.00, new Array<Telefone>, null);
       if (localStorage !== undefined
         && localStorage !== null
         && localStorage.getItem("token") !== undefined
@@ -275,7 +293,7 @@ export class UsuarioFormComponent implements OnInit {
   }
 
   private instanciaNovoRegistro() {
-    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, null, new Array<Telefone>, null);
+    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, null, 0.00, new Array<Telefone>, null);
   }
 
   public cancelar(): void {

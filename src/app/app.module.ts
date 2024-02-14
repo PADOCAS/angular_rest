@@ -15,6 +15,7 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {ValidatorUtilService} from "./service/validator-util.service";
 import {NgSelectModule} from "@ng-select/ng-select";
+import { NgxCurrencyDirective } from "ngx-currency";
 
 @NgModule({
   declarations: [],
@@ -32,7 +33,9 @@ import {NgSelectModule} from "@ng-select/ng-select";
     NgbModule,
     FontAwesomeModule,
     //NgSelectModule - AutoComplete ng, import module:
-    NgSelectModule
+    NgSelectModule,
+    //NgxCurrencyDirective -> Campo valores:
+    NgxCurrencyDirective
   ],
   providers: [
     //Vamos prover o uso do LoginService e também UsuarioService para os componentes do módulo:
