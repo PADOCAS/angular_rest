@@ -131,7 +131,8 @@
                name="salario"
                currencyMask
                class="form-control"
-               [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', precision: 2, allowNegative: false}"
+               maxlength="14"
+               [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', precision: 2, allowNegative: false, allowZero: true, nullable: false}"
                (focus)="focusOnDecimal();"/>
       </div>
     </div>
