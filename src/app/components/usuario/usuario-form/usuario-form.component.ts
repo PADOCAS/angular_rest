@@ -56,7 +56,7 @@ import {NgxCurrencyDirective} from "ngx-currency";
   styleUrls: ['./usuario-form.component.css', './usuario-form.component.responsive.css']
 })
 export class UsuarioFormComponent implements OnInit {
-  usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, null, 0.00, new Array<Telefone>, null);
+  usuario: Usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null,  null, null, 0.00, new Array<Telefone>, null);
   mostrarSenha = false;
   listProfissao: Array<Profissao> | any = null;
 
@@ -278,7 +278,7 @@ export class UsuarioFormComponent implements OnInit {
     this.toastService.limparMensagens();
 
     setTimeout(() => {
-      this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, null, 0.00, new Array<Telefone>, null);
+      this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0.00, new Array<Telefone>, null);
       if (localStorage !== undefined
         && localStorage !== null
         && localStorage.getItem("token") !== undefined
@@ -293,7 +293,7 @@ export class UsuarioFormComponent implements OnInit {
   }
 
   private instanciaNovoRegistro() {
-    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, null, 0.00, new Array<Telefone>, null);
+    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0.00, new Array<Telefone>, null);
   }
 
   public cancelar(): void {
@@ -406,6 +406,15 @@ export class UsuarioFormComponent implements OnInit {
           msgErro += "\n";
         }
         msgErro += "* Nome deve ser informado.";
+      }
+
+      //Email:
+      if (this.usuario.email === null
+        || this.usuario.email.trim() === "") {
+        if (msgErro.length > 0) {
+          msgErro += "\n";
+        }
+        msgErro += "* E-mail deve ser informado.";
       }
 
       //Login:

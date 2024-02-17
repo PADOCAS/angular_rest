@@ -42,6 +42,17 @@
                autocomplete="false" maxlength="100">
       </div>
     </div>
+    <div class="mb-2">
+      <div class="col-sm-1">
+        <span style="color: red; font-weight: bold;" *ngIf="emailValidate.invalid">* </span>
+        <label id="lblEmail" for="txtEmail">E-mail</label>
+      </div>
+      <div class="col-sm-12">
+        <input id="txtEmail" [(ngModel)]="usuario.email" name="email" type="text" class="form-control" required="required"
+               #emailValidate="ngModel"
+               autocomplete="false" maxlength="60">
+      </div>
+    </div>
     <div class="row g-8" style="max-width: 100%;">
       <div class="col-md-4">
         <span style="color: red; font-weight: bold;" *ngIf="loginValidate.invalid">* </span>
