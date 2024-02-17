@@ -65,6 +65,7 @@ export class LoginComponent implements OnInit {
       this.elementRef.nativeElement.querySelector('#txtLogin').focus();
     }
   }
+
   public loginEnterSenha() {
     if (this.validLogin()) {
       this.statusBarService.setShowStatusDialog(true);
@@ -75,6 +76,23 @@ export class LoginComponent implements OnInit {
         this.loginService.login(this.usuario);
       });
     }
+  }
+
+  public recuperarSenhaUser() {
+    this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
+
+    setTimeout(() => {
+      //StatusBarService já é fechado dentro do loginService após concluir a recuperação
+      if (this.usuario.login !== undefined
+        && this.usuario.login !== null
+        && this.usuario.login !== "") {
+        this.loginService.recuperarSenha(this.usuario.login);
+      } else {
+        this.toastService.showWarning("Atenção", "Informe o Login para recuperação de acesso!", null);
+        this.statusBarService.setShowStatusDialog(false);
+      }
+    });
   }
 
   public login() {

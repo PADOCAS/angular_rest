@@ -12,8 +12,8 @@
   <div class="mb-2 col-5 col-md-5">
     <span style="color: red; font-weight: bold;" *ngIf="userLogin.invalid">* </span>
     <label id="lblLogin" for="txtLogin">Login</label>
-      <input id="txtLogin" type="text" class="form-control" [(ngModel)]="usuario.login" #userLogin="ngModel"
-             name="login" maxlength="30" required>
+    <input id="txtLogin" type="text" class="form-control" [(ngModel)]="usuario.login" #userLogin="ngModel"
+           name="login" maxlength="30" required>
     <div *ngIf="userLogin.invalid && userLogin.touched" class="alert alert-danger">
       Login deve ser informado
     </div>
@@ -38,5 +38,13 @@
     <button type="button" class="btn btn-primary" [disabled]="userLogin.invalid || userSenha.invalid" (click)="login();"
             (keydown.enter)="login();">Acessar
     </button>
+  </div>
+
+  <div class="mb-2 col-5 col-md-5" style="margin-top: 10px !important;">
+    <a id="linkRecuperarSenhaUser"
+       style="text-decoration: underline; font-weight: bold; cursor: pointer;"
+       (click)="recuperarSenhaUser();" (keydown.enter)="recuperarSenhaUser();">
+      Esqueceu sua Senha ?
+    </a>
   </div>
 </form>
