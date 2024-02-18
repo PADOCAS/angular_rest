@@ -56,7 +56,15 @@ export class LoginService {
       .subscribe(data => {
           //Retorno HTTP (Objeto Erro com uma resposta de erro(404) ou ok (200):
           let objetoErro: ObjetoErroApi = JSON.parse(JSON.stringify(data));
-          console.log(objetoErro);
+          // console.log(objetoErro);
+          if (objetoErro != null
+            && objetoErro.codigo !== undefined
+            && objetoErro.codigo !== null
+            && objetoErro.codigo.includes("404")) {
+            this.toastService.showErro("Erro ao recuperar Login!", objetoErro.erro, null, objetoErro);
+          } else {
+            this.toastService.showSuccesso("Sucesso", "E-mail de recuperação enviado com sucesso!", 2000);
+          }
           this.statusBarService.setShowStatusDialog(false);
         },
         error => {
