@@ -237,7 +237,8 @@ export class UsuarioFormComponent implements OnInit {
                 if (error.status !== null
                   && error.status === 403) {
                   //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
-                  this.toastService.showErro("Erro ao salvar Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
+                  this.toastService.showErro("Erro ao salvar Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 3000, null);
+                  localStorage.removeItem("token"); //Remove o Token do usuário e redireciona para Login
                   this.router.navigate(["login"]);
                 } else {
                   this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);
@@ -257,7 +258,8 @@ export class UsuarioFormComponent implements OnInit {
                 if (error.status !== null
                   && error.status === 403) {
                   //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
-                  this.toastService.showErro("Erro ao salvar Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 2000, null);
+                  this.toastService.showErro("Erro ao salvar Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 3000, null);
+                  localStorage.removeItem("token"); //Remove o Token do usuário e redireciona para Login
                   this.router.navigate(["login"]);
                 } else {
                   this.toastService.showErro("Erro ao salvar Usuário", error.message, null, error.error);

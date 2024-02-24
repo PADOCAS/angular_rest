@@ -1,0 +1,62 @@
+<form style="display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;">
+  <div class="mb-1" style="text-align: center;">
+    <h1 STYLE="font-weight: bold;">Recuperar senha</h1>
+  </div>
+
+  <div class="mb-1" style="text-align: center; margin-top: 15px;">
+    <h5 style="text-decoration: underline; color: blue;">Preencha os campos abaixo para criar uma nova senha.</h5>
+  </div>
+
+  <div class="mb-2 col-5 col-md-5">
+    <label id="lblEmail" for="txtEmail">E-mail</label>
+    <input id="txtEmail" type="text" class="form-control" [(ngModel)]="email"
+           disabled
+           name="email" maxlength="60" required>
+  </div>
+
+  <div class="mb-2 col-5 col-md-5">
+    <span style="color: red; font-weight: bold;" *ngIf="userSenha.invalid">* </span>
+    <label for="txtSenha" class="form-label" id="lblSenha">Senha</label>
+    <div class="input-group">
+      <input id="txtSenha" [type]="mostrarSenha ? 'text' : 'password'" class="form-control"
+             [(ngModel)]="senha" #userSenha="ngModel"
+             placeholder="Digite a nova senha"
+             name="senha" maxlength="30" required>
+      <button class="btn btn-outline-secondary" type="button" id="btnMostrarSenha" (click)="mostrarOcultarSenha()">
+        Mostrar
+      </button>
+    </div>
+    <div *ngIf="userSenha.invalid && userSenha.touched" class="alert alert-danger">
+      Senha deve ser informada
+    </div>
+  </div>
+
+  <div class="mb-2 col-5 col-md-5">
+    <span style="color: red; font-weight: bold;" *ngIf="userConfirmacaoSenha.invalid">* </span>
+    <label for="txtConfirmacaoSenha" class="form-label" id="lblConfirmacaoSenha">Confirmação de Senha</label>
+    <div class="input-group">
+      <input id="txtConfirmacaoSenha" [type]="mostrarConfirmacaoSenha ? 'text' : 'password'" class="form-control"
+             [(ngModel)]="confirmacaoSenha" #userConfirmacaoSenha="ngModel"
+             placeholder="Confirme a nova senha"
+             name="confirmacaoSenha" maxlength="30" required>
+      <button class="btn btn-outline-secondary" type="button" id="btnMostrarConfirmacaoSenha" (click)="mostrarOcultarConfirmacaoSenha()">
+        Mostrar
+      </button>
+    </div>
+    <div *ngIf="userConfirmacaoSenha.invalid && userConfirmacaoSenha.touched" class="alert alert-danger">
+      Confirmação de Senha deve ser informada
+    </div>
+  </div>
+
+  <div class="mb-2 col-5 col-md-5">
+    <button type="button" class="btn btn-primary" [disabled]="userSenha.invalid || userConfirmacaoSenha.invalid" (click)="confirmar();"
+            (keydown.enter)="confirmar();">Confirmar
+    </button>
+  </div>
+</form>

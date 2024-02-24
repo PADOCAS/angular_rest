@@ -6,6 +6,7 @@ import {UsuarioComponent} from "./components/usuario/usuario.component";
 import {UsuarioFormComponent} from "./components/usuario/usuario-form/usuario-form.component";
 import {RouterGuard} from "./guard/router.guard";
 import {UsuarioTelefoneFormComponent} from "./components/usuario/usuario-telefone-form/usuario-telefone-form.component";
+import {RecuperarSenhaComponent} from "./components/recuperar-senha/recuperar-senha/recuperar-senha.component";
 
 export const routes: Routes = [
   {path: "usuario-add", component: UsuarioFormComponent, canActivate: [RouterGuard]}, //Cadastro de Usuário - adicionar novo //Definimos o RouterGuard para checar token antes de ir para rota!
@@ -14,6 +15,7 @@ export const routes: Routes = [
   {path: "usuarioList", component: UsuarioComponent, canActivate: [RouterGuard]}, //Definimos o RouterGuard para checar token antes de ir para rota!
   {path: "home", component: HomeComponent, canActivate: [RouterGuard]}, //Definimos o RouterGuard para checar token antes de ir para rota!
   {path: "login", component: LoginComponent}, //Essas são acessadas sem precisar do token ainda, liberadas! (não precisa do guard)
+  {path: "recuperar-senha", component: RecuperarSenhaComponent}, //Essas são acessadas sem precisar do token ainda, liberadas! (não precisa do guard)
   {path: "", component: LoginComponent} //Essas são acessadas sem precisar do token ainda, liberadas! (não precisa do guard)
 ];
 

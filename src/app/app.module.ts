@@ -16,6 +16,7 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {ValidatorUtilService} from "./service/validator-util.service";
 import {NgSelectModule} from "@ng-select/ng-select";
 import { NgxCurrencyDirective } from "ngx-currency";
+import {RecuperarSenhaService} from "./service/recuperar-senha.service";
 
 @NgModule({
   declarations: [],
@@ -42,12 +43,14 @@ import { NgxCurrencyDirective } from "ngx-currency";
     //Vamos prover o StatusBarService para qualquer componente utilizar nosso statusBar
     //Vamos prover o ToastService para qualquer componente utilizar nosso componente de mensagem para o usuário
     //Vamor prover o ValidatorUtilService para qualquer componente utilizar nosso validator geral Util
+    //Vamor prover o RecuperarSenhaService para o componente utilizar o RecupearSenhaService
     LoginService,
     UsuarioService,
     StatusBarService,
     ToastService,
     UsuarioTelefoneService,
     ValidatorUtilService,
+    RecuperarSenhaService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HeaderInterceptorService,
