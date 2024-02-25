@@ -11,9 +11,9 @@ export class ValidatorUtilService {
   }
 
   /**
-   * Valida Data, pode retornar a mensagem de erro direto ou preencher uma string para retornar a tela
+   * Valida Data, pode retornar a mensagem de erro direto ou preencher uma ‘string’ para retornar a tela
    *
-   * @param data (string)
+   * @param data (‘string’)
    * @param errorMessage (caso quiser tratar o erro direto em sua tela, recebe um objeto com a referência original da msg), se passar nulo vai liberar um Toast para o usuário
    */
   public isValidDate(data: string, errorMessage: ErrorMessage | null) {

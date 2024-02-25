@@ -61,18 +61,18 @@ export class UsuarioService {
     return this.http.get<Usuario>(Constants.baseUrl + id, {headers});
   }
 
-  public isUserAutenticado() {
-    if (localStorage != null) {
-      let token = localStorage.getItem("token");
-
-      if (token != null
-        && token.trim().length > 0) {
-        return true;
-      }
-    }
-
-    return false;
-  }
+  // public isUserAutenticado() {
+  //   if (localStorage != null) {
+  //     let token = localStorage.getItem("token");
+  //
+  //     if (token != null
+  //       && token.trim().length > 0) {
+  //       return true;
+  //     }
+  //   }
+  //
+  //   return false;
+  // }
 
   /**
    * Consulta API VIACEP para buscar o cep informado

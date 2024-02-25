@@ -1,3 +1,5 @@
+// noinspection RedundantIfStatementJS
+
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
@@ -19,7 +21,6 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
   mostrarSenha = false;
-  title = 'Angular-REST';
   //Vamos criar um objeto Usuario, como 2 atributos, similar ao que vamos enviar para a API depois!
   usuario: Usuario = {
     id: null,

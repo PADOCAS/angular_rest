@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {StatusBarService} from "../../../service/status-bar.service";
 import {ToastService} from "../../../service/toast.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -59,17 +59,17 @@ export class RecuperarSenhaComponent implements OnInit {
     this.toastService.limparMensagens();
 
     if (this.validSalvar()) {
-      //Fazer um método na Spring API que recebe uma String (token) onde ele vai checar esses passos abaixo e retorar erro caso encontre!!
+      //Fazer um método na Spring API que recebe uma ‘String’ (token) onde ele vai checar esses passos abaixo e retorar erro caso encontre!!
       //pode fazer no recuperarSenhaUserController
-      let tokenRecuperacaSenha:TokenRecuperacaoSenhaDTO = new TokenRecuperacaoSenhaDTO(this.token, this.email, this.senha);
+      let tokenRecuperacaSenha: TokenRecuperacaoSenhaDTO = new TokenRecuperacaoSenhaDTO(this.token, this.email, this.senha);
       this.recuperarSenhaService.confirmAlteracaoSenha(tokenRecuperacaSenha).subscribe(
-        data => {
+        () => {
           //Após salvar seria bom fechar essa tela ou voltar para o login, redireciona para lá!
           this.toastService.showSuccesso("Sucesso", "Senha alterada com sucesso!\nVocê será redirecionado para tela de Login!", 2000);
           //Tudo ok, fecha a tela e redireciona para o Login:
           setTimeout(() => {
-            this.router.navigate(["login"]);
-            this.statusBarService.setShowStatusDialog(false);
+              this.router.navigate(["login"]);
+              this.statusBarService.setShowStatusDialog(false);
             }, 2000
           );
         }, error => {

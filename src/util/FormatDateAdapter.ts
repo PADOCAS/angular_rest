@@ -2,7 +2,7 @@ import {NgbDateAdapter, NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 import {Injectable} from "@angular/core";
 
 /**
- * Este serviço trata de como a data é representada em scripts, ou seja, ngModel.
+ * Este serviço trata de como a data é representada em ‘scripts’, ou seja, ngModel.
  */
 @Injectable()
 export class FormatDateAdapter extends NgbDateAdapter<string> {

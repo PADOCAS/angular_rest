@@ -14,7 +14,6 @@ import {filter} from "rxjs";
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'Angular-REST';
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
   }

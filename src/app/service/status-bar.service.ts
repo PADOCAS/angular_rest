@@ -13,7 +13,7 @@ export class StatusBarService {
   }
 
   /**
-   * Método responsável para dar show ou hide no modal do statusDialog Componente! Tudo controlado pelo service!
+   * Método responsável para dar ‘show’ ou hide no modal do statusDialog Componente! Tudo controlado pelo service!
    * @param value
    */
   public setShowStatusDialog(value: boolean): void {

@@ -71,7 +71,7 @@ export class UsuarioFormComponent implements OnInit {
         // console.log("1-Carreguei profissão...");
         //Passar return of(null) caso contrário se for uma data com objetos preenchidos ele fica passando 1 a 1 no switchMap abaixo (NÃO QUEREMOS ISSO)
         return of(null);
-      }), switchMap(data => {
+      }), switchMap(() => {
         if (localStorage !== undefined
           && localStorage !== null
           && localStorage.getItem("token") !== undefined
@@ -128,7 +128,7 @@ export class UsuarioFormComponent implements OnInit {
         //Fecha o statusBar:
         this.statusBarService.setShowStatusDialog(false);
       },
-      error => {
+      () => {
         //Fecha o statusBar:
         this.statusBarService.setShowStatusDialog(false);
       }
@@ -227,7 +227,7 @@ export class UsuarioFormComponent implements OnInit {
             && this.usuario.id.toString().trim() !== null) {
             //Atualizando Registro:
             this.usuarioService.editarUsuario(this.usuario)
-              .subscribe(data => {
+              .subscribe(() => {
                 //Limpa o cadastro para deixar pronto para salvar um novo registro se necessário:
                 // this.instanciaNovoRegistro();
                 this.toastService.showSuccesso("Sucesso", "Usuário atualizado com sucesso!", 2000);
@@ -248,7 +248,7 @@ export class UsuarioFormComponent implements OnInit {
           } else {
             //Novo Registro:
             this.usuarioService.saveUsuario(this.usuario)
-              .subscribe(data => {
+              .subscribe(() => {
                 //Limpa o cadastro para deixar pronto para salvar um novo registro se necessário:
                 // this.instanciaNovoRegistro();
                 this.toastService.showSuccesso("Sucesso", "Usuário salvo com sucesso!", 2000);
@@ -294,9 +294,9 @@ export class UsuarioFormComponent implements OnInit {
     });
   }
 
-  private instanciaNovoRegistro() {
-    this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0.00, new Array<Telefone>, null);
-  }
+  // private instanciaNovoRegistro() {
+  //   this.usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0.00, new Array<Telefone>, null);
+  // }
 
   public cancelar(): void {
     this.statusBarService.setShowStatusDialog(true);
@@ -492,5 +492,4 @@ export class UsuarioFormComponent implements OnInit {
   }
 
   protected readonly faCalendarAlt = faCalendarAlt;
-  protected readonly ErrorMessage = ErrorMessage;
 }

@@ -30,14 +30,14 @@ export class MenuComponent {
     });
   }
 
-  public menuHome(): void {
-    this.statusBarService.setShowStatusDialog(true);
-    this.toastService.limparMensagens();
-
-    setTimeout(() => {
-      this.statusBarService.setShowStatusDialog(false);
-    });
-  }
+  // public menuHome(): void {
+  //   this.statusBarService.setShowStatusDialog(true);
+  //   this.toastService.limparMensagens();
+  //
+  //   setTimeout(() => {
+  //     this.statusBarService.setShowStatusDialog(false);
+  //   });
+  // }
 
   public menuUsuarios(): void {
     this.statusBarService.setShowStatusDialog(true);

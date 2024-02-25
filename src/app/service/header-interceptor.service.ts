@@ -62,7 +62,7 @@ export class HeaderInterceptorService implements HttpInterceptor {
 
   public processaErro(error: HttpErrorResponse) {
     //Mensagem padrão de erro, caso não for nada da API que estamos usando, nem veio as informações necessário que queremos.
-    let errorMessage = "Erro desconhecido";
+    // let errorMessage = "Erro desconhecido";
 
     if (error !== null
       && error.error !== null
@@ -73,7 +73,7 @@ export class HeaderInterceptorService implements HttpInterceptor {
       && error.error.excecao !== undefined
       && error.error.excecao !== null) {
       //Esse é o ObjetoErroApi que recebemos da API (tratamento genérico para os erros que ocorrem lá) -> Enviado por JSON!
-      errorMessage = "Exceção: ".concat(error.error.excecao).concat("\nCódigo: ").concat(error.error.codigo).concat("\nErro: ").concat(error.error.erro);
+      // errorMessage = "Exceção: ".concat(error.error.excecao).concat("\nCódigo: ").concat(error.error.codigo).concat("\nErro: ").concat(error.error.erro);
     } else if (error !== null
       && error.error !== null
       && error.error.code !== undefined
@@ -81,7 +81,7 @@ export class HeaderInterceptorService implements HttpInterceptor {
       && error.error.error !== undefined
       && error.error.error !== null) {
       //Esse é o erro padrão, não é do ObjetoErroApi
-      errorMessage = "Código: " + error.error.code + "\nMensagem: " + error.error.error;
+      // errorMessage = "Código: " + error.error.code + "\nMensagem: " + error.error.error;
     }
 
     // window.alert(errorMessage);  //Caso quisesse retornar um alerta na tela para o usuário (não vamos utilizar isso, estamos rodando o toastMessage do bootstrap)

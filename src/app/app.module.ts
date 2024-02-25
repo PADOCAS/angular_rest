@@ -6,7 +6,7 @@ import {LoginService} from "./service/login.service";
 import {HeaderInterceptorService} from "./service/header-interceptor.service";
 import {UsuarioService} from "./service/usuario.service";
 import {StatusBarService} from "./service/status-bar.service";
-import {NgbDatepickerConfig, NgbModule, NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule, NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
 import {ToastService} from "./service/toast.service";
 import {RouterGuard} from "./guard/router.guard";
 import {UsuarioTelefoneService} from "./service/usuario-telefone.service";
@@ -15,7 +15,7 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {ValidatorUtilService} from "./service/validator-util.service";
 import {NgSelectModule} from "@ng-select/ng-select";
-import { NgxCurrencyDirective } from "ngx-currency";
+import {NgxCurrencyDirective} from "ngx-currency";
 import {RecuperarSenhaService} from "./service/recuperar-senha.service";
 
 @NgModule({

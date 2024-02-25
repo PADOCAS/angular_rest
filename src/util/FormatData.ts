@@ -34,13 +34,13 @@ export class FormatData extends NgbDateParserFormatter {
     return null;
   }
 
-  /**
-   * Método para conversão e gravação da data
-   * @param date
-   */
-  toModel(date: NgbDateStruct | null): string | null {
-    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
-  }
+  // /**
+  //  * Método para conversão e gravação da data
+  //  * @param date
+  //  */
+  // toModel(date: NgbDateStruct | null): string | null {
+  //   return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
+  // }
 
   private inputZeroEsquerdaDiaMes(value: any) {
     if (value !== undefined

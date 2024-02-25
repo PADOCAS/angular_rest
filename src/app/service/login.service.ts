@@ -8,6 +8,7 @@ import {StatusBarService} from "./status-bar.service";
 import {Telefone} from "../../model/telefone";
 import {ObjetoErroApi} from "../../model/objetoErroApi";
 
+// noinspection JSUnresolvedReference
 @Injectable({
   providedIn: 'root'
 })
@@ -25,7 +26,7 @@ export class LoginService {
           //Retorno HTTP:
           //Retira o Bearer e também o espaço, só queremos o token:
           // console.log(JSON.parse(JSON.stringify(data)).Authorization.replace("Bearer", "").replaceAll(" ", "").replaceAll("\\s", ""));
-          var token: string = JSON.parse(JSON.stringify(data)).Authorization.replace("Bearer", "").replaceAll(" ", "").replaceAll("\\s", "");
+          let token: string = JSON.parse(JSON.stringify(data)).Authorization.replace("Bearer", "").replaceAll(" ", "").replaceAll("\\s", "");
 
           //armazena o valor da variável token no armazenamento local do navegador, pode ser reutilizado depois!
           localStorage.setItem("token", token);

@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedReference
+
 import {Component, OnInit} from '@angular/core';
 import {UsuarioService} from "../../service/usuario.service";
 import {Usuario} from "../../../model/usuario";
@@ -68,7 +70,7 @@ export class UsuarioComponent implements OnInit {
       //catchError: Tratamos erros.
       //of: Para criar um novo observável com base nos dados recebidos.
       //tap: para executar ações secundárias (como atribuir valores às variáveis e exibir mensagens de sucesso).
-      //subscribe final: Apenas para tratar exception, caso tiver.
+      //Subscribe final: Apenas para tratar exception, caso tiver.
       this.usuarioService.deleteUsuario(id).pipe(
         switchMap(() => {
           if (this.nomePesquisa
@@ -123,118 +125,118 @@ export class UsuarioComponent implements OnInit {
     }
   }
 
-  /**
-   * Método deleteUsuario sem aprimorá-lo de forma mais limpa
-   * @param id (number)
-   */
-  public deleteUsuarioAntesSemDeixarOMetodoMaisEnxuto(id: number) {
-    //Mensagem de confirmação para realizar a exclusão do registro:
-    if (confirm("Confirma a exclusão do Usuário?")) {
-      //StatusDialog globalizado!
-      this.statusBarService.setShowStatusDialog(true);
-      this.toastService.limparMensagens();
-
-      setTimeout(() => {
-        this.usuarioService.deleteUsuario(id)
-          .subscribe(data => {
-            // console.log("Retorno do método delete: " + data);
-            //Após deletar, recarrega a lista de usuário para atualizar a tela!
-            // Não vamos fazer assim, vamos deixar o nomePesquisa preenchido e apenas refazer a consulta por nome
-            // this.nomePesquisa = "";
-            // this.carregarUsuariosCadastrados();
-
-            //Retira isso, vamos respeitar a página que o usuário estava e o total que trará da nova consulta após a ação de deletar!
-            // this.page = 1; // Inicialize com a página 0
-            // this.totalUsuariosPaginacao = 0;
-
-            if (this.nomePesquisa !== null
-              && this.nomePesquisa.trim() !== '') {
-              //Só utiliza a pesquisa por Nome se algo for digitado em tela!
-              this.usuarioService.getPageUsuarioPorNome(this.nomePesquisa, this.page - 1)
-                .subscribe(data => {
-                  //Verifica se ao deletar, a página não existe mais, ai retorna para página anterior (máxima disponível):
-                  if (data.content !== null
-                    && data.content.length === 0
-                    && data.totalPages !== null
-                    && data.totalPages > 0
-                    && this.page > data.totalPages) {
-                    //Joga para última página disponível:
-                    this.page = data.totalPages;
-
-                    this.usuarioService.getPageUsuarioPorNome(this.nomePesquisa, this.page - 1)
-                      .subscribe(data => {
-                        //Pega o Page.content (que é a lista de usuário que foi paginada)
-                        this.usuarios = data.content;
-                        this.totalUsuariosPaginacao = data.totalElements;
-
-                        this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
-                        this.statusBarService.setShowStatusDialog(false);
-                      }, error => {
-                        this.toastService.showErro("Erro ao consultar Usuário", error.message, null, error.error);
-                        this.statusBarService.setShowStatusDialog(false);
-                      });
-                  } else {
-                    this.usuarios = data.content;
-                    this.totalUsuariosPaginacao = data.totalElements;
-
-                    this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
-                    this.statusBarService.setShowStatusDialog(false);
-                  }
-                }, error => {
-                  this.toastService.showErro("Erro ao consultar Usuário por Nome", error.message, null, error.error);
-                  this.statusBarService.setShowStatusDialog(false);
-                });
-            } else {
-              //Paginação deve pegar a pagina - 1 para fazer a consulta correta la na API (começa no índice ZERO)
-              this.usuarioService.getPageUsuarios(this.page - 1)
-                .subscribe(data => {
-                  //Pega o Page.content (que é a lista de usuário que foi paginada)
-                  //Verifica se ao deletar, a página não existe mais, ai retorna para página anterior (máxima disponível):
-                  if (data.content !== null
-                    && data.content.length === 0
-                    && data.totalPages !== null
-                    && data.totalPages > 0
-                    && this.page > data.totalPages) {
-                    //Joga para última página disponível:
-                    this.page = data.totalPages;
-
-                    this.usuarioService.getPageUsuarios(this.page - 1)
-                      .subscribe(data => {
-                        //Pega o Page.content (que é a lista de usuário que foi paginada)
-                        this.usuarios = data.content;
-                        this.totalUsuariosPaginacao = data.totalElements;
-
-                        this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
-                        this.statusBarService.setShowStatusDialog(false);
-                      }, error => {
-                        this.toastService.showErro("Erro ao consultar Usuário", error.message, null, error.error);
-                        this.statusBarService.setShowStatusDialog(false);
-                      });
-                  } else {
-                    this.usuarios = data.content;
-                    this.totalUsuariosPaginacao = data.totalElements;
-
-                    this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
-                    this.statusBarService.setShowStatusDialog(false);
-                  }
-                });
-            }
-          }, error => {
-            if (error.status !== null
-              && error.status === 403) {
-              //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
-              this.toastService.showErro("Erro ao excluir Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 3000, null);
-              localStorage.removeItem("token"); //Remove o Token do usuário e redireciona para Login
-              this.router.navigate(["login"]);
-            } else {
-              this.toastService.showErro("Erro ao excluir Usuário", error.message, null, error.error);
-            }
-
-            this.statusBarService.setShowStatusDialog(false);
-          });
-      });
-    }
-  }
+  // /**
+  //  * Método deleteUsuario sem aprimorá-lo de forma mais limpa
+  //  * @param id (number)
+  //  */
+  // public deleteUsuarioAntesSemDeixarOMetodoMaisEnxuto(id: number) {
+  //   //Mensagem de confirmação para realizar a exclusão do registro:
+  //   if (confirm("Confirma a exclusão do Usuário?")) {
+  //     //StatusDialog globalizado!
+  //     this.statusBarService.setShowStatusDialog(true);
+  //     this.toastService.limparMensagens();
+  //
+  //     setTimeout(() => {
+  //       this.usuarioService.deleteUsuario(id)
+  //         .subscribe(data => {
+  //           // console.log("Retorno do método delete: " + data);
+  //           //Após deletar, recarrega a lista de usuário para atualizar a tela!
+  //           // Não vamos fazer assim, vamos deixar o nomePesquisa preenchido e apenas refazer a consulta por nome
+  //           // this.nomePesquisa = "";
+  //           // this.carregarUsuariosCadastrados();
+  //
+  //           //Retira isso, vamos respeitar a página que o usuário estava e o total que trará da nova consulta após a ação de deletar!
+  //           // this.page = 1; // Inicialize com a página 0
+  //           // this.totalUsuariosPaginacao = 0;
+  //
+  //           if (this.nomePesquisa !== null
+  //             && this.nomePesquisa.trim() !== '') {
+  //             //Só utiliza a pesquisa por Nome se algo for digitado em tela!
+  //             this.usuarioService.getPageUsuarioPorNome(this.nomePesquisa, this.page - 1)
+  //               .subscribe(data => {
+  //                 //Verifica se ao deletar, a página não existe mais, aí retorna para página anterior (máxima disponível):
+  //                 if (data.content !== null
+  //                   && data.content.length === 0
+  //                   && data.totalPages !== null
+  //                   && data.totalPages > 0
+  //                   && this.page > data.totalPages) {
+  //                   //Joga para última página disponível:
+  //                   this.page = data.totalPages;
+  //
+  //                   this.usuarioService.getPageUsuarioPorNome(this.nomePesquisa, this.page - 1)
+  //                     .subscribe(data => {
+  //                       //Pega o Page.content (que é a lista de usuário que foi paginada)
+  //                       this.usuarios = data.content;
+  //                       this.totalUsuariosPaginacao = data.totalElements;
+  //
+  //                       this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
+  //                       this.statusBarService.setShowStatusDialog(false);
+  //                     }, error => {
+  //                       this.toastService.showErro("Erro ao consultar Usuário", error.message, null, error.error);
+  //                       this.statusBarService.setShowStatusDialog(false);
+  //                     });
+  //                 } else {
+  //                   this.usuarios = data.content;
+  //                   this.totalUsuariosPaginacao = data.totalElements;
+  //
+  //                   this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
+  //                   this.statusBarService.setShowStatusDialog(false);
+  //                 }
+  //               }, error => {
+  //                 this.toastService.showErro("Erro ao consultar Usuário por Nome", error.message, null, error.error);
+  //                 this.statusBarService.setShowStatusDialog(false);
+  //               });
+  //           } else {
+  //             //Paginação deve pegar a página - 1 para fazer a consulta correta la na API (começa no índice ZERO)
+  //             this.usuarioService.getPageUsuarios(this.page - 1)
+  //               .subscribe(data => {
+  //                 //Pega o Page.content (que é a lista de usuário que foi paginada)
+  //                 //Verifica se ao deletar, a página não existe mais, aí retorna para página anterior (máxima disponível):
+  //                 if (data.content !== null
+  //                   && data.content.length === 0
+  //                   && data.totalPages !== null
+  //                   && data.totalPages > 0
+  //                   && this.page > data.totalPages) {
+  //                   //Joga para última página disponível:
+  //                   this.page = data.totalPages;
+  //
+  //                   this.usuarioService.getPageUsuarios(this.page - 1)
+  //                     .subscribe(data => {
+  //                       //Pega o Page.content (que é a lista de usuário que foi paginada)
+  //                       this.usuarios = data.content;
+  //                       this.totalUsuariosPaginacao = data.totalElements;
+  //
+  //                       this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
+  //                       this.statusBarService.setShowStatusDialog(false);
+  //                     }, error => {
+  //                       this.toastService.showErro("Erro ao consultar Usuário", error.message, null, error.error);
+  //                       this.statusBarService.setShowStatusDialog(false);
+  //                     });
+  //                 } else {
+  //                   this.usuarios = data.content;
+  //                   this.totalUsuariosPaginacao = data.totalElements;
+  //
+  //                   this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
+  //                   this.statusBarService.setShowStatusDialog(false);
+  //                 }
+  //               });
+  //           }
+  //         }, error => {
+  //           if (error.status !== null
+  //             && error.status === 403) {
+  //             //Erro 403 recusa do servidor (token faltando para requisição), mandamos uma mensagem genérica e encaminhamos para o login novamente:
+  //             this.toastService.showErro("Erro ao excluir Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 3000, null);
+  //             localStorage.removeItem("token"); //Remove o Token do usuário e redireciona para Login
+  //             this.router.navigate(["login"]);
+  //           } else {
+  //             this.toastService.showErro("Erro ao excluir Usuário", error.message, null, error.error);
+  //           }
+  //
+  //           this.statusBarService.setShowStatusDialog(false);
+  //         });
+  //     });
+  //   }
+  // }
 
   public consultaUsuariosPorNome() {
     //StatusDialog globalizado!
@@ -306,7 +308,7 @@ export class UsuarioComponent implements OnInit {
             this.statusBarService.setShowStatusDialog(false);
           });
       } else {
-        //Paginação deve pegar a pagina - 1 para fazer a consulta correta la na API (começa no índice ZERO)
+        //Paginação deve pegar a página - 1 para fazer a consulta correta la na API (começa no índice ZERO)
         this.usuarioService.getPageUsuarios(pagina - 1)
           .subscribe(data => {
             //Pega o Page.content (que é a lista de usuário que foi paginada)

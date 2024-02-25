@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AsyncPipe, NgClass} from "@angular/common";
 import {StatusBarService} from "../../../service/status-bar.service";
 
 /**
- * Componente StatusBar trabalhará em conjunto com o service para controlar o show modal (true ou false)
+ * Componente StatusBar trabalhará em conjunto com o service para controlar o ‘show’ modal (true ou false)
  */
 @Component({
   selector: 'app-status-bar',

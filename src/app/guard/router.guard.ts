@@ -14,7 +14,7 @@ export class RouterGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     // console.log("Guardião sendo chamado!");
-    //Nessa parte o Toast message não adianta, aqui ele ta no meio do processo de validação de mudança de rota, nenhuma iteração da tela vai funcionar!
+    //Nessa parte o Toast message não adianta, aqui ele tá no meio do processo de validação de mudança de rota, nenhuma iteração da tela vai funcionar!
 
     if (this.isUserAutenticado()) {
       //Caso o usuário estiver autenticado, liberamos a rota:

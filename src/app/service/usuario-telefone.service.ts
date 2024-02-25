@@ -3,7 +3,7 @@ import {Telefone} from "../../model/telefone";
 import {Usuario} from "../../model/usuario";
 
 /**
- * Service guarda informações de telefone/usuario por TOKEN de cada sessão de usuário nos MAPs, não correndo risco de atrapalhar programa multiusuários utilizando!
+ * Service guarda informações de telefone/usuario por ‘TOKEN’ de cada sessão de usuário nos MAPs, não correndo risco de atrapalhar programa multiusuários utilizando!
  */
 @Injectable({
   providedIn: 'root'
