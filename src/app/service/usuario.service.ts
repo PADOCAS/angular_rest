@@ -46,7 +46,7 @@ export class UsuarioService {
     return this.http.get<any>(Constants.baseUrl + "usuariopornome/" + nome);
   }
 
-  public getPageUsuarioPorNome(nome:string, page:number):Observable<any> {
+  public getPageUsuarioPorNome(nome: string, page: number): Observable<any> {
     //Retorna um Page com os Usuários filtrados por nome para a página que o usuário vai navegar:
     return this.http.get<any>(Constants.baseUrl + "pageusuariopornome/" + page + "/" + nome);
   }
@@ -106,5 +106,20 @@ export class UsuarioService {
     //Convertendo para um novo objeto e enviando para API (para não enviar com informações de ROLE etc.. que vieram do FIND, deixamos o objeto apenas com o necessário antes de editar!)
     let usuarioPutCharged: Usuario = new Usuario(usuario.id, usuario.login, usuario.senha, usuario.nome, usuario.cep, usuario.bairro, usuario.localidade, usuario.logradouro, usuario.complemento, usuario.uf, usuario.dataNascimento, usuario.cpf, usuario.email, usuario.profissao, usuario.salario, usuario.listTelefone, usuario.listRole);
     return this.http.put<Usuario>(Constants.baseUrl, usuarioPutCharged);
+  }
+
+  public downloadReportUsuarioPdf() {
+    return this.http.get(Constants.baseUrl + "relatorio", {responseType: "text"}).subscribe(
+      data => {
+        // Verifica se o elemento iframe existe:
+        let iframeElement = document.querySelector('iframe');
+        if (iframeElement !== undefined
+          && iframeElement !== null
+          && iframeElement.src !== null) {
+          // Define o src do iframe com o valor recebido
+          iframeElement.src = data;
+        }
+      }
+    );
   }
 }

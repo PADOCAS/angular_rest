@@ -20,7 +20,7 @@
   }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 585px) {
   table tbody tr td{
     font-size: 11px;
   }
@@ -38,7 +38,7 @@
   }
 
   .inputGrande {
-    width: 250px;
+    width: 200px;
   }
 }
 
@@ -53,6 +53,7 @@
 
   button {
     font-size: 9px;
+    padding: 7px;
   }
 
   input {
@@ -60,7 +61,7 @@
   }
 
   .inputGrande {
-    width: 180px;
+    width: 160px;
   }
 }
 
@@ -68,9 +69,14 @@
   .inputGrande {
     width: 150px;
   }
+
+  button {
+    font-size: 8px;
+    padding: 6px;
+  }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 380px) {
   table tbody tr td{
     font-size: 7px;
   }
@@ -80,11 +86,11 @@
   }
 
   button {
-    font-size: 7px;
+    padding: 5px;
   }
 
   input {
-    font-size: 8px;
+    font-size: 7px;
   }
 
   .inputGrande {

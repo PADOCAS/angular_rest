@@ -1,19 +1,24 @@
 <app-menu></app-menu>
 <p>Usuários</p>
 
-<form class="row g-3" style="padding: 10px; width: 100%;">
-  <div class="col-auto">
+<form class="row g-4" style="padding: 5px; width: 100%;">
+  <div class="col-auto" style="margin-right: 5px; padding-right: 0;">
     <input id="txtNomePesquisa" name="nomePesquisa" [(ngModel)]="nomePesquisa" type="text"
            class="form-control inputGrande" maxlength="100" placeholder="Pesquisa Usuário por Nome">
   </div>
-  <div class="col-auto">
+  <div class="col-auto" style="padding: 0; margin-right: 5px;">
     <button type="button" (click)="consultaUsuariosPorNome();" (keydown.enter)="consultaUsuariosPorNome();"
             class="btn btn-primary mb-2">Pesquisar
     </button>
   </div>
-  <div class="col-auto">
+  <div class="col-auto" style="padding: 0; margin-right: 5px;">
     <button type="button" [routerLink]="['/usuario-add']" (click)="novo();" (keydown.enter)="novo();"
             class="btn btn-secondary mb-2">Novo
+    </button>
+  </div>
+  <div class="col-auto" style="padding: 0;">
+    <button (click)="imprimeRelatorioUsuario();" type="button" class="btn btn-dark mb-2" data-bs-toggle="modal" data-bs-target="#modalImpressaoPdf">
+      Impressão
     </button>
   </div>
 </form>
@@ -29,7 +34,8 @@
   </thead>
 
   <tbody>
-  <tr *ngFor="let usu of usuarios | paginate:{ itemsPerPage: 5, currentPage: page, totalItems: totalUsuariosPaginacao }">
+  <tr
+    *ngFor="let usu of usuarios | paginate:{ itemsPerPage: 5, currentPage: page, totalItems: totalUsuariosPaginacao }">
     <td>{{ usu.id }}</td>
     <td>{{ usu.login }}</td>
     <td>{{ usu.nome }}</td>
@@ -55,4 +61,18 @@
                        nextLabel="Próxima"
                        [responsive]="true"
   ></pagination-controls>
+</div>
+
+<!-- Modal Impressão Relatório -->
+<div class="modal fade" id="modalImpressaoPdf" tabindex="-1" aria-labelledby="lblTitModalRelatorio" aria-hidden="true">
+  <div class="modal-dialog" style="min-width: 80%; min-height:90%; height: 90%;">
+    <div class="modal-content">
+      <div class="modal-body">
+        <iframe id="iFrameRelUsuario" title="Relatório de Usuários" width="100%" style="height: 80vh;" frameborder="0" allowtransparency="true"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
 </div>

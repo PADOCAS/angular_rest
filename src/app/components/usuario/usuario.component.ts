@@ -320,4 +320,8 @@ export class UsuarioComponent implements OnInit {
       }
     });
   }
+
+  public imprimeRelatorioUsuario() {
+    return this.usuarioService.downloadReportUsuarioPdf();
+  }
 }
