@@ -17,7 +17,7 @@
     </button>
   </div>
   <div class="col-auto" style="padding: 0;">
-    <button (click)="imprimeRelatorioUsuario();" type="button" class="btn btn-dark mb-2" data-bs-toggle="modal" data-bs-target="#modalImpressaoPdf">
+    <button (click)="imprimeRelatorioUsuario();" (keydown.enter)="imprimeRelatorioUsuario();" type="button" class="btn btn-dark mb-2">
       Impressão
     </button>
   </div>
@@ -71,7 +71,7 @@
         <iframe id="iFrameRelUsuario" title="Relatório de Usuários" width="100%" style="height: 80vh;" frameborder="0" allowtransparency="true"></iframe>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModalReport();" (keydown.enter)="closeModalReport();">Fechar</button>
       </div>
     </div>
   </div>

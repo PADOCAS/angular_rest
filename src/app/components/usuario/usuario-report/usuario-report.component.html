@@ -1,0 +1,90 @@
+<!--suppress ALL -->
+<app-menu></app-menu>
+
+<div class="card" style="margin-top: 10px;">
+  <div style="padding-left: 10px; padding-right: 10px; padding-top: 10px;">
+    <div class="card text-start">
+      <div class="card-header">
+        <div class="mb-2" style="margin-bottom: 0 !important;">
+          <button (click)="gerarImpressao();" (keydown.enter)="gerarImpressao();" type="button"
+                  class="btn btn-dark mb-2">
+            Impressão
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p>Relatório de Usuários</p>
+
+  <form style="padding: 10px;">
+    <div class="row g-8" style="max-width: 100%;">
+      <div class="col-md-4">
+        <label id="lblPeriodoNascimento" for="txtDataNascInicio">Período Nascimento Inicial</label>
+        <div class="input-group">
+          <input id="txtDataNascInicio" [(ngModel)]="usuarioReport.dataNascimentoInicio" name="dataNascimentoInicio"
+                 type="text"
+                 class="form-control"
+                 placeholder="dd/MM/yyyy"
+                 [positionTarget]="btnCalendarDataNascimentoInicio"
+                 (focusout)="validatorUtil().isValidDate(usuarioReport.dataNascimentoInicio, null, 'Data Nascimento Inicial')"
+                 maxlength="10"
+                 ngbDatepicker #datePickerDataNascimentoInicio="ngbDatepicker"
+                 autocomplete="false">
+          <button style="background-color: #B0C4DE;" #btnCalendarDataNascimentoInicio class="btn btn-outline-secondary"
+                  (click)="datePickerDataNascimentoInicio.toggle();" type="button">
+            <fa-icon [icon]="faCalendarAlt"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label id="lblPeriodoSeparadorDatas" for="txtDataNascFim">Período Nascimento Final</label>
+        <div class="input-group">
+          <input id="txtDataNascFim" [(ngModel)]="usuarioReport.dataNascimentoFim" name="dataNascimentoFim" type="text"
+                 class="form-control"
+                 placeholder="dd/MM/yyyy"
+                 [positionTarget]="btnCalendarDataNascimentoFim"
+                 (focusout)="validatorUtil().isValidDate(usuarioReport.dataNascimentoFim, null, 'Data Nascimento Final')"
+                 maxlength="10"
+                 ngbDatepicker #datePickerDataNascimentoFim="ngbDatepicker"
+                 autocomplete="false">
+          <button style="background-color: #B0C4DE;" #btnCalendarDataNascimentoFim class="btn btn-outline-secondary"
+                  (click)="datePickerDataNascimentoFim.toggle();" type="button">
+            <fa-icon [icon]="faCalendarAlt"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-8" style="max-width: 100%;">
+      <div class="col-md-4">
+        <label id="lblProfissao" for="ngSelectProfissao">Profissão</label>
+        <ng-select id="ngSelectProfissao"
+                   [items]="listProfissao"
+                   [(ngModel)]="usuarioReport.profissao"
+                   placeholder="Selecione uma Profissão..."
+                   bindLabel="idDescricaoFormatted"
+                   notFoundText="Nenhuma profissão encontrada"
+                   name="profissao">
+        </ng-select>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Modal Impressão Relatório -->
+<div class="modal fade" id="modalImpressaoPdf" tabindex="-1" aria-labelledby="lblTitModalRelatorio" aria-hidden="true">
+  <div class="modal-dialog" style="min-width: 80%; min-height:90%; height: 90%;">
+    <div class="modal-content">
+      <div class="modal-body">
+        <iframe id="iFrameRelUsuario" title="Relatório de Usuários" width="100%" style="height: 80vh;" frameborder="0"
+                allowtransparency="true"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModalReport();"
+                (keydown.enter)="closeModalReport();">Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

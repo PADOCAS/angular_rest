@@ -87,7 +87,7 @@
                  class="form-control"
                  placeholder="dd/MM/yyyy"
                  [positionTarget]="btnCalendarDataNascimento"
-                 (focusout)="validatorUtil().isValidDate(usuario.dataNascimento, null)"
+                 (focusout)="validatorUtil().isValidDate(usuario.dataNascimento, null, 'Data Nascimento')"
                  maxlength="10"
                  ngbDatepicker #datePickerDataNascimento="ngbDatepicker"
                  autocomplete="false">

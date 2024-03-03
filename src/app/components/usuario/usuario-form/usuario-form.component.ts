@@ -451,7 +451,7 @@ export class UsuarioFormComponent implements OnInit {
         //Cria um Objeto e passa a msg dentro para tratar caso der erro, acessar a msg atualizada!
         //Caso mandar apenas a msg para o método será outra referência!
         let errorMsgAux: ErrorMessage = new ErrorMessage(msgErro);
-        if (!this.validatorUtilService.isValidDate(this.usuario.dataNascimento, errorMsgAux)) {
+        if (!this.validatorUtilService.isValidDate(this.usuario.dataNascimento, errorMsgAux, "Data Nascimento")) {
           msgErro = errorMsgAux.msg;
         }
       }

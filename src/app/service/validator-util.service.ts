@@ -15,8 +15,13 @@ export class ValidatorUtilService {
    *
    * @param data (‘string’)
    * @param errorMessage (caso quiser tratar o erro direto em sua tela, recebe um objeto com a referência original da msg), se passar nulo vai liberar um Toast para o usuário
+   * @param labelData (Label especifico para data que está a validar)
    */
-  public isValidDate(data: string, errorMessage: ErrorMessage | null) {
+  public isValidDate(data: string, errorMessage: ErrorMessage | null, labelData: string | null) {
+    if (labelData === null) {
+      labelData = "Data inválida";
+    }
+
     if (errorMessage !== null) {
       this.toastService.limparMensagens();
     }
@@ -29,9 +34,9 @@ export class ValidatorUtilService {
         if (errorMessage.msg.length > 0) {
           errorMessage.msg += "\n";
         }
-        errorMessage.msg += "* Data válida, insira os dados no formato dd/MM/yyyy";
+        errorMessage.msg += "* " + labelData + " inválida, insira os dados no formato dd/MM/yyyy";
       } else {
-        this.toastService.showWarning("Data inválida", "Informe uma data válida!\nInsira os dados no formato dd/MM/yyyy", null);
+        this.toastService.showWarning(labelData + " inválida", "Informe uma data válida!\nInsira os dados no formato dd/MM/yyyy", null);
       }
       return false;
     }
@@ -46,9 +51,9 @@ export class ValidatorUtilService {
         if (errorMessage.msg.length > 0) {
           errorMessage.msg += "\n";
         }
-        errorMessage.msg += "* Data válida, insira os dados no formato dd/MM/yyyy";
+        errorMessage.msg += "* " + labelData + " inválida, insira os dados no formato dd/MM/yyyy";
       } else {
-        this.toastService.showWarning("Data inválida", "Informe uma data válida!\nInsira os dados no formato dd/MM/yyyy", null);
+        this.toastService.showWarning(labelData + " inválida", "Informe uma data válida!\nInsira os dados no formato dd/MM/yyyy", null);
       }
       return false;
     }
@@ -59,9 +64,9 @@ export class ValidatorUtilService {
         if (errorMessage.msg.length > 0) {
           errorMessage.msg += "\n";
         }
-        errorMessage.msg += "* Data válida, dia informado inválido!";
+        errorMessage.msg += "* " + labelData + " inválida, dia informado inválido!";
       } else {
-        this.toastService.showWarning("Data inválida", "Dia inválido!", null);
+        this.toastService.showWarning(labelData + " inválida", "Dia inválido!", null);
       }
       return false;
     }
@@ -72,9 +77,9 @@ export class ValidatorUtilService {
         if (errorMessage.msg.length > 0) {
           errorMessage.msg += "\n";
         }
-        errorMessage.msg += "* Data válida, mês informado inválido!";
+        errorMessage.msg += "* " + labelData + " inválida, mês informado inválido!";
       } else {
-        this.toastService.showWarning("Data inválida", "Mês inválido!", null);
+        this.toastService.showWarning(labelData + " inválida", "Mês inválido!", null);
       }
       return false;
     }
@@ -85,9 +90,9 @@ export class ValidatorUtilService {
         if (errorMessage.msg.length > 0) {
           errorMessage.msg += "\n";
         }
-        errorMessage.msg += "* Data válida, ano informado inválido!";
+        errorMessage.msg += "* " + labelData + " inválida, ano informado inválido!";
       } else {
-        this.toastService.showWarning("Data inválida", "Ano inválido!", null);
+        this.toastService.showWarning(labelData + " inválida", "Ano inválido!", null);
       }
       return false;
     }
@@ -104,9 +109,9 @@ export class ValidatorUtilService {
           if (errorMessage.msg.length > 0) {
             errorMessage.msg += "\n";
           }
-          errorMessage.msg += "* Data válida, dia inválido para o mês de fevereiro, nesse ano vai até o dia 29.";
+          errorMessage.msg += "* " + labelData + " inválida, dia inválido para o mês de fevereiro, nesse ano vai até o dia 29.";
         } else {
-          this.toastService.showWarning("Data inválida", "Mês de fevereiro, nesse ano vai até o dia 29.", null);
+          this.toastService.showWarning(labelData + " inválida", "Mês de fevereiro, nesse ano vai até o dia 29.", null);
         }
         return false;
       }
@@ -119,9 +124,9 @@ export class ValidatorUtilService {
           if (errorMessage.msg.length > 0) {
             errorMessage.msg += "\n";
           }
-          errorMessage.msg += "* Data válida, dia inválido para o mês de fevereiro, nesse ano vai até o dia 28.";
+          errorMessage.msg += "* " + labelData + " inválida, dia inválido para o mês de fevereiro, nesse ano vai até o dia 28.";
         } else {
-          this.toastService.showWarning("Data inválida", "Mês de fevereiro, nesse ano vai até o dia 28.", null);
+          this.toastService.showWarning(labelData + " inválida", "Mês de fevereiro, nesse ano vai até o dia 28.", null);
         }
         return false;
       }
@@ -134,9 +139,9 @@ export class ValidatorUtilService {
           if (errorMessage.msg.length > 0) {
             errorMessage.msg += "\n";
           }
-          errorMessage.msg += "* Data válida, mês vai até o dia 31.";
+          errorMessage.msg += "* " + labelData + " inválida, mês vai até o dia 31.";
         } else {
-          this.toastService.showWarning("Data inválida", "Mês vai até o dia 31.", null);
+          this.toastService.showWarning(labelData + " inválida", "Mês vai até o dia 31.", null);
         }
         return false;
       }
@@ -149,9 +154,9 @@ export class ValidatorUtilService {
           if (errorMessage.msg.length > 0) {
             errorMessage.msg += "\n";
           }
-          errorMessage.msg += "* Data válida, mês vai até o dia 30.";
+          errorMessage.msg += "* " + labelData + " inválida, mês vai até o dia 30.";
         } else {
-          this.toastService.showWarning("Data inválida", "Mês vai até o dia 30.", null);
+          this.toastService.showWarning(labelData + " inválida", "Mês vai até o dia 30.", null);
         }
         return false;
       }

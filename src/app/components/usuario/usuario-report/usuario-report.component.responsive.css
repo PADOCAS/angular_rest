@@ -1,0 +1,41 @@
+@media (max-width: 900px) {
+  button {
+    font-size: 13px;
+  }
+
+  input {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 550px) {
+  button {
+    font-size: 11px;
+  }
+
+  input {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 450px) {
+  button {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 350px) {
+  button {
+    font-size: 7px;
+  }
+}
+
+@media (max-width: 300px) {
+  button {
+    font-size: 6px;
+  }
+
+  input {
+    font-size: 9px;
+  }
+}

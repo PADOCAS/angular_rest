@@ -7,8 +7,10 @@ import {UsuarioFormComponent} from "./components/usuario/usuario-form/usuario-fo
 import {RouterGuard} from "./guard/router.guard";
 import {UsuarioTelefoneFormComponent} from "./components/usuario/usuario-telefone-form/usuario-telefone-form.component";
 import {RecuperarSenhaComponent} from "./components/recuperar-senha/recuperar-senha/recuperar-senha.component";
+import {UsuarioReportComponent} from "./components/usuario/usuario-report/usuario-report.component";
 
 export const routes: Routes = [
+  {path: "usuario-report", component: UsuarioReportComponent, canActivate: [RouterGuard]}, //Relatório de Usuários //Definimos o RouterGuard para checar token antes de ir para rota!
   {path: "usuario-add", component: UsuarioFormComponent, canActivate: [RouterGuard]}, //Cadastro de Usuário - adicionar novo //Definimos o RouterGuard para checar token antes de ir para rota!
   {path: "usuario-edit/:id", component: UsuarioFormComponent, canActivate: [RouterGuard]}, //Cadastro de usuário - editar recebendo parâmetro //Definimos o RouterGuard para checar token antes de ir para rota!
   {path: "usuario-telefone", component: UsuarioTelefoneFormComponent, canActivate: [RouterGuard]}, //Cadastro de telefones do usuário (recebe objetos telefone/usuario por service) //Definimos o RouterGuard para checar token antes de ir para rota!

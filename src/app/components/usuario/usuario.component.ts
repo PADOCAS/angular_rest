@@ -321,7 +321,24 @@ export class UsuarioComponent implements OnInit {
     });
   }
 
+  public openModalReport() {
+    let modalElement = document.getElementById('modalImpressaoPdf');
+    if (modalElement) {
+      modalElement.classList.add('show');
+      modalElement.style.display = 'block';
+    }
+  }
+
+  public closeModalReport() {
+    let modalElement = document.getElementById('modalImpressaoPdf');
+    if (modalElement) {
+      modalElement.classList.remove('show');
+      modalElement.style.display = 'none';
+    }
+  }
+
   public imprimeRelatorioUsuario() {
+    this.openModalReport();
     return this.usuarioService.downloadReportUsuarioPdf();
   }
 }
