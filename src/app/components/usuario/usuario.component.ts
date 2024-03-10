@@ -321,14 +321,6 @@ export class UsuarioComponent implements OnInit {
     });
   }
 
-  public openModalReport() {
-    let modalElement = document.getElementById('modalImpressaoPdf');
-    if (modalElement) {
-      modalElement.classList.add('show');
-      modalElement.style.display = 'block';
-    }
-  }
-
   public closeModalReport() {
     let modalElement = document.getElementById('modalImpressaoPdf');
     if (modalElement) {
@@ -338,7 +330,8 @@ export class UsuarioComponent implements OnInit {
   }
 
   public imprimeRelatorioUsuario() {
-    this.openModalReport();
+    this.statusBarService.setShowStatusDialog(true);
+    this.toastService.limparMensagens();
     return this.usuarioService.downloadReportUsuarioPdf();
   }
 }

@@ -11,6 +11,54 @@ export class ValidatorUtilService {
   }
 
   /**
+   * Valida um período, pode retornar um erro direto ou preencher uma 'string' para voltar a tela
+   * @param dataInicio
+   * @param dataFim
+   * @param errorMessage
+   * @param labelPeriodo
+   */
+  public isValidPeriodo(dataInicio: string, dataFim: String, errorMessage: ErrorMessage | null, labelPeriodo: string | null): boolean {
+    if (labelPeriodo === null) {
+      labelPeriodo = "Período";
+    }
+
+    if (errorMessage !== null) {
+      this.toastService.limparMensagens();
+    }
+
+    if (dataInicio !== null
+      && dataFim !== null) {
+      let partsDataInicio = dataInicio.split('/');
+      let partsDataFim = dataFim.split('/');
+
+      if (partsDataInicio.length === 3
+        && partsDataFim.length === 3) {
+        const dtInicio: Date = new Date(parseInt(partsDataInicio[2]), parseInt(partsDataInicio[1]), parseInt(partsDataInicio[0]));
+        const dtFim: Date = new Date(parseInt(partsDataFim[2]), parseInt(partsDataFim[1]), parseInt(partsDataFim[0]));
+
+        // Verifica se a data inicial é maior que a data final
+        if (dtInicio !== null
+          && dtFim !== null
+          && dtInicio > dtFim) {
+          if (errorMessage !== null
+            && errorMessage.msg !== null) {
+            if (errorMessage.msg.length > 0) {
+              errorMessage.msg += "\n";
+            }
+            errorMessage.msg += "* " + labelPeriodo + " inválido, Data Início não deve ser posterior a Data Fim.";
+          } else {
+            this.toastService.showWarning(labelPeriodo + " inválido", "Data Início não deve ser posterior a Data Fim.", null);
+          }
+
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  /**
    * Valida Data, pode retornar a mensagem de erro direto ou preencher uma ‘string’ para retornar a tela
    *
    * @param data (‘string’)
@@ -26,7 +74,7 @@ export class ValidatorUtilService {
       this.toastService.limparMensagens();
     }
 
-    const parts = data.split('/');
+    let parts = data.split('/');
 
     if (parts.length != 3) {
       if (errorMessage !== null

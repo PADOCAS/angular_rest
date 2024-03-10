@@ -3,11 +3,11 @@
   <div class="modal-backdrop"
        [ngClass]="{'show': statusBarService.showStatusDialog | async}"
        [style.display]="(statusBarService.showStatusDialog | async) ? 'block' : 'none'" data-bs-toggle="modal"
-       [style.z-index]="(statusBarService.showStatusDialog | async) ? '1050' : '-1'"
+       [style.z-index]="(statusBarService.showStatusDialog | async) ? '9999999' : '-1'"
        data-bs-target="#staticModalProgressBar"></div>
   <div id="staticModalProgressBar" class="modal d-flex align-items-center justify-content-center"
        [ngClass]="{'show': statusBarService.showStatusDialog | async}"
-       [style.z-index]="(statusBarService.showStatusDialog | async) ? '1050' : '-1'"
+       [style.z-index]="(statusBarService.showStatusDialog | async) ? '9999999' : '-1'"
        tabindex="-1" role="dialog"
        [style.display]="(statusBarService.showStatusDialog | async) ? 'block' : 'none'" aria-modal="true"
        data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">

@@ -4,13 +4,16 @@ import {Usuario} from "../../model/usuario";
 import {Observable} from "rxjs";
 import {Constants} from "../../util/constants";
 import {ViaCep} from "../../model/viaCep";
+import {UsuarioReport} from "../../model/usuarioReport";
+import {StatusBarService} from "./status-bar.service";
+import {ToastService} from "./toast.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private statusBarService: StatusBarService, private toastService: ToastService) {
   }
 
   /**
@@ -111,15 +114,69 @@ export class UsuarioService {
   public downloadReportUsuarioPdf() {
     return this.http.get(Constants.baseUrl + "relatorio", {responseType: "text"}).subscribe(
       data => {
-        // Verifica se o elemento iframe existe:
-        let iframeElement = document.querySelector('iframe');
-        if (iframeElement !== undefined
-          && iframeElement !== null
-          && iframeElement.src !== null) {
-          // Define o src do iframe com o valor recebido
-          iframeElement.src = data;
+        if (data !== undefined
+          && data !== null
+          && data !== '') {
+          //Abre o Modal:
+          let modalElement = document.getElementById('modalImpressaoPdf');
+          if (modalElement) {
+            modalElement.classList.add('show');
+            modalElement.style.display = 'block';
+          }
+
+          // Verifica se o elemento iframe existe:
+          let iframeElement = document.querySelector('iframe');
+          if (iframeElement !== undefined
+            && iframeElement !== null
+            && iframeElement.src !== null) {
+            // Define o src do iframe com o valor recebido
+            iframeElement.src = data;
+          }
+
+          this.statusBarService.setShowStatusDialog(false);
+        } else {
+          this.toastService.showWarning("Atenção", "Nenhum registro encontrado.", 2000);
+          this.statusBarService.setShowStatusDialog(false);
         }
-      }
-    );
+      },
+      error => {
+        this.toastService.showErro("Erro ao gerar Relatório", error.message, null, error.error);
+        this.statusBarService.setShowStatusDialog(false);
+      });
+  }
+
+  public downloadReportUsuarioPdfWithParam(usuarioReport: UsuarioReport) {
+    return this.http.post(Constants.baseUrl + "relatorio/", usuarioReport, {responseType: "text"}).subscribe(
+      data => {
+        if (data !== undefined
+          && data !== null
+          && data !== '') {
+          //Abre o Modal:
+          let modalElement = document.getElementById('modalImpressaoPdf');
+
+          if (modalElement) {
+            modalElement.classList.add('show');
+            modalElement.style.display = 'block';
+            // Verifica se o elemento iframe existe:
+            let iframeElement = document.querySelector('iframe');
+
+            if (iframeElement !== undefined
+              && iframeElement !== null
+              && iframeElement.src !== null) {
+              // Define o src do iframe com o valor recebido
+              iframeElement.src = data;
+            }
+          }
+
+          this.statusBarService.setShowStatusDialog(false);
+        } else {
+          this.toastService.showWarning("Atenção", "Nenhum registro encontrado.", 2000);
+          this.statusBarService.setShowStatusDialog(false);
+        }
+      },
+      error => {
+        this.toastService.showErro("Erro ao gerar Relatório", error.message, null, error.error);
+        this.statusBarService.setShowStatusDialog(false);
+      });
   }
 }

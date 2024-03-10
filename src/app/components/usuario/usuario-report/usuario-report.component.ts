@@ -63,14 +63,6 @@ export class UsuarioReportComponent implements OnInit {
       });
   }
 
-  public openModalReport() {
-    let modalElement = document.getElementById('modalImpressaoPdf');
-    if (modalElement) {
-      modalElement.classList.add('show');
-      modalElement.style.display = 'block';
-    }
-  }
-
   public closeModalReport() {
     let modalElement = document.getElementById('modalImpressaoPdf');
     if (modalElement) {
@@ -83,9 +75,7 @@ export class UsuarioReportComponent implements OnInit {
     this.statusBarService.setShowStatusDialog(true);
     this.toastService.limparMensagens();
     if (this.validarImpressao()) {
-      alert("GERAR IMPRESSÃO...");
-      this.openModalReport();
-      this.statusBarService.setShowStatusDialog(false);
+      this.usuarioService.downloadReportUsuarioPdfWithParam(this.usuarioReport);
     } else {
       this.statusBarService.setShowStatusDialog(false);
     }
@@ -110,11 +100,11 @@ export class UsuarioReportComponent implements OnInit {
       }
 
       //Data Nascimento Final:
-      let isInfoDataInicioFim: boolean = false;
+      let isInfoDataFim: boolean = false;
       if (this.usuarioReport.dataNascimentoFim !== undefined
         && this.usuarioReport.dataNascimentoFim !== null
         && this.usuarioReport.dataNascimentoFim.trim() !== "") {
-        isInfoDataInicioFim = true;
+        isInfoDataFim = true;
         //Cria um Objeto e passa a msg dentro para tratar caso der erro, acessar a msg atualizada!
         //Caso mandar apenas a msg para o método será outra referência!
         let errorMsgAux: ErrorMessage = new ErrorMessage(msgErro);
@@ -124,14 +114,23 @@ export class UsuarioReportComponent implements OnInit {
       }
 
       if (((isInfoDataInicio
-          && !isInfoDataInicioFim)
+          && !isInfoDataFim)
         || (!isInfoDataInicio
-          && isInfoDataInicioFim))) {
+          && isInfoDataFim))) {
         if (msgErro.length > 0) {
           msgErro += "\n";
         }
 
         msgErro += "* Informe o período inicial e final ou então nenhum deles.";
+      } else if (isInfoDataInicio
+        && isInfoDataFim) {
+        //Valida Período:
+        //Cria um Objeto e passa a msg dentro para tratar caso der erro, acessar a msg atualizada!
+        //Caso mandar apenas a msg para o método será outra referência!
+        let errorMsgAux: ErrorMessage = new ErrorMessage(msgErro);
+        if (!this.validatorUtilService.isValidPeriodo(this.usuarioReport.dataNascimentoInicio, this.usuarioReport.dataNascimentoFim, errorMsgAux, "Período Nascimento")) {
+          msgErro = errorMsgAux.msg;
+        }
       }
     }
 
