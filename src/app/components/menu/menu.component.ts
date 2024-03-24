@@ -30,16 +30,7 @@ export class MenuComponent {
     });
   }
 
-  // public menuHome(): void {
-  //   this.statusBarService.setShowStatusDialog(true);
-  //   this.toastService.limparMensagens();
-  //
-  //   setTimeout(() => {
-  //     this.statusBarService.setShowStatusDialog(false);
-  //   });
-  // }
-
-  public menuUsuarios(): void {
+  public loadProgram(): void {
     this.statusBarService.setShowStatusDialog(true);
     this.toastService.limparMensagens();
 

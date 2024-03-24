@@ -14,8 +14,8 @@
             Cadastros
           </a>
           <ul class="dropdown-menu" aria-labelledby="navBarCadastrosDrowpdown">
-            <li><a class="dropdown-item" [routerLink]="['/usuarioList']" (click)="menuUsuarios();"
-                   (keydown.enter)="menuUsuarios();">Usuários</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/usuarioList']" (click)="loadProgram();"
+                   (keydown.enter)="loadProgram();">Usuários</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -23,8 +23,17 @@
             Relatórios
           </a>
           <ul class="dropdown-menu" aria-labelledby="navBarRelatoriosDrowpdown">
-            <li><a class="dropdown-item" [routerLink]="['/usuario-report']" (click)="menuUsuarios();"
-                   (keydown.enter)="menuUsuarios();">Usuários</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/usuario-report']" (click)="loadProgram();"
+                   (keydown.enter)="loadProgram();">Usuários</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navBarGraficosDrowpdown"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Gráficos
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navBarGraficosDrowpdown">
+            <li><a class="dropdown-item" [routerLink]="['/bar-chart']" (click)="loadProgram();"
+                   (keydown.enter)="loadProgram();">Usuários</a></li>
           </ul>
         </li>
         <li class="nav-item">
