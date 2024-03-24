@@ -7,6 +7,7 @@ import {ViaCep} from "../../model/viaCep";
 import {UsuarioReport} from "../../model/usuarioReport";
 import {StatusBarService} from "./status-bar.service";
 import {ToastService} from "./toast.service";
+import {UsuarioGrafico} from "../../model/usuarioGrafico";
 
 @Injectable({
   providedIn: 'root'
@@ -109,6 +110,10 @@ export class UsuarioService {
     //Convertendo para um novo objeto e enviando para API (para não enviar com informações de ROLE etc.. que vieram do FIND, deixamos o objeto apenas com o necessário antes de editar!)
     let usuarioPutCharged: Usuario = new Usuario(usuario.id, usuario.login, usuario.senha, usuario.nome, usuario.cep, usuario.bairro, usuario.localidade, usuario.logradouro, usuario.complemento, usuario.uf, usuario.dataNascimento, usuario.cpf, usuario.email, usuario.profissao, usuario.salario, usuario.listTelefone, usuario.listRole);
     return this.http.put<Usuario>(Constants.baseUrl, usuarioPutCharged);
+  }
+
+  public getDadosGraficoSalario():Observable<any> {
+    return this.http.get(Constants.baseUrl + "graficosalario");
   }
 
   public downloadReportUsuarioPdf() {
