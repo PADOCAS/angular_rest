@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuComponent} from "../menu/menu.component";
-import Chart from 'chart.js/auto';
+import {MenuComponent} from "../../menu/menu.component";
+import Chart from "chart.js/auto";
 
 @Component({
-  selector: 'app-bar-chart',
+  selector: 'app-usuario-bar-chart',
   standalone: true,
   imports: [
     MenuComponent
   ],
-  templateUrl: './bar-chart.component.html',
-  styleUrl: './bar-chart.component.css'
+  templateUrl: './usuario-bar-chart.component.html',
+  styleUrl: './usuario-bar-chart.component.css'
 })
-export class BarChartComponent implements OnInit {
+export class UsuarioBarChartComponent implements OnInit {
   chart: any;
 
   constructor() {
