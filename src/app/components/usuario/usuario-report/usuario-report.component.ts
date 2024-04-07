@@ -60,6 +60,9 @@ export class UsuarioReportComponent implements OnInit {
         this.listProfissao = data;
         //Fecha o statusBar:
         this.statusBarService.setShowStatusDialog(false);
+      }, error => {
+        this.toastService.showErro("Erro", error.message, null, error.error);
+        this.statusBarService.setShowStatusDialog(false);
       });
   }
 

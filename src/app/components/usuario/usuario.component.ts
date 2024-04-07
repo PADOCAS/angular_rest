@@ -50,6 +50,9 @@ export class UsuarioComponent implements OnInit {
         //Pega o Page.content (que é a lista de usuário que foi paginada)
         this.usuarios = data.content;
         this.totalUsuariosPaginacao = data.totalElements;
+      }, error => {
+        this.toastService.showErro("Erro", error.message, null, error.error);
+        this.statusBarService.setShowStatusDialog(false);
       });
   }
 
@@ -63,7 +66,7 @@ export class UsuarioComponent implements OnInit {
       && id !== null
       && login !== undefined
       && login !== null) {
-      if(login === 'admin') {
+      if (login === 'admin') {
         this.statusBarService.setShowStatusDialog(true);
         this.toastService.limparMensagens();
         this.toastService.showWarning("Atenção", "Você não tem permissão para excluir o usuário admin.", 2000);

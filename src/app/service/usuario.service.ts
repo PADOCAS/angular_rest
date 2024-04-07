@@ -7,7 +7,6 @@ import {ViaCep} from "../../model/viaCep";
 import {UsuarioReport} from "../../model/usuarioReport";
 import {StatusBarService} from "./status-bar.service";
 import {ToastService} from "./toast.service";
-import {UsuarioGrafico} from "../../model/usuarioGrafico";
 
 @Injectable({
   providedIn: 'root'
@@ -112,7 +111,7 @@ export class UsuarioService {
     return this.http.put<Usuario>(Constants.baseUrl, usuarioPutCharged);
   }
 
-  public getDadosGraficoSalario():Observable<any> {
+  public getDadosGraficoSalario(): Observable<any> {
     return this.http.get(Constants.baseUrl + "graficosalario");
   }
 
@@ -145,7 +144,17 @@ export class UsuarioService {
         }
       },
       error => {
-        this.toastService.showErro("Erro ao gerar Relatório", error.message, null, error.error);
+        let errorObj = null;
+
+        //Usei o JSON.parse, direto não converteu corretamente o JSON nesse método!
+        if (error !== undefined
+          && error !== null
+          && error.error !== undefined
+          && error.error !== null) {
+          errorObj = JSON.parse(error.error);
+        }
+
+        this.toastService.showErro("Erro ao gerar Relatório", error.message, null, errorObj);
         this.statusBarService.setShowStatusDialog(false);
       });
   }
@@ -180,7 +189,16 @@ export class UsuarioService {
         }
       },
       error => {
-        this.toastService.showErro("Erro ao gerar Relatório", error.message, null, error.error);
+        let errorObj = null;
+
+        //Usei o JSON.parse, direto não converteu corretamente o JSON nesse método!
+        if (error !== undefined
+          && error !== null
+          && error.error !== undefined
+          && error.error !== null) {
+          errorObj = JSON.parse(error.error);
+        }
+        this.toastService.showErro("Erro ao gerar Relatório", error.message, null, errorObj);
         this.statusBarService.setShowStatusDialog(false);
       });
   }

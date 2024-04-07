@@ -63,8 +63,10 @@ export class UsuarioBarChartComponent implements OnInit {
           }
         }
         this.statusBarService.setShowStatusDialog(false);
-      }
-    );
+      }, error => {
+        this.toastService.showErro("Erro", error.message, null, error.error);
+        this.statusBarService.setShowStatusDialog(false);
+      });
   }
 
   createChart() {
