@@ -29,7 +29,39 @@ export class UsuarioBarChartComponent implements OnInit {
     this.usuarioService.getDadosGraficoSalario().subscribe(
       data => {
         this.usuarioGrafico = data;
-        this.createChart();
+
+        if (this.usuarioGrafico !== undefined
+          && this.usuarioGrafico !== null
+          && this.usuarioGrafico.nome !== null
+          && this.usuarioGrafico.nome !== '') {
+          let divNotResultDados = document.getElementById('divNotResultDados');
+          let canvasDados = document.getElementById('barChart');
+
+          if (divNotResultDados !== undefined
+            && divNotResultDados !== null) {
+            divNotResultDados.style.display = 'none';
+          }
+
+          if (canvasDados !== undefined
+            && canvasDados !== null) {
+            canvasDados.style.display = 'block';
+          }
+
+          this.createChart();
+        } else {
+          let divNotResultDados = document.getElementById('divNotResultDados');
+          let canvasDados = document.getElementById('barChart');
+
+          if (divNotResultDados !== undefined
+            && divNotResultDados !== null) {
+            divNotResultDados.style.display = 'block';
+          }
+
+          if (canvasDados !== undefined
+            && canvasDados !== null) {
+            canvasDados.style.display = 'none';
+          }
+        }
         this.statusBarService.setShowStatusDialog(false);
       }
     );
