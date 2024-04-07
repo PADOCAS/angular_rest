@@ -58,70 +58,80 @@ export class UsuarioComponent implements OnInit {
    *
    * @param id (number)
    */
-  public deleteUsuario(id: number): void {
-    //Mensagem de confirmação para realizar a exclusão do registro:
-    if (confirm("Confirma a exclusão do Usuário?")) {
-      //StatusDialog globalizado!
-      this.statusBarService.setShowStatusDialog(true);
-      this.toastService.limparMensagens();
+  public deleteUsuario(login: string, id: number): void {
+    if (id !== undefined
+      && id !== null
+      && login !== undefined
+      && login !== null) {
+      if(login === 'admin') {
+        this.statusBarService.setShowStatusDialog(true);
+        this.toastService.limparMensagens();
+        this.toastService.showWarning("Atenção", "Você não tem permissão para excluir o usuário admin.", 2000);
+        this.statusBarService.setShowStatusDialog(false);
+      } else if (confirm("Confirma a exclusão do Usuário?")) {
+        //Mensagem de confirmação para realizar a exclusão do registro:
+        //StatusDialog globalizado!
+        this.statusBarService.setShowStatusDialog(true);
+        this.toastService.limparMensagens();
 
-      //pipe: Encadear operações em observáveis.
-      //switchMap: Para encadear as chamadas de API de acordo com a lógica condicional (se há um nome de pesquisa ou não)
-      //catchError: Tratamos erros.
-      //of: Para criar um novo observável com base nos dados recebidos.
-      //tap: para executar ações secundárias (como atribuir valores às variáveis e exibir mensagens de sucesso).
-      //Subscribe final: Apenas para tratar exception, caso tiver.
-      this.usuarioService.deleteUsuario(id).pipe(
-        switchMap(() => {
-          if (this.nomePesquisa
-            && this.nomePesquisa.trim() !== '') {
-            return this.usuarioService.getPageUsuarioPorNome(this.nomePesquisa, this.page - 1);
-          } else {
-            return this.usuarioService.getPageUsuarios(this.page - 1);
-          }
-        }), catchError(error => {
-          if (error.status === 403) {
-            this.toastService.showErro("Erro ao excluir Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 3000, null);
-            localStorage.removeItem("token"); //Remove o Token do usuário e redireciona para Login
-            this.router.navigate(["login"]);
-          } else {
-            this.toastService.showErro("Erro ao excluir Usuário", error.message, null, error.error);
-          }
-          throw error;
-        }), switchMap(data => {
-          if (data.content !== null && data.content.length === 0 && data.totalPages !== null && data.totalPages > 0 && this.page > data.totalPages) {
-            this.page = data.totalPages;
-
+        //pipe: Encadear operações em observáveis.
+        //switchMap: Para encadear as chamadas de API de acordo com a lógica condicional (se há um nome de pesquisa ou não)
+        //catchError: Tratamos erros.
+        //of: Para criar um novo observável com base nos dados recebidos.
+        //tap: para executar ações secundárias (como atribuir valores às variáveis e exibir mensagens de sucesso).
+        //Subscribe final: Apenas para tratar exception, caso tiver.
+        this.usuarioService.deleteUsuario(id).pipe(
+          switchMap(() => {
             if (this.nomePesquisa
               && this.nomePesquisa.trim() !== '') {
               return this.usuarioService.getPageUsuarioPorNome(this.nomePesquisa, this.page - 1);
             } else {
               return this.usuarioService.getPageUsuarios(this.page - 1);
             }
-          } else {
-            return of(data);
-          }
-        }), tap(data => {
-          this.usuarios = data.content;
-          this.totalUsuariosPaginacao = data.totalElements;
-          this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
-          this.statusBarService.setShowStatusDialog(false);
-        })
-      ).subscribe(
-        () => {
-        },
-        error => {
-          if (error.status !== 403) {
-            if (this.nomePesquisa
-              && this.nomePesquisa.trim() !== '') {
-              this.toastService.showErro("Erro ao consultar Usuário por Nome", error.message, null, error.error);
+          }), catchError(error => {
+            if (error.status === 403) {
+              this.toastService.showErro("Erro ao excluir Usuário", "Usuário sem Token válido,\nRefaça o Login e tente novamente.", 3000, null);
+              localStorage.removeItem("token"); //Remove o Token do usuário e redireciona para Login
+              this.router.navigate(["login"]);
             } else {
-              this.toastService.showErro("Erro ao consultar Usuário", error.message, null, error.error);
+              this.toastService.showErro("Erro ao excluir Usuário", error.message, null, error.error);
             }
+            throw error;
+          }), switchMap(data => {
+            if (data.content !== null && data.content.length === 0 && data.totalPages !== null && data.totalPages > 0 && this.page > data.totalPages) {
+              this.page = data.totalPages;
+
+              if (this.nomePesquisa
+                && this.nomePesquisa.trim() !== '') {
+                return this.usuarioService.getPageUsuarioPorNome(this.nomePesquisa, this.page - 1);
+              } else {
+                return this.usuarioService.getPageUsuarios(this.page - 1);
+              }
+            } else {
+              return of(data);
+            }
+          }), tap(data => {
+            this.usuarios = data.content;
+            this.totalUsuariosPaginacao = data.totalElements;
+            this.toastService.showSuccesso("Sucesso", "Usuário deletado com sucesso!", 2000);
+            this.statusBarService.setShowStatusDialog(false);
+          })
+        ).subscribe(
+          () => {
+          },
+          error => {
+            if (error.status !== 403) {
+              if (this.nomePesquisa
+                && this.nomePesquisa.trim() !== '') {
+                this.toastService.showErro("Erro ao consultar Usuário por Nome", error.message, null, error.error);
+              } else {
+                this.toastService.showErro("Erro ao consultar Usuário", error.message, null, error.error);
+              }
+            }
+            this.statusBarService.setShowStatusDialog(false);
           }
-          this.statusBarService.setShowStatusDialog(false);
-        }
-      );
+        );
+      }
     }
   }
 
@@ -275,10 +285,23 @@ export class UsuarioComponent implements OnInit {
     //Vai fechar o StatusDialog no Formulario -> usuario-form-component.ts onInit após carregar todos os atributos!
   }
 
-  public editUsuario() {
+  public editUsuario(login: string, id: number) {
     this.statusBarService.setShowStatusDialog(true);
     this.toastService.limparMensagens();
     //Vai fechar o StatusDialog no Formulario -> usuario-form-component.ts onInit após carregar todos os atributos!
+
+    if (id !== undefined
+      && id !== null) {
+      if (login !== undefined
+        && login !== null
+        && login === 'admin') {
+        this.toastService.showWarning("Atenção", "Você não tem permissão para editar o usuário admin.", 2000);
+        this.statusBarService.setShowStatusDialog(false);
+      } else {
+        // Se a validação for bem-sucedida, navegue para a rota desejada.
+        this.router.navigate(['/usuario-edit', id]);
+      }
+    }
   }
 
   /**
