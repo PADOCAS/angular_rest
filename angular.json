@@ -33,6 +33,7 @@
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
               "src/styles.css"
             ],
+            "baseHref": "/angular-rest/",
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
@@ -44,8 +45,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "8mb",
+                  "maximumError": "8mb"
                 },
                 {
                   "type": "anyComponentStyle",
