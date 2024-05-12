@@ -9,6 +9,7 @@ import {UsuarioTelefoneFormComponent} from "./components/usuario/usuario-telefon
 import {RecuperarSenhaComponent} from "./components/recuperar-senha/recuperar-senha/recuperar-senha.component";
 import {UsuarioReportComponent} from "./components/usuario/usuario-report/usuario-report.component";
 import {UsuarioBarChartComponent} from "./components/usuario/usuario-bar-chart/usuario-bar-chart.component";
+import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
 
 export const routes: Routes = [
   {path: "usuario-bar-chart", component: UsuarioBarChartComponent, canActivate: [RouterGuard]}, //Gráficos de Barras - Salários Usuário //Definimos o RouterGuard para checar token antes de ir para rota!
@@ -20,7 +21,8 @@ export const routes: Routes = [
   {path: "home", component: HomeComponent, canActivate: [RouterGuard]}, //Definimos o RouterGuard para checar token antes de ir para rota!
   {path: "login", component: LoginComponent}, //Essas são acessadas sem precisar do token ainda, liberadas! (não precisa do guard)
   {path: "recuperar-senha", component: RecuperarSenhaComponent}, //Essas são acessadas sem precisar do token ainda, liberadas! (não precisa do guard)
-  {path: "", component: LoginComponent} //Essas são acessadas sem precisar do token ainda, liberadas! (não precisa do guard)
+  {path: "", redirectTo: '/login', pathMatch: 'full'}, //Sem URI passado redireciona para o login
+  {path: "**", component: PageNotFoundComponent} //Página não encontrada para erros 404!
 ];
 
 @NgModule({
