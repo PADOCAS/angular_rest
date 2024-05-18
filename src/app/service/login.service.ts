@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Usuario} from "../../model/usuario";
 import {Constants} from "../../util/constants";
 import {Router} from "@angular/router";
@@ -7,6 +7,7 @@ import {ToastService} from "./toast.service";
 import {StatusBarService} from "./status-bar.service";
 import {Telefone} from "../../model/telefone";
 import {ObjetoErroApi} from "../../model/objetoErroApi";
+import {catchError, switchMap, throwError} from "rxjs";
 
 // noinspection JSUnresolvedReference
 @Injectable({
@@ -21,8 +22,22 @@ export class LoginService {
     // console.log("Usuário: " + usuario.login);
     // console.info(usuario); //Sem ser um JSON válido {login: '213123', senha: '12wewe'}
     // console.info(JSON.stringify(usuario)); //Formato JSON válido! {"login":"213123","senha":"12wewe"}
-    return this.http.post(Constants.baseLogin, JSON.stringify(usuario))
-      .subscribe(data => {
+    //Fazendo em 2 etapa, no payara ele não consegue retornar um erro adequado ao usuário quando o login falha!!! Por isso fizemos em 2 etapas
+    //1-Valida credenciais (Primeira requisição)
+    //2-Validando credenciais ele gera o token (Segunda requisição)
+    return this.http.post(Constants.baseUrlPath + "validlogin", JSON.stringify(usuario), {headers: new HttpHeaders({'Content-Type': 'application/json'})})
+      .pipe(
+        //Requisição 2 -> Pega o Token do usuário
+        switchMap((response) => {
+          return this.http.post(Constants.baseLogin, JSON.stringify(usuario));
+        }),
+        catchError(error => {
+          // Retorna o erro para que ele possa ser tratado fora do pipe
+          throw error;
+        })
+      ).subscribe((data) => {
+        if (data !== null
+          && data !== '') {
           //Retorno HTTP:
           //Retira o Bearer e também o espaço, só queremos o token:
           // console.log(JSON.parse(JSON.stringify(data)).Authorization.replace("Bearer", "").replaceAll(" ", "").replaceAll("\\s", ""));
@@ -35,13 +50,13 @@ export class LoginService {
           //Redirecionando rota para o componente HomeComponent
           this.router.navigate(["home"]);
           this.statusBarService.setShowStatusDialog(false);
-        },
-        error => {
-          // console.error(`Acesso Negado!\n\nExceção: ${error.error.excecao},\nCódigo: ${error.error.codigo},\nErro: ${error.error.erro}`);
-          // alert(`Acesso Negado!\n\nExceção: ${error.error.excecao},\nCódigo: ${error.error.codigo},\nErro: ${error.error.erro}`);
-          this.toastService.showErro("Acesso Negado!", error.message, null, error.error);
-          this.statusBarService.setShowStatusDialog(false);
-        });
+        }
+      }, error => {
+        // console.error(`Acesso Negado!\n\nExceção: ${error.error.excecao},\nCódigo: ${error.error.codigo},\nErro: ${error.error.erro}`);
+        // alert(`Acesso Negado!\n\nExceção: ${error.error.excecao},\nCódigo: ${error.error.codigo},\nErro: ${error.error.erro}`);
+        this.toastService.showErro("Acesso Negado!", error.message, null, error.error);
+        this.statusBarService.setShowStatusDialog(false);
+      });
   }
 
   /**

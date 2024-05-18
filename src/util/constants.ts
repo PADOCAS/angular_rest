@@ -6,6 +6,7 @@ export class Constants {
   public static get baseServidor(): string {
     //Para rodar localmente, precisamos por o IP da máquina local (base Teste)
     // return "http://localhost:8080/";
+    // return "http://localhost:50800/";
     //Para rodar Produção - Servidor Nuvem:
     return "https://ldsystems.com.br:50080/";
   }
