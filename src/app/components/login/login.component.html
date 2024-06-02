@@ -35,7 +35,8 @@
   </div>
 
   <div class="mb-2 col-5 col-md-5">
-    <button type="button" class="btn btn-primary" [disabled]="userLogin.invalid || userSenha.invalid" (click)="login();"
+    <button type="button" class="btn btn-primary" [disabled]="userLogin.invalid || userSenha.invalid"
+            (click)="login();"
             (keydown.enter)="login();">Acessar
     </button>
   </div>
@@ -47,4 +48,22 @@
       Esqueceu sua Senha ?
     </a>
   </div>
+
+  <footer>
+    <!-- RODAPE -->
+    <section class="rodape">
+      <div>
+        <div style="display: flex; width: 100%;">
+          <div style="flex: 1;">
+            <label style="display: flex; flex: 1; justify-content: center; font-weight: bold; font-size: 13px;">
+              Usuário e Senha padrão: admin/admin
+            </label>
+            <label style="display: flex; flex: 1; justify-content: center; font-size: 13px;">
+              <a href="https://github.com/PADOCAS/angular_rest" target="blank">Projeto GitHub</a>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+  </footer>
 </form>
