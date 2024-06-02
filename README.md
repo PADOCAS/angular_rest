@@ -28,6 +28,16 @@
 
 - **Arquivo util/constants.ts:** Configurado o caminho para as URL's direcionadas, configurar de acordo com sua aplicação Spring REST API implantada.
 
+<h3 align="left">Configurações para deploy no payara:</h3>
+
+- **Geração dos arquivos -> Pasta raiz, comando:** `ng build -c production --base-href /angular-rest/`
+- **Após o build, devemos deixar os arquivos preparados para gerar o .WAR:**
+  1) Jogar todos os arquivos gerados no build direto na pasta /dist do projeto
+  2) Criar uma pasta WEB/INF dentro do diretório /dist
+  3) Criar os arquivos dentro da pasta WEB/INF (glassfish-web.xml, web.xml) para configuração do glassfish
+  4) Apagar a pasta browser que ele gerou no build, deixando apenas tudo direto na /dist
+- **Geração do WAR para deploy no payara:** Feito os passos acima, gere o war -> `jar -cvf angular-rest.war -C ..\dist\ .`
+
 <h3 align="left">Projeto Spring REST API:</h3>
 <h4><a href="https://github.com/PADOCAS/springboot_api_rest">Projeto Spring REST API Git Hub</a></h4>
 
